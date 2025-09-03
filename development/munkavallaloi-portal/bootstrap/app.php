@@ -10,9 +10,16 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
-    })
+    ->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'is_admin' => \App\Http\Middleware\IsAdmin::class,
+    ]);
+
+    $middleware->web(append: [ // Ezt a sort add hozzá
+        \App\Http\Middleware\SetLocale::class,
+    ]);
+
+})
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

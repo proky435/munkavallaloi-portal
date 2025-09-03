@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Notifications\NewTicketCreated;
+use App\Notifications\CategoryTicketCreated;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -32,7 +33,8 @@ class TicketController extends Controller
      */
     public function create(): View
     {
-        return view('tickets.create');
+        $categories = \App\Models\Category::all();
+        return view('tickets.create', compact('categories'));
     }
 
 
@@ -42,6 +44,7 @@ class TicketController extends Controller
    public function store(Request $request): RedirectResponse
 {
     $validated = $request->validate([
+        'category_id' => 'required|exists:categories,id',
         'subject' => 'required|string|max:255',
         'message' => 'required|string',
         'attachment' => 'nullable|file|mimes:pdf,jpg,png,doc,docx|max:2048',
@@ -54,9 +57,15 @@ class TicketController extends Controller
 
     $ticket = $request->user()->tickets()->create($validated);
 
-    // ÚJ: Értesítés küldése
+    // ÚJ: Értesítés küldése általános adminoknak
     $admins = User::where('is_admin', true)->get();
     Notification::send($admins, new NewTicketCreated($ticket));
+
+    // ÚJ: Kategória-specifikus értesítés küldése
+    if ($ticket->category && $ticket->category->responsible_email) {
+        Notification::route('mail', $ticket->category->responsible_email)
+            ->notify(new CategoryTicketCreated($ticket));
+    }
 
     return redirect(route('tickets.index'))->with('success', 'Bejelentés sikeresen elküldve!');
 }

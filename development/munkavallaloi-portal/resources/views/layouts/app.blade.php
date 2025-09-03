@@ -40,7 +40,8 @@
         </div>
     @endif
 
-    {{ $slot }}
+    @yield('content')
+    {{ $slot ?? '' }}
             </main>
         </div>
     </body>

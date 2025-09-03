@@ -14,6 +14,12 @@ class TicketController extends Controller
 {
     public function show(Ticket $ticket): View
     {
+        // Category-based access control
+        $user = auth()->user();
+        if ($user->accessible_categories && !$user->canAccessCategory($ticket->category_id)) {
+            abort(403, 'Nincs jogosultságod ehhez a bejelentéshez.');
+        }
+
         return view('admin.tickets.show', [
             'ticket' => $ticket,
         ]);
@@ -21,6 +27,12 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket): RedirectResponse
     {
+        // Category-based access control
+        $user = auth()->user();
+        if ($user->accessible_categories && !$user->canAccessCategory($ticket->category_id)) {
+            abort(403, 'Nincs jogosultságod ehhez a bejelentéshez.');
+        }
+
         $validated = $request->validate([
             'status' => 'required|string|in:Új,Folyamatban,Lezárva',
         ]);

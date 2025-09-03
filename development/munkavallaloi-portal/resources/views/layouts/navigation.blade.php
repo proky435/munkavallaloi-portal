@@ -41,6 +41,18 @@
     <x-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
         {{ __('Tudásbázis Kezelése') }}
     </x-nav-link>
+    <!-- ÚJ: Kategóriák Link -->
+    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+        {{ __('Kategóriák Kezelése') }}
+    </x-nav-link>
+    <!-- ÚJ: Szerepkörök Link -->
+    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+        {{ __('Szerepkörök Kezelése') }}
+    </x-nav-link>
+    <!-- ÚJ: Felhasználók Link -->
+    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+        {{ __('Felhasználók Kezelése') }}
+    </x-nav-link>
 @endif
      </div>
 

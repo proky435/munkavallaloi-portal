@@ -13,8 +13,21 @@
                         @csrf
 
                         <div>
-                            <x-input-label for="subject" :value="__('Téma')" />
-                            <x-text-input id="subject" class="block mt-1 w-full" type="text" name="subject" :value="old('subject')" required autofocus />
+                            <x-input-label for="category_id" :value="__('Kategória')" />
+                            <select id="category_id" name="category_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                                <option value="">-- Válassz kategóriát --</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-input-label for="subject" :value="__('Tárgy')" />
+                            <x-text-input id="subject" class="block mt-1 w-full" type="text" name="subject" :value="old('subject')" required />
                         </div>
 
                         <div class="mt-4">

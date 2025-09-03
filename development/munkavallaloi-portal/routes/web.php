@@ -7,8 +7,11 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TicketController as AdminTicketController; // JAVÍTVA: Alias hozzáadása
 use App\Http\Controllers\Admin\CommentController as AdminCommentController; // JAVÍTVA: Alias hozzáadása
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\Admin\ArticleController as AdminArticleController;;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\RoleController as AdminRoleController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('language/{locale}', function ($locale) {
     app()->setLocale($locale);
@@ -48,6 +51,9 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::put('/tickets/{ticket}', [AdminTicketController::class, 'update'])->name('tickets.update');
     Route::post('/tickets/{ticket}/comments', [AdminCommentController::class, 'store'])->name('tickets.comments.store');
     Route::resource('articles', AdminArticleController::class);
+    Route::resource('categories', AdminCategoryController::class);
+    Route::resource('roles', AdminRoleController::class);
+    Route::resource('users', AdminUserController::class);
 });
 
 require __DIR__.'/auth.php';

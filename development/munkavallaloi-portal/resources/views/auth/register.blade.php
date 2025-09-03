@@ -16,6 +16,18 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Workplace -->
+        <div class="mt-4">
+            <x-input-label for="workplace" :value="__('Munkaterület')" />
+            <select id="workplace" name="workplace" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                <option value="">-- Válassz munkaterületet --</option>
+                <option value="Brema" {{ old('workplace') == 'Brema' ? 'selected' : '' }}>Brema</option>
+                <option value="Boden" {{ old('workplace') == 'Boden' ? 'selected' : '' }}>Boden</option>
+                <option value="Tarragona" {{ old('workplace') == 'Tarragona' ? 'selected' : '' }}>Tarragona</option>
+            </select>
+            <x-input-error :messages="$errors->get('workplace')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

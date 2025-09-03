@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'workplace',
+        'role_id',
+        'accessible_categories',
     ];
 
     /**
@@ -35,19 +39,17 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'accessible_categories' => 'array',
+    ];
 
-     public function tickets(): HasMany
+    public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
     }
@@ -55,6 +57,36 @@ class User extends Authenticatable
     public function comments(): HasMany
 {
     return $this->hasMany(Comment::class);
+}
+
+/**
+ * Get the role that belongs to the user
+ */
+public function role(): BelongsTo
+{
+    return $this->belongsTo(Role::class);
+}
+
+/**
+ * Check if user can access tickets from a specific category
+ */
+public function canAccessCategory($categoryId): bool
+{
+    // Super admins can access all categories
+    if ($this->is_admin && !$this->accessible_categories) {
+        return true;
+    }
+    
+    // Check if category is in user's accessible categories
+    return $this->accessible_categories && in_array($categoryId, $this->accessible_categories);
+}
+
+/**
+ * Check if user has a specific permission
+ */
+public function hasPermission(string $permission): bool
+{
+    return $this->role && $this->role->hasPermission($permission);
 }
 
 }

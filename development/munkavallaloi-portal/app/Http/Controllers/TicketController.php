@@ -61,14 +61,24 @@ class TicketController extends Controller
     return redirect(route('tickets.index'))->with('success', 'Bejelentés sikeresen elküldve!');
 }
 
-
-    /**
+ /**
      * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+*/
+public function show(Ticket $ticket): View
+{
+    // Biztonsági ellenőrzés: A felhasználó csak a saját bejelentését nézheti meg.
+    if ($ticket->user_id !== auth()->id()) {
+        abort(403);
     }
+
+    return view('tickets.show', [
+        'ticket' => $ticket,
+    ]);
+}
+
+
+   
+
 
     /**
      * Show the form for editing the specified resource.
@@ -106,4 +116,8 @@ public function download(Ticket $ticket)
 
     return Storage::disk('private')->download($ticket->attachment);
 }
+
+
+
+
 }

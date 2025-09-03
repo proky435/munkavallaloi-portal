@@ -29,7 +29,11 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse ($tickets as $ticket)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $ticket->subject }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+    <a href="{{ route('tickets.show', $ticket) }}" class="text-indigo-600 hover:text-indigo-900">
+        {{ $ticket->subject }}
+    </a>
+</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
     @if ($ticket->status === 'Új')
         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">

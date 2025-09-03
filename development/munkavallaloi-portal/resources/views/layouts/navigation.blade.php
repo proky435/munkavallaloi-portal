@@ -22,16 +22,28 @@
 <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
     {{ __('Saját bejelentéseim') }}
 </x-nav-link>
+<!-- ÚJ: Tudásbázis Link -->
+<x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">
+    {{ __('Tudásbázis') }}
+</x-nav-link>
+
  </div>
 
- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-<!-- ÚJ: Admin Link -->
+
+
+     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+    <!-- Admin Link -->
 @if(auth()->user()->is_admin)
-    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
+    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
         {{ __('Admin Felület') }}
     </x-nav-link>
+    <!-- ÚJ: Tudásbázis Link -->
+    <x-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
+        {{ __('Tudásbázis Kezelése') }}
+    </x-nav-link>
 @endif
-  </div>
+     </div>
+
             </div>
 
             

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felhasználói Portál Demo</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://rsms.me/inter/inter.css');
+        
+        :root {
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --blue-100: #dbeafe;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --blue-800: #1e40af;
+            --yellow-100: #fef9c3;
+            --yellow-800: #854d0e;
+            --green-100: #dcfce7;
+            --green-600: #16a34a;
+            --green-800: #166534;
+            --red-400: #f87171;
+        }
+
+        /* Alap stílusok és reset */
+        *, *::before, *::after { box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; height: 100%; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--slate-100);
+            color: var(--slate-800);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Animációk */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Komponensek */
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary { background-color: var(--blue-600); color: white; }
+        .btn-primary:hover { background-color: var(--blue-700); }
+        .btn-secondary { background-color: var(--slate-200); color: var(--slate-700); }
+        .btn-secondary:hover { background-color: var(--slate-300); }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--slate-300);
+            border-radius: 0.5rem;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            background-color: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-textarea { min-height: 120px; resize: vertical; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--blue-600);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-blue { background-color: var(--blue-100); color: var(--blue-800); }
+        .badge-yellow { background-color: var(--yellow-100); color: var(--yellow-800); }
+        .badge-green { background-color: var(--green-100); color: var(--green-800); }
+        
+        /* Táblázat */
+        .table { width: 100%; border-collapse: collapse; }
+        .table th, .table td { padding: 0.75rem 1.5rem; text-align: left; }
+        .table thead { background-color: var(--slate-100); font-size: 0.75rem; text-transform: uppercase; color: var(--slate-600); }
+        .table tbody tr { border-bottom: 1px solid var(--slate-200); }
+        .table tbody tr:last-child { border-bottom: none; }
+        .table tbody tr:hover { background-color: var(--slate-50); }
+
+        /* Elrendezés */
+        #login-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: var(--slate-100); padding: 1rem; }
+        #app-page .app-container { display: flex; height: 100vh; }
+        .sidebar { width: 16rem; background-color: var(--slate-800); color: white; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar-header { height: 4rem; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700; border-bottom: 1px solid var(--slate-700); }
+        .sidebar nav { flex-grow: 1; padding: 1rem; }
+        .sidebar-link { display: flex; align-items: center; padding: 0.625rem 1rem; border-radius: 0.5rem; transition: background-color 0.2s; color: var(--slate-200); text-decoration: none; margin-bottom: 0.5rem; }
+        .sidebar-link:hover { background-color: var(--slate-700); }
+        .sidebar-link.active { background-color: var(--blue-600); color: white; }
+        .sidebar-link svg { margin-right: 0.75rem; flex-shrink: 0; }
+        .sidebar-footer { padding: 1rem; border-top: 1px solid var(--slate-700); }
+        
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; background-color: var(--slate-50); }
+        .main-header { height: 4rem; background-color: white; border-bottom: 1px solid var(--slate-200); display: flex; align-items: center; justify-content: flex-end; padding: 0 2rem; flex-shrink: 0;}
+        .main-container { flex-grow: 1; overflow-y: auto; padding: 2rem; }
+
+        /* Modal stílusok */
+        .modal-overlay {
+            position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); z-index: 50;
+            display: flex; align-items: center; justify-content: center; padding: 1rem;
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            background-color: white; border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            width: 100%; max-width: 36rem;
+            transform: scale(0.95); opacity: 0; transition: all 0.3s ease;
+            max-height: 90vh; display: flex; flex-direction: column;
+        }
+        .modal-overlay:not(.hidden) .modal-content { transform: scale(1); opacity: 1; }
+        .modal-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--slate-200); font-size: 1.25rem; font-weight: 600; }
+        .modal-body { padding: 1.5rem; overflow-y: auto; }
+        .modal-footer { padding: 1rem 1.5rem; background-color: var(--slate-50); border-top: 1px solid var(--slate-200); border-radius: 0 0 0.75rem 0.75rem; text-align: right;}
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <!-- BEJELENTKEZŐ KÉPERNYŐ -->
+    <div id="login-page">
+        <div class="card" style="width: 100%; max-width: 24rem; padding: 2rem;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="font-size: 1.875rem; font-weight: 700; color: var(--slate-700);">Munkavállalói Portál</h1>
+                <p style="color: var(--slate-500); margin-top: 0.5rem;">Jelentkezzen be a fiókjába.</p>
+            </div>
+            <form id="login-form">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; font-size: 0.875rem; font-weight: 500; color: var(--slate-600); margin-bottom: 0.25rem;">E-mail cím</label>
+                    <input type="email" value="kovacs.janos@demo.com" class="form-input">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-size: 0.875rem; font-weight: 500; color: var(--slate-600); margin-bottom: 0.25rem;">Jelszó</label>
+                    <input type="password" value="********" class="form-input">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem 1rem;">Bejelentkezés</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ALKALMAZÁS FELÜLET -->
+    <div id="app-page" class="hidden">
+        <div class="app-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">Munkavállalói Portál</div>
+                <nav>
+                    <a href="#" class="sidebar-link active" data-target="dashboard-view"><i data-lucide="layout-dashboard"></i>Irányítópult</a>
+                    <a href="#" class="sidebar-link" data-target="tickets-view"><i data-lucide="ticket"></i>Saját bejelentéseim</a>
+                    <a href="#" class="sidebar-link" data-target="profile-view"><i data-lucide="user"></i>Profilom</a>
+                </nav>
+                <div class="sidebar-footer">
+                     <a href="#" style="font-size: 0.875rem; color: var(--slate-400); text-decoration: none; display: block; text-align: center; margin-bottom: 1rem;">Visszaélés bejelentése</a>
+                    <button id="logout-button" class="sidebar-link" style="width: 100%; color: var(--red-400);"><i data-lucide="log-out"></i>Kijelentkezés</button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <header class="main-header" style="justify-content: space-between;">
+                    <h1 style="font-size: 1.5rem; font-weight: 600;" id="page-title">Irányítópult</h1>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <button id="new-ticket-button" class="btn btn-primary"><i data-lucide="plus" style="width: 1.2rem; height: 1.2rem; margin-right: 0.5rem;"></i>Új bejelentés</button>
+                        <div style="width: 2.5rem; height: 2.5rem; background-color: var(--slate-200); border-radius: 9999px;"></div>
+                    </div>
+                </header>
+                <main class="main-container">
+                    <!-- NÉZETEK HELYE -->
+                    <div id="dashboard-view" class="page-view fade-in">
+                         <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem;">Üdvözöljük, Kovács János!</h2>
+                         <div class="card">
+                             <h3 style="margin-top:0; font-size: 1.125rem;">Folyamatban lévő ügyei (2)</h3>
+                             <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+                                 <li style="padding: 0.75rem 0; border-bottom: 1px solid var(--slate-100);">#12379 - Munkáltatói igazolás <span class="badge badge-yellow" style="float: right;">Folyamatban</span></li>
+                                 <li style="padding: 0.75rem 0;">#12355 - Adatváltozás <span class="badge badge-yellow" style="float: right;">Folyamatban</span></li>
+                             </ul>
+                         </div>
+                    </div>
+                    
+                    <div id="tickets-view" class="page-view hidden fade-in">
+                        <div class="card" style="padding: 0; overflow-x: auto;">
+                           <table class="table">
+                                <thead><tr><th>Azonosító</th><th>Téma</th><th>Dátum</th><th>Státusz</th></tr></thead>
+                                <tbody>
+                                    <tr><td>#12379</td><td>Munkáltatói igazolás</td><td>2025-09-03</td><td><span class="badge badge-yellow">Folyamatban</span></td></tr>
+                                    <tr><td>#12355</td><td>Adatváltozás</td><td>2025-08-29</td><td><span class="badge badge-yellow">Folyamatban</span></td></tr>
+                                    <tr><td>#12340</td><td>Repjegy</td><td>2025-08-15</td><td><span class="badge badge-green">Lezárva</span></td></tr>
+                                    <tr><td>#12311</td><td>Bérelt autó</td><td>2025-07-22</td><td><span class="badge badge-green">Lezárva</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="profile-view" class="page-view hidden fade-in">
+                        <div class="card">
+                            <h2 style="font-size: 1.25rem; font-weight: 600; margin-top: 0; border-bottom: 1px solid var(--slate-200); padding-bottom: 0.75rem; margin-bottom: 1.5rem;">Profilom</h2>
+                            <div style="max-width: 500px;">
+                                <div style="margin-bottom: 1rem;">
+                                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Név</label>
+                                    <input type="text" value="Kovács János" class="form-input">
+                                </div>
+                                <div style="margin-bottom: 1.5rem;">
+                                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">E-mail cím</label>
+                                    <input type="email" value="kovacs.janos@demo.com" class="form-input">
+                                </div>
+                                <button class="btn btn-primary">Változtatások mentése</button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ÚJ BEJELENTÉS MODAL -->
+    <div id="new-ticket-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">Új bejelentés létrehozása</div>
+            <div class="modal-body">
+                <form id="new-ticket-form">
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Munkaterület</label>
+                        <select class="form-select"><option>Tarragona</option><option>Bréma</option><option>Boden</option></select>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Témakör</label>
+                        <select class="form-select"><option>Lakás</option><option>Munkabér</option><option>Utalás</option><option selected>Munkáltatói igazolás</option><option>Repjegy</option><option>Bérelt autó</option><option>Adatváltozás</option></select>
+                    </div>
+                     <div style="margin-bottom: 1rem;">
+                        <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Üzenet</label>
+                        <textarea class="form-textarea" placeholder="Kérjük, részletezze a kérését..."></textarea>
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Fájl csatolása (opcionális)</label>
+                        <input type="file" id="file-upload" class="form-input" style="padding: 0.4rem;">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="close-modal-button" style="margin-right: 0.5rem;">Mégse</button>
+                <button class="btn btn-primary" id="submit-ticket-button">Bejelentés küldése</button>
+            </div>
+        </div>
+    </div>
+    
+     <!-- ÉRTESÍTÉS (TOAST) -->
+    <div id="toast" style="position: fixed; top: 1.25rem; right: 1.25rem; background-color: var(--green-600); color: white; padding: 0.5rem 1.25rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); opacity: 0; transform: translateY(-20px); transition: all 0.3s;">
+        <p>Bejelentés sikeresen elküldve!</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            lucide.createIcons();
+
+            const loginPage = document.getElementById('login-page');
+            const appPage = document.getElementById('app-page');
+            const loginForm = document.getElementById('login-form');
+            const logoutButton = document.getElementById('logout-button');
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const pageViews = document.querySelectorAll('.page-view');
+            const pageTitle = document.getElementById('page-title');
+            
+            const modal = document.getElementById('new-ticket-modal');
+            const newTicketButton = document.getElementById('new-ticket-button');
+            const closeModalButton = document.getElementById('close-modal-button');
+            const submitTicketButton = document.getElementById('submit-ticket-button');
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                loginPage.classList.add('hidden');
+                appPage.classList.remove('hidden');
+            });
+
+            logoutButton.addEventListener('click', () => {
+                appPage.classList.add('hidden');
+                loginPage.classList.remove('hidden');
+            });
+            
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.dataset.target;
+                    if (!targetId) return;
+
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    pageTitle.textContent = link.textContent.trim();
+                    pageViews.forEach(view => view.id === targetId ? view.classList.remove('hidden') : view.classList.add('hidden'));
+                });
+            });
+
+            function openModal() { modal.classList.remove('hidden'); }
+            function closeModal() { modal.classList.add('hidden'); }
+            function showToast() {
+                const toast = document.getElementById('toast');
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(-20px)';
+                }, 3000);
+            }
+            
+            newTicketButton.addEventListener('click', openModal);
+            closeModalButton.addEventListener('click', closeModal);
+            submitTicketButton.addEventListener('click', () => {
+                closeModal();
+                showToast();
+            });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        });
+    </script>
+</body>
+</html>

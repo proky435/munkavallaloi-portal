@@ -24,8 +24,21 @@ class User extends Authenticatable
         'email',
         'password',
         'workplace',
+        'workplace_id',
         'role_id',
         'accessible_categories',
+        'phone',
+        'birth_date',
+        'birth_place',
+        'address',
+        'city',
+        'postal_code',
+        'country',
+        'bank_account_number',
+        'tax_number',
+        'social_security_number',
+        'emergency_contact_name',
+        'emergency_contact_phone',
     ];
 
     /**
@@ -47,6 +60,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'accessible_categories' => 'array',
+        'birth_date' => 'date',
     ];
 
     public function tickets(): HasMany
@@ -87,6 +101,14 @@ public function canAccessCategory($categoryId): bool
 public function hasPermission(string $permission): bool
 {
     return $this->role && $this->role->hasPermission($permission);
+}
+
+/**
+ * Get the workplace that belongs to the user
+ */
+public function workplaceModel(): BelongsTo
+{
+    return $this->belongsTo(Workplace::class, 'workplace_id');
 }
 
 }

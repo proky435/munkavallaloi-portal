@@ -18,14 +18,16 @@
 
         <!-- Workplace -->
         <div class="mt-4">
-            <x-input-label for="workplace" :value="__('Munkaterület')" />
-            <select id="workplace" name="workplace" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
-                <option value="">-- Válassz munkaterületet --</option>
-                <option value="Brema" {{ old('workplace') == 'Brema' ? 'selected' : '' }}>Brema</option>
-                <option value="Boden" {{ old('workplace') == 'Boden' ? 'selected' : '' }}>Boden</option>
-                <option value="Tarragona" {{ old('workplace') == 'Tarragona' ? 'selected' : '' }}>Tarragona</option>
+            <x-input-label for="workplace_id" :value="__('Munkahely')" />
+            <select id="workplace_id" name="workplace_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" required>
+                <option value="">{{ __('Válasszon munkahelyet') }}</option>
+                @foreach($workplaces as $workplace)
+                    <option value="{{ $workplace->id }}" {{ old('workplace_id') == $workplace->id ? 'selected' : '' }}>
+                        {{ $workplace->name }} ({{ $workplace->code }})
+                    </option>
+                @endforeach
             </select>
-            <x-input-error :messages="$errors->get('workplace')" class="mt-2" />
+            <x-input-error :messages="$errors->get('workplace_id')" class="mt-2" />
         </div>
 
         <!-- Password -->

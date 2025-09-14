@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Workplace;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -33,6 +34,13 @@ class DashboardController extends Controller
             $query->where('user_id', $request->user_id);
         }
 
+        // Filter by workplace
+        if ($request->filled('workplace_id')) {
+            $query->whereHas('user', function($q) use ($request) {
+                $q->where('workplace_id', $request->workplace_id);
+            });
+        }
+
         // Filter by date range
         if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
@@ -51,12 +59,14 @@ class DashboardController extends Controller
 
         $categories = Category::all();
         $users = User::all();
+        $workplaces = Workplace::all();
 
         return view('admin.dashboard', [
             'tickets' => $tickets,
             'stats' => $stats,
             'categories' => $categories,
             'users' => $users,
+            'workplaces' => $workplaces,
         ]);
     }
 }

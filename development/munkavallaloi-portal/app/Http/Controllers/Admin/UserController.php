@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Category;
+use App\Models\Workplace;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,16 +19,20 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = User::with('role');
+        $query = User::with(['role', 'workplaceModel']);
 
         // Filter by role
         if ($request->filled('role_id')) {
             $query->where('role_id', $request->role_id);
         }
 
-        // Filter by workplace
+        // Filter by workplace (both old enum and new workplace_id)
         if ($request->filled('workplace')) {
             $query->where('workplace', $request->workplace);
+        }
+        
+        if ($request->filled('workplace_id')) {
+            $query->where('workplace_id', $request->workplace_id);
         }
 
         // Search by name or email
@@ -40,8 +45,9 @@ class UserController extends Controller
 
         $users = $query->paginate(15)->appends($request->query());
         $roles = Role::all();
+        $workplaces = Workplace::all();
 
-        return view('admin.users.index', compact('users', 'roles'));
+        return view('admin.users.index', compact('users', 'roles', 'workplaces'));
     }
 
     /**

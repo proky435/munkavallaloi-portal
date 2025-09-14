@@ -21,7 +21,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::where('user_id', Auth::id())->latest()->get();
+        $tickets = Ticket::where('user_id', Auth::id())->with('category')->latest()->paginate(10);
 
     return view('tickets.index', [
         'tickets' => $tickets,
@@ -79,6 +79,9 @@ public function show(Ticket $ticket): View
     if ($ticket->user_id !== auth()->id()) {
         abort(403);
     }
+
+    // Load comments with user relationship
+    $ticket->load(['comments.user', 'user', 'category']);
 
     return view('tickets.show', [
         'ticket' => $ticket,

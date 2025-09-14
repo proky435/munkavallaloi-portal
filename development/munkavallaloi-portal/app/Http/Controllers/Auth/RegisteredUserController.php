@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Workplace;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $workplaces = Workplace::active()->get();
+        return view('auth.register', compact('workplaces'));
     }
 
     /**
@@ -32,14 +34,17 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'workplace' => ['required', 'string', 'in:Brema,Boden,Tarragona'],
+            'workplace_id' => ['required', 'exists:workplaces,id'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        $workplace = Workplace::find($request->workplace_id);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'workplace' => $request->workplace,
+            'workplace' => $workplace->name, // Keep backward compatibility
+            'workplace_id' => $request->workplace_id,
             'password' => Hash::make($request->password),
         ]);
 

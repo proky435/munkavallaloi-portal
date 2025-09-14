@@ -12,12 +12,15 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\WorkplaceController as AdminWorkplaceController;
 
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
+Route::get('locale/{locale}', function ($locale) {
+    if (in_array($locale, ['hu', 'en', 'es'])) {
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+    }
     return redirect()->back();
-})->name('language.switch');
+})->name('locale.change');
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,12 +57,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('categories', AdminCategoryController::class);
     Route::resource('roles', AdminRoleController::class);
     Route::resource('users', AdminUserController::class);
+    Route::resource('workplaces', AdminWorkplaceController::class);
 });
 
 require __DIR__.'/auth.php';
-
-Route::get('language/{locale}', function ($locale) {
-    app()->setLocale($locale);
-    session()->put('locale', $locale);
-    return redirect()->back();
-})->name('language.switch');

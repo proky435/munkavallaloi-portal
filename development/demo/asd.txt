@@ -1,24 +1,23 @@
 //kep feltoltese
-//felhasznloi avatar offos
 //articles pdf online
 //multiple munkahely a userekhez
 //tickets/create oldalon mylik munkahelyrol jon a kerdes kotelezo scroll down menu, es csak abbol amit mar a felhasznalo beregisztratl
 //300 alkalmazott kb
-//szabalyzat 
+//szabalyzat menu bar mehet a tudasbazisba
 //email cim lapjan regisztracio, offos a sima
 // auto regi email alapjan adoszam legyen a jelszo alapbol elso belepesnel kotelezze a modositasra
-// sajat adataim valtozasa menu  --profil oldalon szemelyes addatok kuka
+// sajat adataim valtozasa menu  --profil oldalon szemelyes addatok kuka ugye ezek alapbol tudva levoek
 //veszhelyzeti kapcsolat tarto
-//nyelvvalasztas off max angol
+//nyelvvalasztas off max angol magyar
 //repjegy / csomag csak a jegy kell, berbol levonas dokumentalja a db
 //https://maximont.hu/hu/visszaeles-bejelentes/
-//user roles demonstarco reszleesen
+//user roles demonstarco reszletesen
 //fejlesztoi doksi
-//
-//
-//
-//
-//https:///portal.maximont.hu/hu/
-// LEGYEN BOLOND BIZTOS + walkthrough + segitseg gomb
+//LEGYEN BOLOND BIZTOS + walkthrough + segitseg gomb
 // ugyanazon kervenydek blokkolasa max 3db lehet uzenet terjedelme legydn korlatlan maybe tinymc
 //
+//
+//
+//
+// 
+//https:///portal.maximont.hu/hu/

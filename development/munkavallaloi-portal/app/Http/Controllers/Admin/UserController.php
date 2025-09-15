@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = User::with(['role', 'workplaceModel']);
+        $query = User::with(['role', 'workplace']);
 
         // Filter by role
         if ($request->filled('role_id')) {

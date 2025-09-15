@@ -17,48 +17,50 @@
                     </x-nav-link>
                 </div>
 
-                <!-- ÚJ: Tickets Link -->
-                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-<x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
-    {{ __('Saját bejelentéseim') }}
-</x-nav-link>
-<!-- ÚJ: Tudásbázis Link -->
-<x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">
-    {{ __('Tudásbázis') }}
-</x-nav-link>
+                <!-- User Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                        {{ __('Saját bejelentéseim') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">
+                        {{ __('Tudásbázis') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('data-change.index')" :active="request()->routeIs('data-change.*')">
+                        {{ __('Adatváltozás bejelentés') }}
+                    </x-nav-link>
+                </div>
 
- </div>
 
 
-
-     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-    <!-- Admin Link -->
-@if(auth()->user()->is_admin)
-    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-        {{ __('Admin Felület') }}
-    </x-nav-link>
-    <!-- ÚJ: Tudásbázis Link -->
-    <x-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
-        {{ __('Tudásbázis Kezelése') }}
-    </x-nav-link>
-    <!-- ÚJ: Kategóriák Link -->
-    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
-        {{ __('Kategóriák Kezelése') }}
-    </x-nav-link>
-    <!-- ÚJ: Szerepkörök Link -->
-    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
-        {{ __('Szerepkörök Kezelése') }}
-    </x-nav-link>
-    <!-- ÚJ: Felhasználók Link -->
-    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-        {{ __('Felhasználók Kezelése') }}
-    </x-nav-link>
-    <!-- ÚJ: Munkahelyek Link -->
-    <x-nav-link :href="route('admin.workplaces.index')" :active="request()->routeIs('admin.workplaces.*')">
-        {{ __('Munkahelyek Kezelése') }}
-    </x-nav-link>
-@endif
-     </div>
+                <!-- Admin Navigation Links -->
+                @if(auth()->user()->is_admin)
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Admin Felület') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
+                        {{ __('Tudásbázis Kezelése') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                        {{ __('Kategóriák Kezelése') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                        {{ __('Szerepkörök Kezelése') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Felhasználók Kezelése') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.workplaces.index')" :active="request()->routeIs('admin.workplaces.*')">
+                        {{ __('Munkahelyek Kezelése') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.pre-registered-users.index')" :active="request()->routeIs('admin.pre-registered-users.*')">
+                        {{ __('Előregisztrált Felhasználók') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.data-change-approval.index')" :active="request()->routeIs('admin.data-change-approval.*')">
+                        {{ __('Adatváltozás Jóváhagyás') }}
+                    </x-nav-link>
+                </div>
+                @endif
 
             </div>
 

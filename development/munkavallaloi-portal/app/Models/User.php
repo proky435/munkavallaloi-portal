@@ -23,14 +23,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'workplace',
-        'workplace_id',
+        'is_admin',
+        'is_first_login',
         'role_id',
-        'accessible_categories',
+        'workplace_id',
         'phone',
         'birth_date',
         'birth_place',
-        'address',
+        'street_address',
         'city',
         'postal_code',
         'country',
@@ -59,8 +59,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'accessible_categories' => 'array',
         'birth_date' => 'date',
+        'is_first_login' => 'boolean',
     ];
 
     public function tickets(): HasMany
@@ -100,15 +100,44 @@ public function canAccessCategory($categoryId): bool
  */
 public function hasPermission(string $permission): bool
 {
-    return $this->role && $this->role->hasPermission($permission);
+    if (!$this->role) {
+        return false;
+    }
+    
+    return $this->role->hasPermission($permission);
 }
 
-/**
- * Get the workplace that belongs to the user
- */
-public function workplaceModel(): BelongsTo
-{
-    return $this->belongsTo(Workplace::class, 'workplace_id');
-}
+    /**
+     * Get the workplace that belongs to the user
+     */
+    public function workplace(): BelongsTo
+    {
+        return $this->belongsTo(Workplace::class);
+    }
 
+    /**
+     * Alias for workplace relationship for backward compatibility
+     */
+    public function workplaceModel(): BelongsTo
+    {
+        return $this->workplace();
+    }
+
+    /**
+     * Get all workplaces associated with the user.
+     */
+    public function workplaces()
+    {
+        return $this->belongsToMany(Workplace::class, 'user_workplaces')
+                    ->withPivot('is_primary', 'start_date', 'end_date')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get the primary workplace for the user.
+     */
+    public function primaryWorkplace()
+    {
+        return $this->workplaces()->wherePivot('is_primary', true)->first();
+    }
 }

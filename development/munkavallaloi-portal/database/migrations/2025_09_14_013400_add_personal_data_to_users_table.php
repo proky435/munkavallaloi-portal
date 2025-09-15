@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('phone')->nullable()->after('email');
             $table->date('birth_date')->nullable()->after('phone');
             $table->string('birth_place')->nullable()->after('birth_date');
-            $table->string('address')->nullable()->after('birth_place');
-            $table->string('city')->nullable()->after('address');
+            $table->string('street_address')->nullable()->after('birth_place');
+            $table->string('city')->nullable()->after('street_address');
             $table->string('postal_code')->nullable()->after('city');
             $table->string('country')->nullable()->after('postal_code');
             $table->string('bank_account_number')->nullable()->after('country');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('social_security_number')->nullable()->after('tax_number');
             $table->string('emergency_contact_name')->nullable()->after('social_security_number');
             $table->string('emergency_contact_phone')->nullable()->after('emergency_contact_name');
-            $table->string('workplace_id')->nullable()->after('workplace');
+            $table->unsignedBigInteger('workplace_id')->nullable()->after('emergency_contact_phone');
         });
     }
 
@@ -38,7 +38,7 @@ return new class extends Migration
                 'phone',
                 'birth_date',
                 'birth_place',
-                'address',
+                'street_address',
                 'city',
                 'postal_code',
                 'country',

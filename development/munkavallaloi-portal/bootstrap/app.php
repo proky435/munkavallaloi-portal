@@ -13,6 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
     $middleware->alias([
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
+        'check_first_login' => \App\Http\Middleware\CheckFirstTimeLogin::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
     ]);
 
     $middleware->web(append: [ // Ezt a sort add hozzá

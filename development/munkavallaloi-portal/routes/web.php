@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\WorkplaceController as AdminWorkplaceController;
+use App\Http\Controllers\DataChangeController;
+use App\Http\Controllers\Admin\PreRegisteredUserController;
+use App\Http\Controllers\Admin\DataChangeApprovalController;
 
 Route::get('locale/{locale}', function ($locale) {
     if (in_array($locale, ['hu', 'en', 'es'])) {
@@ -26,11 +29,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified', 'check_first_login'])
+    ->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+// First-time login routes (for guest users)
+Route::middleware('guest')->group(function () {
+    Route::get('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'show'])
+        ->name('first-time-login.show');
+    Route::post('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'store'])
+        ->name('first-time-login.store');
+});
+
+Route::middleware(['auth', 'check_first_login'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -43,6 +54,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])->name('tickets.comments.store');
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
+    
+    // Data Change Request Routes
+    Route::get('/data-change', [DataChangeController::class, 'index'])->name('data-change.index');
+    Route::post('/data-change', [DataChangeController::class, 'store'])->name('data-change.store');
 
     // ============================
 });
@@ -58,6 +73,16 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('roles', AdminRoleController::class);
     Route::resource('users', AdminUserController::class);
     Route::resource('workplaces', AdminWorkplaceController::class);
+    
+    // Pre-registered Users Routes
+    Route::resource('pre-registered-users', PreRegisteredUserController::class)->only(['index', 'store', 'destroy']);
+    Route::get('/pre-registered-users/template', [PreRegisteredUserController::class, 'downloadTemplate'])->name('pre-registered-users.template');
+    
+    // Data Change Approval Routes
+    Route::get('/data-change-approval', [DataChangeApprovalController::class, 'index'])->name('data-change-approval.index');
+    Route::get('/data-change-approval/{ticket}', [DataChangeApprovalController::class, 'show'])->name('data-change-approval.show');
+    Route::post('/data-change-approval/{ticket}/approve', [DataChangeApprovalController::class, 'approve'])->name('data-change-approval.approve');
+    Route::post('/data-change-approval/{ticket}/reject', [DataChangeApprovalController::class, 'reject'])->name('data-change-approval.reject');
 });
 
 require __DIR__.'/auth.php';

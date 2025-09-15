@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'responsible_email'];
+    protected $fillable = ['name', 'responsible_email', 'form_type', 'description', 'requires_attachment'];
 
     public function tickets(): HasMany
     {

@@ -24,6 +24,11 @@ class Ticket extends Model
         'status',
         'attachment',
         'category_id',
+        'form_data',
+    ];
+
+    protected $casts = [
+        'form_data' => 'array',
     ];
 
     /**

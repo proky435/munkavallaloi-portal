@@ -38,6 +38,9 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Admin Felület') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
+                        {{ __('Jegyek Kezelése') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
                         {{ __('Tudásbázis Kezelése') }}
                     </x-nav-link>

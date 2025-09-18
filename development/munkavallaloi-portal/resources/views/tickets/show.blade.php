@@ -84,6 +84,39 @@
                         </div>
                     </div>
                 @endif
+
+                <!-- Dynamic Form Data -->
+                @if($ticket->form_data && count($ticket->form_data) > 0)
+                    <div class="mt-6">
+                        <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ __('Beküldött adatok') }}</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            @foreach($ticket->form_data as $fieldId => $fieldData)
+                                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $fieldData['label'] ?? 'Mező #' . $fieldId }}</p>
+                                    @if($fieldData['type'] === 'file')
+                                        @if(isset($fieldData['path']) && $fieldData['path'])
+                                            <div class="flex items-center">
+                                                <svg class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                                </svg>
+                                                <span class="text-blue-600 dark:text-blue-400 text-sm">
+                                                    📎 {{ $fieldData['original_name'] ?? basename($fieldData['path']) }}
+                                                </span>
+                                            </div>
+                                        @else
+                                            <p class="text-gray-400 dark:text-gray-500 italic text-sm">Nincs fájl csatolva</p>
+                                        @endif
+                                    @elseif(array_key_exists('value', $fieldData) && !empty($fieldData['value']))
+                                        <p class="text-gray-900 dark:text-white">{{ $fieldData['value'] }}</p>
+                                    @else
+                                        <p class="text-gray-400 dark:text-gray-500 italic text-sm">Nincs megadva</p>
+                                    @endif
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Típus: {{ $fieldData['type'] }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
             </div>
 
             <!-- Comments -->

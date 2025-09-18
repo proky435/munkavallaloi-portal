@@ -38,8 +38,12 @@
                             <div class="grid grid-cols-12 gap-4 items-center">
                                 <!-- Subject -->
                                 <div class="col-span-4">
-                                    <p class="font-medium text-gray-900 dark:text-white truncate hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{{ $ticket->subject }}</p>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">{{ Str::limit($ticket->message, 100) }}</p>
+                                    <p class="font-medium text-gray-900 dark:text-white truncate hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                        {{ $ticket->subject ?: ($ticket->form_data ? 'Dinamikus űrlap bejelentés' : 'Bejelentés #' . $ticket->id) }}
+                                    </p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
+                                        {{ $ticket->message ?: ($ticket->form_data ? 'Dinamikus űrlap alapú bejelentés' : 'Nincs leírás') }}
+                                    </p>
                                 </div>
 
                                 <!-- Status -->

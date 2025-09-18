@@ -107,6 +107,18 @@ public function hasPermission(string $permission): bool
     return $this->role->hasPermission($permission);
 }
 
+/**
+ * Check if user has a specific role
+ */
+public function hasRole(string $roleName): bool
+{
+    if (!$this->role) {
+        return false;
+    }
+    
+    return $this->role->name === $roleName;
+}
+
     /**
      * Get the workplace that belongs to the user
      */

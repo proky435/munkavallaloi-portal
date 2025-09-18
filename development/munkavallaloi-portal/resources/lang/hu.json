@@ -144,7 +144,31 @@
     "Hasznos információk és útmutatók": "Hasznos információk és útmutatók",
     "Olvasás →": "Olvasás →",
     "Nincs elérhető cikk": "Nincs elérhető cikk",
-    "A tudásbázis jelenleg üres. Kérjük, látogasson vissza később.": "A tudásbázis jelenleg üres. Kérjük, látogasson vissza később."
+    "A tudásbázis jelenleg üres. Kérjük, látogasson vissza később.": "A tudásbázis jelenleg üres. Kérjük, látogasson vissza később.",
+    "Űrlap mezők konfigurálása": "Űrlap mezők konfigurálása",
+    "Új mező hozzáadása": "Új mező hozzáadása",
+    "Válasszon mező típust...": "Válasszon mező típust...",
+    "Hozzáadott mezők": "Hozzáadott mezők",
+    "Címke": "Címke",
+    "Kötelező mező": "Kötelező mező",
+    "Opciók (soronként egy)": "Opciók (soronként egy)",
+    "Kategória létrehozása": "Kategória létrehozása",
+    "Kategória frissítése": "Kategória frissítése",
+    "Back to Categories": "Vissza a kategóriákhoz",
+    "Felelős email címe": "Felelős email címe",
+    "Űrlap betöltése...": "Űrlap betöltése...",
+    "-- Válassz kategóriát --": "-- Válassz kategóriát --",
+    "-- Válasszon --": "-- Válasszon --",
+    "Szöveges beviteli mező": "Szöveges beviteli mező",
+    "Hosszú szöveges mező": "Hosszú szöveges mező",
+    "Legördülő lista": "Legördülő lista",
+    "Dátum választó": "Dátum választó",
+    "Fájl feltöltés": "Fájl feltöltés",
+    "Jelölőnégyzet": "Jelölőnégyzet",
+    "E-mail cím": "E-mail cím",
+    "Telefonszám": "Telefonszám",
+    "Szám": "Szám",
+    "Pénzösszeg": "Pénzösszeg"
 }
 
 

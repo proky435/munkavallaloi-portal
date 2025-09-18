@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\WorkplaceController as AdminWorkplaceController;
 use App\Http\Controllers\DataChangeController;
 use App\Http\Controllers\Admin\PreRegisteredUserController;
 use App\Http\Controllers\Admin\DataChangeApprovalController;
+use App\Http\Controllers\Api\CategoryFormController;
 
 Route::get('locale/{locale}', function ($locale) {
     if (in_array($locale, ['hu', 'en', 'es'])) {
@@ -59,12 +60,16 @@ Route::middleware(['auth', 'check_first_login'])->group(function () {
     Route::get('/data-change', [DataChangeController::class, 'index'])->name('data-change.index');
     Route::post('/data-change', [DataChangeController::class, 'store'])->name('data-change.store');
 
+    // API Routes for Dynamic Forms
+    Route::get('/api/categories/{category}/form', [CategoryFormController::class, 'getForm'])->name('api.categories.form');
+
     // ============================
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/tickets', [AdminTicketController::class, 'index'])->name('tickets.index');
     Route::get('/tickets/{ticket}', [AdminTicketController::class, 'show'])->name('tickets.show');
     Route::put('/tickets/{ticket}', [AdminTicketController::class, 'update'])->name('tickets.update');
     Route::post('/tickets/{ticket}/comments', [AdminCommentController::class, 'store'])->name('tickets.comments.store');

@@ -35,6 +35,7 @@ class TicketController extends Controller
      */
     public function create(): View
     {
+        // All users can see all categories when creating tickets
         $categories = \App\Models\Category::all();
         return view('tickets.create', compact('categories'));
     }

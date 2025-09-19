@@ -26,7 +26,9 @@ class User extends Authenticatable
         'is_admin',
         'is_first_login',
         'role_id',
+        'workplace',
         'workplace_id',
+        'accessible_categories',
         'phone',
         'birth_date',
         'birth_place',
@@ -61,6 +63,7 @@ class User extends Authenticatable
         'password' => 'hashed',
         'birth_date' => 'date',
         'is_first_login' => 'boolean',
+        'accessible_categories' => 'array',
     ];
 
     public function tickets(): HasMany
@@ -86,13 +89,57 @@ public function role(): BelongsTo
  */
 public function canAccessCategory($categoryId): bool
 {
-    // Super admins can access all categories
-    if ($this->is_admin && !$this->accessible_categories) {
+    // If user has specific accessible categories set, use only those
+    if ($this->accessible_categories && is_array($this->accessible_categories) && !empty($this->accessible_categories)) {
+        return in_array($categoryId, $this->accessible_categories);
+    }
+    
+    // If user has role-based permissions for all tickets
+    if ($this->role && $this->role->hasPermission('manage_all_tickets')) {
         return true;
     }
     
-    // Check if category is in user's accessible categories
-    return $this->accessible_categories && in_array($categoryId, $this->accessible_categories);
+    // Super admins can access all categories (only if no specific categories are set)
+    if ($this->is_admin) {
+        return true;
+    }
+    
+    // Regular users can access all categories if no restrictions are set
+    if (empty($this->accessible_categories)) {
+        return true;
+    }
+    
+    // If accessible_categories is empty array, deny access
+    return false;
+}
+
+/**
+ * Get categories that the user can access
+ */
+public function getAccessibleCategories()
+{
+    // If user has specific accessible categories set, use only those
+    if ($this->accessible_categories && is_array($this->accessible_categories) && !empty($this->accessible_categories)) {
+        return \App\Models\Category::whereIn('id', $this->accessible_categories)->get();
+    }
+    
+    // If user has role-based permissions for all tickets
+    if ($this->role && $this->role->hasPermission('manage_all_tickets')) {
+        return \App\Models\Category::all();
+    }
+    
+    // Super admins can access all categories (only if no specific categories are set)
+    if ($this->is_admin) {
+        return \App\Models\Category::all();
+    }
+    
+    // Regular users can access all categories if no restrictions are set
+    if (empty($this->accessible_categories)) {
+        return \App\Models\Category::all();
+    }
+    
+    // If accessible_categories is empty array, return empty collection
+    return collect();
 }
 
 /**
@@ -151,5 +198,37 @@ public function hasRole(string $roleName): bool
     public function primaryWorkplace()
     {
         return $this->workplaces()->wherePivot('is_primary', true)->first();
+    }
+
+    /**
+     * Assign categories to user for admin management
+     */
+    public function assignCategories(array $categoryIds)
+    {
+        $this->update(['accessible_categories' => $categoryIds]);
+    }
+
+    /**
+     * Get categories this user can manage in admin panel
+     */
+    public function getManageableCategories()
+    {
+        // If user has specific accessible categories set, use only those for admin management
+        if ($this->accessible_categories && is_array($this->accessible_categories) && !empty($this->accessible_categories)) {
+            return \App\Models\Category::whereIn('id', $this->accessible_categories)->get();
+        }
+        
+        // If user has role-based permissions for all tickets
+        if ($this->role && $this->role->hasPermission('manage_all_tickets')) {
+            return \App\Models\Category::all();
+        }
+        
+        // Super admins can manage all categories (only if no specific categories are set)
+        if ($this->is_admin) {
+            return \App\Models\Category::all();
+        }
+        
+        // Regular users cannot manage any categories in admin
+        return collect();
     }
 }

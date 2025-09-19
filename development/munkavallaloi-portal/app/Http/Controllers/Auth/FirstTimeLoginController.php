@@ -18,6 +18,11 @@ class FirstTimeLoginController extends Controller
      */
     public function show(): View
     {
+        // Ha a felhasználó már be van jelentkezve és nem first-time login, irányítsuk át
+        if (auth()->check() && !auth()->user()->is_first_login) {
+            return redirect()->route('dashboard');
+        }
+        
         return view('auth.first-time-login');
     }
 
@@ -26,6 +31,28 @@ class FirstTimeLoginController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Ha a felhasználó már be van jelentkezve és nem first-time login, irányítsuk át
+        if (auth()->check() && !auth()->user()->is_first_login) {
+            return redirect()->route('dashboard');
+        }
+        
+        // Ha a felhasználó be van jelentkezve és first-time login, akkor csak frissítsük az adatait
+        if (auth()->check() && auth()->user()->is_first_login) {
+            $request->validate([
+                'password' => ['required', 'confirmed', 'min:8'],
+            ]);
+            
+            $user = auth()->user();
+            $user->update([
+                'password' => Hash::make($request->password),
+                'is_first_login' => false,
+                'email_verified_at' => now(),
+            ]);
+            
+            return redirect()->route('dashboard')->with('success', __('Jelszó sikeresen beállítva! Üdvözöljük a rendszerben.'));
+        }
+
+        // Eredeti logika előregisztrált felhasználóknak
         $request->validate([
             'tax_number' => ['required', 'string'],
             'birth_date' => ['required', 'date_format:Y.m.d'],
@@ -33,8 +60,9 @@ class FirstTimeLoginController extends Controller
         ]);
 
         // Find pre-registered user by tax number and birth date
-        $preRegisteredUser = PreRegisteredUser::where('tax_number', $request->tax_number)
-            ->where('birth_date', date('Y-m-d', strtotime(str_replace('.', '-', $request->birth_date))))
+        $convertedDate = date('Y-m-d', strtotime(str_replace('.', '-', $request->birth_date)));
+        $preRegisteredUser = PreRegisteredUser::whereRaw('TRIM(tax_number) = ?', [trim($request->tax_number)])
+            ->whereDate('birth_date', $convertedDate)
             ->first();
 
         if (!$preRegisteredUser) {

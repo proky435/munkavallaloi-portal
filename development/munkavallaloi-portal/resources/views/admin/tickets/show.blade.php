@@ -14,6 +14,12 @@
                 </p>
             </div>
             <div class="flex items-center space-x-4">
+                <a href="{{ route('admin.tickets.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    {{ __('Vissza a jegyekhez') }}
+                </a>
                 @php
                     $statusColors = [
                         'Új' => 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700',
@@ -59,7 +65,7 @@
                         @endif
 
                         <!-- Dynamic Form Data or Traditional Message -->
-                        @if($ticket->form_data)
+                        @if($ticket->form_data && is_array($ticket->form_data) && !empty($ticket->form_data))
                         <div>
                             <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4">{{ __('Dinamikus űrlap adatok') }}</p>
                             <div class="space-y-4">
@@ -82,6 +88,25 @@
                                         <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Típus: {{ $fieldData['type'] }}</p>
                                     </div>
                                 @endforeach
+                            </div>
+                        </div>
+                        @elseif($ticket->subject === 'Lakás - Bejelentés' && $ticket->message === 'Dinamikus űrlap alapján létrehozott bejelentés')
+                        <div>
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{{ __('Dinamikus űrlap') }}</p>
+                            <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-1">{{ __('Üres űrlap') }}</h4>
+                                        <p class="text-sm text-yellow-700 dark:text-yellow-300">
+                                            {{ __('Ez a bejelentés dinamikus űrlapból jött, de nem tartalmaz kitöltött adatokat. A felhasználó valószínűleg üres űrlapot küldött el.') }}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @else

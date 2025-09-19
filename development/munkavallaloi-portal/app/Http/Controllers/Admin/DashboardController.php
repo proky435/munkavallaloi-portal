@@ -16,13 +16,12 @@ class DashboardController extends Controller
     {
         $query = Ticket::with(['user', 'category']);
 
-        // Category-based access control
+        // Category-based access control for admin management
         $user = auth()->user();
-        if ($user->accessible_categories) {
-            // User has restricted access - only show tickets from accessible categories
-            $query->whereIn('category_id', $user->accessible_categories);
+        $manageableCategories = $user->getManageableCategories();
+        if ($manageableCategories->isNotEmpty() && !$user->hasPermission('manage_all_tickets') && !($user->is_admin && empty($user->accessible_categories))) {
+            $query->whereIn('category_id', $manageableCategories->pluck('id'));
         }
-        // If user has no accessible_categories set, they can see all (super admin)
 
         // Filter by category
         if ($request->filled('category_id')) {
@@ -57,7 +56,7 @@ class DashboardController extends Controller
             'total_users' => User::count(),
         ];
 
-        $categories = Category::all();
+        $categories = $user->getManageableCategories();
         $users = User::all();
         $workplaces = Workplace::all();
 

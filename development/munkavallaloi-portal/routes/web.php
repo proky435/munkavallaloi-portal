@@ -34,13 +34,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified', 'check_first_login'])
     ->name('dashboard');
 
-// First-time login routes (for guest users)
-Route::middleware('guest')->group(function () {
-    Route::get('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'show'])
-        ->name('first-time-login.show');
-    Route::post('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'store'])
-        ->name('first-time-login.store');
-});
+// First-time login routes
+Route::get('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'show'])
+    ->name('first-time-login.show');
+Route::post('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'store'])
+    ->name('first-time-login.store');
 
 Route::middleware(['auth', 'check_first_login'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

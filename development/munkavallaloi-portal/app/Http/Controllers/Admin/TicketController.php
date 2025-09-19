@@ -18,10 +18,10 @@ class TicketController extends Controller
         // Build query with category-based access control
         $query = Ticket::with(['user', 'category']);
         
-        // Apply category-based access control
-        if ($user->accessible_categories) {
-            $accessibleCategoryIds = json_decode($user->accessible_categories, true);
-            $query->whereIn('category_id', $accessibleCategoryIds);
+        // Apply category-based access control for admin management
+        $manageableCategories = $user->getManageableCategories();
+        if ($manageableCategories->isNotEmpty() && !$user->hasPermission('manage_all_tickets') && !($user->is_admin && empty($user->accessible_categories))) {
+            $query->whereIn('category_id', $manageableCategories->pluck('id'));
         }
         
         // Apply filters
@@ -46,12 +46,7 @@ class TicketController extends Controller
         }
         
         // Get categories for filter dropdown (respecting access control)
-        $categories = Category::query();
-        if ($user->accessible_categories) {
-            $accessibleCategoryIds = json_decode($user->accessible_categories, true);
-            $categories->whereIn('id', $accessibleCategoryIds);
-        }
-        $categories = $categories->get();
+        $categories = $user->getManageableCategories();
         
         // Order by creation date (newest first) and paginate
         $tickets = $query->orderBy('created_at', 'desc')->paginate(20);

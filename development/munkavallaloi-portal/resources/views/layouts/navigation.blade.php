@@ -33,7 +33,10 @@
 
 
                 <!-- Admin Navigation Links -->
-                @if(auth()->user()->is_admin)
+                @if(auth()->user()->is_admin || 
+                    auth()->user()->hasPermission('access_admin_dashboard') ||
+                    auth()->user()->hasPermission('manage_all_tickets') ||
+                    auth()->user()->hasPermission('view_assigned_tickets'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Admin Felület') }}

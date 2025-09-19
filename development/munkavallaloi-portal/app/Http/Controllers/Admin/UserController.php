@@ -77,6 +77,15 @@ class UserController extends Controller
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
+        
+        // Admin által létrehozott felhasználók nem first-time login állapotban vannak
+        $validated['is_first_login'] = false;
+        $validated['email_verified_at'] = now();
+        
+        // Ha nincs role_id megadva, alapértelmezett user role (id: 5)
+        if (empty($validated['role_id'])) {
+            $validated['role_id'] = 5;
+        }
 
         User::create($validated);
 
@@ -99,27 +108,42 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'workplace' => 'required|in:Brema,Boden,Tarragona',
-            'role_id' => 'nullable|exists:roles,id',
-            'is_admin' => 'boolean',
-            'accessible_categories' => 'nullable|array',
-            'accessible_categories.*' => 'exists:categories,id'
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+                'password' => 'nullable|string|min:8|confirmed',
+                'workplace' => 'nullable|in:Brema,Boden,Tarragona',
+                'role_id' => 'nullable|exists:roles,id',
+                'accessible_categories' => 'nullable|array',
+                'accessible_categories.*' => 'exists:categories,id'
+            ]);
 
-        if (!empty($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
+            // Handle password
+            if (!empty($validated['password'])) {
+                $validated['password'] = Hash::make($validated['password']);
+            } else {
+                unset($validated['password']);
+            }
+
+            // Handle is_admin checkbox (checkbox only sends value when checked)
+            $validated['is_admin'] = $request->has('is_admin') ? true : false;
+
+            // Handle accessible_categories (ensure it's null if empty)
+            if (empty($validated['accessible_categories'])) {
+                $validated['accessible_categories'] = null;
+            }
+
+            $user->update($validated);
+
+            return redirect()->route('admin.users.index')
+                ->with('success', 'User updated successfully.');
+                
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Update failed: ' . $e->getMessage());
         }
-
-        $user->update($validated);
-
-        return redirect()->route('admin.users.index')
-            ->with('success', 'User updated successfully.');
     }
 
     /**

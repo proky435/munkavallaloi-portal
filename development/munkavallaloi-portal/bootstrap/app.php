@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     $middleware->alias([
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
         'check_first_login' => \App\Http\Middleware\CheckFirstTimeLogin::class,
+        'check_profile_complete' => \App\Http\Middleware\CheckProfileComplete::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
     ]);
 

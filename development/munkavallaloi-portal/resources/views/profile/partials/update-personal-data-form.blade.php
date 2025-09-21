@@ -134,7 +134,7 @@
             
             <div class="space-y-6">
                 <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label for="street_address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         {{ __('Utca, házszám') }}
                     </label>
                     <div class="relative">
@@ -143,11 +143,11 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                             </svg>
                         </div>
-                        <input id="address" name="address" type="text" value="{{ old('address', $user->address) }}"
-                               class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 cursor-not-allowed backdrop-blur-sm"
-                               placeholder="Kossuth Lajos utca 12." readonly>
+                        <input id="street_address" name="street_address" type="text" value="{{ old('street_address', $user->street_address) }}"
+                               class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent backdrop-blur-sm"
+                               placeholder="Kossuth Lajos utca 12.">
                     </div>
-                    <x-input-error class="mt-2" :messages="$errors->get('address')" />
+                    <x-input-error class="mt-2" :messages="$errors->get('street_address')" />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -162,8 +162,8 @@
                                 </svg>
                             </div>
                             <input id="city" name="city" type="text" value="{{ old('city', $user->city) }}"
-                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 cursor-not-allowed backdrop-blur-sm"
-                                   placeholder="Budapest" readonly>
+                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent backdrop-blur-sm"
+                                   placeholder="Budapest">
                         </div>
                         <x-input-error class="mt-2" :messages="$errors->get('city')" />
                     </div>
@@ -179,8 +179,8 @@
                                 </svg>
                             </div>
                             <input id="postal_code" name="postal_code" type="text" value="{{ old('postal_code', $user->postal_code) }}"
-                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 cursor-not-allowed backdrop-blur-sm"
-                                   placeholder="1051" readonly>
+                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent backdrop-blur-sm"
+                                   placeholder="1051">
                         </div>
                         <x-input-error class="mt-2" :messages="$errors->get('postal_code')" />
                     </div>
@@ -196,8 +196,8 @@
                                 </svg>
                             </div>
                             <input id="country" name="country" type="text" value="{{ old('country', $user->country) }}"
-                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 cursor-not-allowed backdrop-blur-sm"
-                                   placeholder="Magyarország" readonly>
+                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent backdrop-blur-sm"
+                                   placeholder="Magyarország">
                         </div>
                         <x-input-error class="mt-2" :messages="$errors->get('country')" />
                     </div>

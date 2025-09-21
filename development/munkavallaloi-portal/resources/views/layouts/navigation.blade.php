@@ -38,7 +38,7 @@
                     auth()->user()->hasPermission('manage_all_tickets') ||
                     auth()->user()->hasPermission('view_assigned_tickets'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    <x-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin.*')">
                         {{ __('Admin Felület') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">

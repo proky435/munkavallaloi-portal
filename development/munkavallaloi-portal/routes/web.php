@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\TicketController as AdminTicketController; // JAVÍTVA: Alias hozzáadása
 use App\Http\Controllers\Admin\CommentController as AdminCommentController; // JAVÍTVA: Alias hozzáadása
 use App\Http\Controllers\CommentController;
@@ -30,9 +31,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified', 'check_first_login'])
+// User Dashboard
+Route::get('/dashboard', [DashboardController::class, 'userDashboard'])
+    ->middleware(['auth', 'verified', 'check_first_login', 'check_profile_complete'])
     ->name('dashboard');
+
+// Admin Dashboard redirect
+Route::get('/admin-dashboard', [DashboardController::class, 'adminDashboard'])
+    ->middleware(['auth', 'verified', 'check_first_login'])
+    ->name('admin-dashboard');
 
 // First-time login routes
 Route::get('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'show'])
@@ -40,7 +47,15 @@ Route::get('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginControl
 Route::post('/first-time-login', [App\Http\Controllers\Auth\FirstTimeLoginController::class, 'store'])
     ->name('first-time-login.store');
 
-Route::middleware(['auth', 'check_first_login'])->group(function () {
+// Complete profile routes (for new users)
+Route::middleware('auth')->group(function () {
+    Route::get('/complete-profile', [App\Http\Controllers\CompleteProfileController::class, 'show'])
+        ->name('complete-profile.show');
+    Route::post('/complete-profile', [App\Http\Controllers\CompleteProfileController::class, 'store'])
+        ->name('complete-profile.store');
+});
+
+Route::middleware(['auth', 'check_first_login', 'check_profile_complete'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -65,7 +80,7 @@ Route::middleware(['auth', 'check_first_login'])->group(function () {
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/tickets', [AdminTicketController::class, 'index'])->name('tickets.index');
     Route::get('/tickets/{ticket}', [AdminTicketController::class, 'show'])->name('tickets.show');

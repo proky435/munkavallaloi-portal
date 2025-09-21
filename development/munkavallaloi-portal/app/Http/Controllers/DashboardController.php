@@ -12,11 +12,21 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     /**
-     * Display the dashboard.
+     * Display the user dashboard.
      */
-    public function index(): View
+    public function userDashboard()
     {
         $user = Auth::user();
+        
+        // Check if user has admin permissions - if so, redirect to admin dashboard
+        $hasAdminAccess = $user->is_admin || 
+                         $user->hasPermission('access_admin_dashboard') ||
+                         $user->hasPermission('manage_all_tickets') ||
+                         $user->hasPermission('view_assigned_tickets');
+        
+        if ($hasAdminAccess) {
+            return redirect()->route('admin.dashboard');
+        }
         
         // Get user's recent tickets
         $recentTickets = Ticket::where('user_id', $user->id)
@@ -37,6 +47,28 @@ class DashboardController extends Controller
             'resolved' => Ticket::where('user_id', $user->id)->where('status', 'resolved')->count(),
         ];
         
-        return view('dashboard', compact('recentTickets', 'recentArticles', 'ticketCounts'));
+        return view('user-dashboard', compact('recentTickets', 'recentArticles', 'ticketCounts'));
+    }
+
+    /**
+     * Redirect to admin dashboard if user has admin permissions.
+     */
+    public function adminDashboard()
+    {
+        $user = Auth::user();
+        
+        // Check if user has admin permissions
+        $hasAdminAccess = $user->is_admin || 
+                         $user->hasPermission('access_admin_dashboard') ||
+                         $user->hasPermission('manage_all_tickets') ||
+                         $user->hasPermission('view_assigned_tickets');
+        
+        if ($hasAdminAccess) {
+            // Redirect to admin dashboard
+            return redirect()->route('admin.dashboard');
+        }
+        
+        // If no admin access, redirect to user dashboard
+        return redirect()->route('dashboard');
     }
 }

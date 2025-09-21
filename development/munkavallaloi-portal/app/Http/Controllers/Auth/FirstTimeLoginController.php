@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\PreRegisteredUser;
+use App\Http\Controllers\CompleteProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -45,10 +46,17 @@ class FirstTimeLoginController extends Controller
             $user = auth()->user();
             $user->update([
                 'password' => Hash::make($request->password),
-                'is_first_login' => false,
                 'email_verified_at' => now(),
             ]);
             
+            // Check if profile is complete
+            if (!CompleteProfileController::isProfileComplete($user)) {
+                // Don't set is_first_login to false yet - user can still use first-time login
+                return redirect()->route('complete-profile.show')->with('success', __('Jelszó sikeresen beállítva! Kérjük, egészítse ki profilját.'));
+            }
+            
+            // Only set is_first_login to false when profile is complete
+            $user->update(['is_first_login' => false]);
             return redirect()->route('dashboard')->with('success', __('Jelszó sikeresen beállítva! Üdvözöljük a rendszerben.'));
         }
 
@@ -97,7 +105,7 @@ class FirstTimeLoginController extends Controller
             'social_security_number' => $preRegisteredUser->social_security_number,
             'emergency_contact_name' => $preRegisteredUser->emergency_contact_name,
             'emergency_contact_phone' => $preRegisteredUser->emergency_contact_phone,
-            'is_first_login' => false,
+            'is_first_login' => true, // Keep as first login until profile is verified complete
             'email_verified_at' => now(),
             'role_id' => 5, // Default user role
         ]);
@@ -107,6 +115,11 @@ class FirstTimeLoginController extends Controller
 
         // Log in the new user
         Auth::login($user);
+
+        // Check if profile is complete, if not redirect to complete profile
+        if (!CompleteProfileController::isProfileComplete($user)) {
+            return redirect()->route('complete-profile.show')->with('success', __('Fiók sikeresen aktiválva! Kérjük, egészítse ki profilját.'));
+        }
 
         return redirect()->route('dashboard')->with('success', __('Fiók sikeresen aktiválva! Üdvözöljük a rendszerben.'));
     }

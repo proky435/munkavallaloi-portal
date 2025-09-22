@@ -19,11 +19,13 @@ class Ticket extends Model
      */
     protected $fillable = [
         'user_id',
-        'subject',
-        'message',
-        'status',
-        'attachment',
         'category_id',
+        'title',
+        'description',
+        'priority',
+        'status',
+        'attachment_path',
+        'data_change_type_id',
         'form_data',
     ];
 
@@ -39,14 +41,24 @@ class Ticket extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comments(): HasMany
-{
-    return $this->hasMany(Comment::class)->oldest();
-}
+    /**
+     * Get the category that owns the ticket.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 
-public function category(): BelongsTo
-{
-    return $this->belongsTo(Category::class);
-}
-    
+    /**
+     * Get the data change type that owns the ticket.
+     */
+    public function dataChangeType(): BelongsTo
+    {
+        return $this->belongsTo(DataChangeType::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->oldest();
+    }
 }

@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\WorkplaceController as AdminWorkplaceController;
 use App\Http\Controllers\DataChangeController;
 use App\Http\Controllers\Admin\PreRegisteredUserController;
 use App\Http\Controllers\Admin\DataChangeApprovalController;
+use App\Http\Controllers\Admin\DataChangeRequestController;
+use App\Http\Controllers\Admin\DataChangeTypeController;
 use App\Http\Controllers\Api\CategoryFormController;
 
 Route::get('locale/{locale}', function ($locale) {
@@ -69,9 +71,12 @@ Route::middleware(['auth', 'check_first_login', 'check_profile_complete'])->grou
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
     
-    // Data Change Request Routes
+    // Data Change Routes
     Route::get('/data-change', [DataChangeController::class, 'index'])->name('data-change.index');
-    Route::post('/data-change', [DataChangeController::class, 'store'])->name('data-change.store');
+    Route::get('/data-change/my-requests', [DataChangeController::class, 'myRequests'])->name('data-change.my-requests');
+    Route::get('/data-change/{dataChangeType}', [DataChangeController::class, 'show'])->name('data-change.show');
+    Route::post('/data-change/{dataChangeType}', [DataChangeController::class, 'store'])->name('data-change.store');
+    Route::get('/data-change/request/{dataChangeRequest}', [DataChangeController::class, 'showRequest'])->name('data-change.show-request');
 
     // API Routes for Dynamic Forms
     Route::get('/api/categories/{category}/form', [CategoryFormController::class, 'getForm'])->name('api.categories.form');
@@ -91,6 +96,14 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('roles', AdminRoleController::class);
     Route::resource('users', AdminUserController::class);
     Route::resource('workplaces', AdminWorkplaceController::class);
+    
+    // Data Change Requests Management
+    Route::get('/data-change-requests', [DataChangeRequestController::class, 'index'])->name('data-change-requests.index');
+    Route::get('/data-change-requests/{dataChangeRequest}', [DataChangeRequestController::class, 'show'])->name('data-change-requests.show');
+    Route::put('/data-change-requests/{dataChangeRequest}', [DataChangeRequestController::class, 'update'])->name('data-change-requests.update');
+    
+    // Data Change Types Management (Custom Forms)
+    Route::resource('data-change-types', DataChangeTypeController::class);
     
     // Pre-registered Users Routes
     Route::resource('pre-registered-users', PreRegisteredUserController::class)->only(['index', 'store', 'destroy']);

@@ -16,7 +16,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            // Name and workplace can only be changed through data change requests
             'email' => [
                 'required',
                 'string',
@@ -25,7 +25,6 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            'workplace_id' => ['nullable', 'exists:workplaces,id'],
             'phone' => ['nullable', 'string', 'max:20'],
             'birth_date' => ['nullable', 'date', 'before:today'],
             'birth_place' => ['nullable', 'string', 'max:255'],

@@ -40,9 +40,9 @@
         @csrf
         @method('patch')
 
-        <!-- Workplace Selection -->
+        <!-- Workplace Display (Read-only) -->
         <div>
-            <label for="workplace_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label for="workplace_display" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 {{ __('Munkahely') }}
             </label>
             <div class="relative">
@@ -51,17 +51,16 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                     </svg>
                 </div>
-                <select id="workplace_id" name="workplace_id" 
-                        class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-colors duration-200">
-                    <option value="">{{ __('Válasszon munkahelyet') }}</option>
-                    @foreach($workplaces as $workplace)
-                        <option value="{{ $workplace->id }}" {{ old('workplace_id', $user->workplace_id) == $workplace->id ? 'selected' : '' }}>
-                            {{ $workplace->name }} ({{ $workplace->code }})
-                        </option>
-                    @endforeach
-                </select>
+                <input id="workplace_display" type="text" readonly
+                       value="@if($user->workplaceModel){{ $user->workplaceModel->name }} ({{ $user->workplaceModel->code }})@else{{ __('Nincs beállítva') }}@endif"
+                       class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-600/50 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 cursor-not-allowed">
             </div>
-            <x-input-error class="mt-2" :messages="$errors->get('workplace_id')" />
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {{ __('A munkahely módosításához használja az Adatváltozás bejelentés funkciót.') }}
+            </p>
         </div>
 
         <!-- Personal Information Section -->

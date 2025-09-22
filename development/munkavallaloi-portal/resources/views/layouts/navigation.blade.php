@@ -50,6 +50,12 @@
                     <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
                         {{ __('Kategóriák Kezelése') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.data-change-requests.index')" :active="request()->routeIs('admin.data-change-requests.*')">
+                        {{ __('Adatváltozás Kérések') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.data-change-types.index')" :active="request()->routeIs('admin.data-change-types.*')">
+                        {{ __('Adatváltozás Formák') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
                         {{ __('Szerepkörök Kezelése') }}
                     </x-nav-link>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->json('form_data'); // Store the dynamic form data
             $table->json('attachments')->nullable(); // Store file paths
-            $table->enum('status', ['pending', 'approved', 'rejected', 'processing'])->default('pending');
+            $table->enum('status', ['pending', 'processing', 'approved', 'completed', 'rejected', 'revision_required'])->default('pending');
             $table->text('admin_notes')->nullable();
             $table->foreignId('processed_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamp('processed_at')->nullable();

@@ -38,39 +38,55 @@
                     auth()->user()->hasPermission('manage_all_tickets') ||
                     auth()->user()->hasPermission('view_assigned_tickets'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin.*')">
-                        {{ __('Admin Felület') }}
+                    <x-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin-dashboard')">
+                        {{ __('Admin') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
-                        {{ __('Jegyek Kezelése') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
-                        {{ __('Tudásbázis Kezelése') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
-                        {{ __('Kategóriák Kezelése') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.data-change-requests.index')" :active="request()->routeIs('admin.data-change-requests.*')">
-                        {{ __('Adatváltozás Kérések') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.data-change-types.index')" :active="request()->routeIs('admin.data-change-types.*')">
-                        {{ __('Adatváltozás Formák') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
-                        {{ __('Szerepkörök Kezelése') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                        {{ __('Felhasználók Kezelése') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.workplaces.index')" :active="request()->routeIs('admin.workplaces.*')">
-                        {{ __('Munkahelyek Kezelése') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.pre-registered-users.index')" :active="request()->routeIs('admin.pre-registered-users.*')">
-                        {{ __('Előregisztrált Felhasználók') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.data-change-approval.index')" :active="request()->routeIs('admin.data-change-approval.*')">
-                        {{ __('Adatváltozás Jóváhagyás') }}
-                    </x-nav-link>
+                    
+                    <!-- Ticket Management Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none {{ request()->routeIs('admin.tickets.*', 'admin.articles.*', 'admin.categories.*') ? 'border-indigo-400 dark:border-indigo-600 text-gray-900 dark:text-gray-100' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700' }}">
+                            {{ __('Jegyek & Tudás') }}
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" x-transition class="absolute z-50 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
+                            <a href="{{ route('admin.tickets.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Jegyek Kezelése') }}</a>
+                            <a href="{{ route('admin.articles.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Tudásbázis') }}</a>
+                            <a href="{{ route('admin.categories.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Kategóriák') }}</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Change Management Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none {{ request()->routeIs('admin.data-change-requests.*', 'admin.data-change-types.*', 'admin.field-mapping.*') ? 'border-indigo-400 dark:border-indigo-600 text-gray-900 dark:text-gray-100' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700' }}">
+                            {{ __('Adatváltozás') }}
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" x-transition class="absolute z-50 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
+                            <a href="{{ route('admin.data-change-requests.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Kérések Kezelése') }}</a>
+                            <a href="{{ route('admin.data-change-types.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Formák Kezelése') }}</a>
+                            <a href="{{ route('admin.field-mapping.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Field Mapping') }}</a>
+                        </div>
+                    </div>
+                    
+                    <!-- User Management Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none {{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.workplaces.*', 'admin.pre-registered-users.*') ? 'border-indigo-400 dark:border-indigo-600 text-gray-900 dark:text-gray-100' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700' }}">
+                            {{ __('Felhasználók') }}
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" x-transition class="absolute z-50 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
+                            <a href="{{ route('admin.users.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Felhasználók') }}</a>
+                            <a href="{{ route('admin.roles.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Szerepkörök') }}</a>
+                            <a href="{{ route('admin.workplaces.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Munkahelyek') }}</a>
+                            <a href="{{ route('admin.pre-registered-users.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Előregisztráltak') }}</a>
+                        </div>
+                    </div>
                 </div>
                 @endif
 
@@ -180,6 +196,38 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
+            <!-- User Links -->
+            <x-responsive-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                {{ __('Saját bejelentéseim') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.*')">
+                {{ __('Tudásbázis') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('data-change.index')" :active="request()->routeIs('data-change.*')">
+                {{ __('Adatváltozás bejelentés') }}
+            </x-responsive-nav-link>
+            
+            <!-- Admin Links -->
+            @if(auth()->user()->is_admin || 
+                auth()->user()->hasPermission('access_admin_dashboard') ||
+                auth()->user()->hasPermission('manage_all_tickets') ||
+                auth()->user()->hasPermission('view_assigned_tickets'))
+            <div class="border-t border-gray-200 dark:border-gray-600 pt-2 mt-2">
+                <div class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {{ __('Admin') }}
+                </div>
+                <x-responsive-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin-dashboard')">
+                    {{ __('Admin Felület') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.data-change-requests.index')" :active="request()->routeIs('admin.data-change-requests.*')">
+                    {{ __('Adatváltozás Kérések') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Felhasználók') }}
+                </x-responsive-nav-link>
+            </div>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

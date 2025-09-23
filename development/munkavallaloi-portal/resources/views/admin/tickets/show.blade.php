@@ -6,9 +6,20 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                    {{ __('Bejelentés Kezelése') }} #{{ $ticket->id }}
-                </h1>
+                <div class="flex items-center space-x-3">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                        {{ __('Bejelentés Kezelése') }} #{{ $ticket->id }}
+                    </h1>
+                    <x-help-tooltip 
+                        title="Bejelentés Kezelése"
+                        content="<strong>Kezelési lépések:</strong><br>
+                        1. <strong>Státusz:</strong> Módosítsa a bejelentés állapotát<br>
+                        2. <strong>Válasz:</strong> Írjon részletes választ a felhasználónak<br>
+                        3. <strong>Melléklet:</strong> Csatoljon dokumentumokat a válaszhoz<br>
+                        4. <strong>Prioritás:</strong> Állítsa be a sürgősségi szintet<br><br>
+                        <strong>Fájl típusok:</strong> PDF, DOC, DOCX, JPG, PNG, TXT (max 10MB)<br>
+                        <strong>Értesítés:</strong> A felhasználó automatikusan értesítést kap!" />
+                </div>
                 <p class="mt-2 text-gray-600 dark:text-gray-400">
                     {{ $ticket->subject ?: ($ticket->form_data ? 'Dinamikus űrlap alapú bejelentés' : 'Bejelentés részletei') }}
                 </p>
@@ -228,6 +239,23 @@
                                 <div class="flex-1">
                                     <div class="bg-{{ $isAdmin ? 'blue-100' : 'gray-100' }} dark:bg-{{ $isAdmin ? 'blue-900/30' : 'gray-700' }} rounded-xl px-3 py-2">
                                         <p class="text-sm text-gray-900 dark:text-white">{{ $comment->body }}</p>
+                                        
+                                        @if($comment->attachment_path)
+                                            <div class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
+                                                <div class="flex items-center space-x-2">
+                                                    <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                                    </svg>
+                                                    <a href="{{ route('comments.download', $comment) }}" 
+                                                       class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline">
+                                                        {{ $comment->attachment_original_name }}
+                                                    </a>
+                                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                                        ({{ number_format($comment->attachment_size / 1024, 1) }} KB)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                         {{ $comment->created_at->diffForHumans() }} - {{ $comment->user->name }}
@@ -242,13 +270,29 @@
 
                         <!-- Reply Form -->
                         <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-600">
-                            <form method="POST" action="{{ route('admin.tickets.comments.store', $ticket) }}">
+                            <form method="POST" action="{{ route('admin.tickets.comments.store', $ticket) }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
-                                    <textarea name="body" rows="3" required
+                                    <label for="body" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('Válasz') }}</label>
+                                    <textarea name="body" id="body" rows="3" required
                                               class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200"
                                               placeholder="Írjon választ..."></textarea>
+                                    @error('body')
+                                        <p class="text-red-500 dark:text-red-400 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
+
+                                <div class="mb-4">
+                                    <label for="attachment" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('Melléklet') }}</label>
+                                    <input type="file" name="attachment" id="attachment" 
+                                           accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt"
+                                           class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('Opcionális fájl (PDF, DOC, DOCX, JPG, PNG, TXT - max 10MB)') }}</p>
+                                    @error('attachment')
+                                        <p class="text-red-500 dark:text-red-400 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                                 <div class="flex justify-end">
                                     <button type="submit" 
                                             class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">

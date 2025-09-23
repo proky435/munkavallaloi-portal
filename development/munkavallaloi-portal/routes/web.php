@@ -18,6 +18,7 @@ use App\Http\Controllers\DataChangeController;
 use App\Http\Controllers\Admin\PreRegisteredUserController;
 use App\Http\Controllers\Admin\DataChangeApprovalController;
 use App\Http\Controllers\Admin\DataChangeRequestController;
+use App\Http\Controllers\Admin\FieldMappingController;
 use App\Http\Controllers\Admin\DataChangeTypeController;
 use App\Http\Controllers\Api\CategoryFormController;
 
@@ -68,8 +69,10 @@ Route::middleware(['auth', 'check_first_login', 'check_profile_complete'])->grou
     Route::get('/tickets/{ticket}/download', [TicketController::class, 'download'])->name('tickets.download');
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])->name('tickets.comments.store');
+    Route::get('/comments/{comment}/download', [CommentController::class, 'downloadAttachment'])->name('comments.download');
     Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
     Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])->name('articles.show');
+    Route::get('/articles/{article}/pdf', [ArticleController::class, 'downloadPdf'])->name('articles.pdf');
     
     // Data Change Routes
     Route::get('/data-change', [DataChangeController::class, 'index'])->name('data-change.index');
@@ -101,6 +104,13 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/data-change-requests', [DataChangeRequestController::class, 'index'])->name('data-change-requests.index');
     Route::get('/data-change-requests/{dataChangeRequest}', [DataChangeRequestController::class, 'show'])->name('data-change-requests.show');
     Route::put('/data-change-requests/{dataChangeRequest}', [DataChangeRequestController::class, 'update'])->name('data-change-requests.update');
+    Route::post('/data-change-requests/{dataChangeRequest}/apply', [DataChangeRequestController::class, 'apply'])->name('data-change-requests.apply');
+    
+    // Field Mapping Management
+    Route::get('/field-mapping', [FieldMappingController::class, 'index'])->name('field-mapping.index');
+    Route::get('/field-mapping/preview/{dataChangeRequest}', [FieldMappingController::class, 'preview'])->name('field-mapping.preview');
+    Route::post('/field-mapping/update', [FieldMappingController::class, 'update'])->name('field-mapping.update');
+    Route::delete('/field-mapping/{field}', [FieldMappingController::class, 'delete'])->name('field-mapping.delete');
     
     // Data Change Types Management (Custom Forms)
     Route::resource('data-change-types', DataChangeTypeController::class);

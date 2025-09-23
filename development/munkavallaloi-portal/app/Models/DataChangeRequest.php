@@ -17,13 +17,19 @@ class DataChangeRequest extends Model
         'status',
         'admin_notes',
         'processed_by',
-        'processed_at'
+        'processed_at',
+        'scheduled_for',
+        'is_scheduled',
+        'reminder_sent_at'
     ];
 
     protected $casts = [
         'form_data' => 'array',
         'attachments' => 'array',
-        'processed_at' => 'datetime'
+        'processed_at' => 'datetime',
+        'scheduled_for' => 'datetime',
+        'reminder_sent_at' => 'datetime',
+        'is_scheduled' => 'boolean'
     ];
 
     public function user(): BelongsTo

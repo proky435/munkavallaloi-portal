@@ -14,6 +14,9 @@ class Comment extends Model
         'user_id',
         'ticket_id',
         'body',
+        'attachment_path',
+        'attachment_original_name',
+        'attachment_size',
     ];
 
     public function user(): BelongsTo

@@ -134,6 +134,23 @@
                                 <div class="flex-1">
                                     <div class="{{ $comment->user->is_admin ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-gray-50 dark:bg-gray-700/50' }} rounded-lg p-4">
                                         <p class="text-gray-900 dark:text-white whitespace-pre-wrap">{{ $comment->body }}</p>
+                                        
+                                        @if($comment->attachment_path)
+                                            <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                                                <div class="flex items-center space-x-2">
+                                                    <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                                                    </svg>
+                                                    <a href="{{ route('comments.download', $comment) }}" 
+                                                       class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline">
+                                                        {{ $comment->attachment_original_name }}
+                                                    </a>
+                                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                                        ({{ number_format($comment->attachment_size / 1024, 1) }} KB)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                                         {{ $comment->user->name }}

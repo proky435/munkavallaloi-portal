@@ -5,9 +5,20 @@
     <div class="py-8 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <!-- Header -->
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Admin Dashboard') }}</h1>
-                <p class="mt-2 text-gray-600 dark:text-gray-400">Rendszer áttekintés és statisztikák</p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+                <div class="flex items-center space-x-3">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ __('Admin Dashboard') }}</h1>
+                    <x-help-tooltip 
+                        title="Admin Dashboard Használata"
+                        content="<strong>Főbb funkciók:</strong><br>
+                        • <strong>Jegyek:</strong> Bejelentések megtekintése és kezelése<br>
+                        • <strong>Kategóriák:</strong> Jegy kategóriák szerkesztése<br>
+                        • <strong>Tudásbázis:</strong> Cikkek és PDF-ek kezelése<br>
+                        • <strong>Adatváltozás:</strong> Felhasználói kérések jóváhagyása<br>
+                        • <strong>Felhasználók:</strong> Szerepkörök és jogosultságok<br><br>
+                        <strong>Tipp:</strong> A válaszoknál csatolhat dokumentumokat is!" />
+                </div>
+                <p class="text-gray-600 dark:text-gray-400">{{ __('Rendszer áttekintés és gyors műveletek') }}</p>
             </div>
             
             <!-- Statisztikai Kártyák -->
@@ -193,6 +204,11 @@
                     @endforelse
                 </div>
             </div>
+        </div>
+
+        <!-- Confidential Reporting Section -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+            @include('layouts.whistleblowing-link')
         </div>
     </div>
 @endsection

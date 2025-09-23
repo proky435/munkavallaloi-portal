@@ -31,6 +31,23 @@
                                 <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
                                     {{ Str::limit($article->content, 150) }}
                                 </p>
+                                
+                                @if($article->pdf_attachment)
+                                    <div class="mb-3 p-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <svg class="w-4 h-4 text-red-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                                </svg>
+                                                <span class="text-xs text-red-700 dark:text-red-300">PDF melléklet</span>
+                                            </div>
+                                            <a href="{{ route('articles.pdf', $article) }}" class="text-xs text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                                                {{ __('Letöltés') }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
+                                
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs text-gray-500 dark:text-gray-500">
                                         {{ $article->updated_at->format('Y.m.d') }}

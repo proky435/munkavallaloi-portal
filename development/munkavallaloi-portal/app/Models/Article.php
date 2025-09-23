@@ -14,5 +14,8 @@ class Article extends Model
         'slug',
         'content',
         'is_published',
+        'pdf_attachment',
+        'pdf_original_name',
+        'pdf_size',
     ];
 }

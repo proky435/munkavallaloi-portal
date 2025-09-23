@@ -5,7 +5,18 @@
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Új bejelentés') }}</h1>
+            <div class="flex items-center space-x-3">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Új bejelentés') }}</h1>
+                <x-help-tooltip 
+                    title="Bejelentés Létrehozása"
+                    content="<strong>Hogyan működik:</strong><br>
+                    1. <strong>Kategória:</strong> Válassza ki a megfelelő kategóriát (IT, HR, Admin, stb.)<br>
+                    2. <strong>Tárgy:</strong> Rövid, beszédes címet adjon meg<br>
+                    3. <strong>Leírás:</strong> Részletesen írja le a problémát vagy kérést<br>
+                    4. <strong>Prioritás:</strong> Válassza ki a sürgősségi szintet<br>
+                    5. <strong>Fájlok:</strong> Csatoljon képernyőképeket vagy dokumentumokat<br><br>
+                    <strong>Tipp:</strong> Minél részletesebb a leírás, annál gyorsabb a megoldás!" />
+            </div>
             <p class="mt-2 text-gray-600 dark:text-gray-400">Válasszon kategóriát és töltse ki a szükséges mezőket</p>
         </div>
 

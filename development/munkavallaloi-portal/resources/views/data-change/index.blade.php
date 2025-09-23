@@ -5,7 +5,18 @@
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Adatváltozás bejelentés') }}</h1>
+            <div class="flex items-center space-x-3">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Adatváltozás bejelentés') }}</h1>
+                <x-help-tooltip 
+                    title="Adatváltozás Bejelentés"
+                    content="<strong>Hogyan működik:</strong><br>
+                    1. <strong>Típus választás:</strong> Kattintson a módosítani kívánt adat típusára<br>
+                    2. <strong>Űrlap kitöltése:</strong> Adja meg az új adatokat<br>
+                    3. <strong>Dokumentumok:</strong> Csatolja a szükséges igazoló dokumentumokat<br>
+                    4. <strong>Jóváhagyás:</strong> A HR részleg ellenőrzi és jóváhagyja<br>
+                    5. <strong>Értesítés:</strong> Email értesítést kap a döntésről<br><br>
+                    <strong>Fontos:</strong> A változások csak jóváhagyás után lépnek életbe!" />
+            </div>
             <p class="mt-2 text-gray-600 dark:text-gray-400">
                 {{ __('Válassza ki, milyen adatokat szeretne módosítani.') }}
             </p>

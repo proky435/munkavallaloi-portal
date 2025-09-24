@@ -223,9 +223,6 @@
             </div>
         </div>
 
-        <!-- Confidential Reporting Section -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-            @include('layouts.whistleblowing-link')
-        </div>
+        
     </div>
 @endsection

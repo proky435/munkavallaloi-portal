@@ -6,17 +6,34 @@
         <div class="max-w-7xl mx-auto">
             <!-- Header -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-                <div class="flex items-center space-x-3">
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ __('Admin Dashboard') }}</h1>
-                    <x-help-tooltip 
-                        title="Admin Dashboard Használata"
-                        content="<strong>Főbb funkciók:</strong><br>
-                        • <strong>Jegyek:</strong> Bejelentések megtekintése és kezelése<br>
-                        • <strong>Kategóriák:</strong> Jegy kategóriák szerkesztése<br>
-                        • <strong>Tudásbázis:</strong> Cikkek és PDF-ek kezelése<br>
-                        • <strong>Adatváltozás:</strong> Felhasználói kérések jóváhagyása<br>
-                        • <strong>Felhasználók:</strong> Szerepkörök és jogosultságok<br><br>
-                        <strong>Tipp:</strong> A válaszoknál csatolhat dokumentumokat is!" />
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ __('Admin Dashboard') }}</h1>
+                        <x-help-tooltip 
+                            title="Admin Dashboard Használata"
+                            content="<strong>Főbb funkciók:</strong><br>
+                            • <strong>Jegyek:</strong> Bejelentések megtekintése és kezelése<br>
+                            • <strong>Kategóriák:</strong> Jegy kategóriák szerkesztése<br>
+                            • <strong>Tudásbázis:</strong> Cikkek és PDF-ek kezelése<br>
+                            • <strong>Adatváltozás:</strong> Felhasználói kérések jóváhagyása<br>
+                            • <strong>Felhasználók:</strong> Szerepkörök és jogosultságok<br><br>
+                            <strong>Tipp:</strong> A válaszoknál csatolhat dokumentumokat is!" />
+                    </div>
+                    
+                    <!-- Confidential Reporting Button -->
+                    <div class="flex-shrink-0">
+                        <a href="https://maximont.hu/hu/visszaeles-bejelentes/" 
+                           target="_blank"
+                           class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-sm font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            {{ __('Confidential Reporting') }}
+                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2M7 7l10 10M17 7l-4 4"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
                 <p class="text-gray-600 dark:text-gray-400">{{ __('Rendszer áttekintés és gyors műveletek') }}</p>
             </div>

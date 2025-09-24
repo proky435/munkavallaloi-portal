@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             WorkplaceSeeder::class,
             DataChangeTypeSeeder::class,
+            CategoryFormSeeder::class,
             ArticleSeeder::class,
+            TestUserSeeder::class,
         ]);
     }
 }

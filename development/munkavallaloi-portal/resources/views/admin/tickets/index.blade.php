@@ -99,7 +99,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200">
-                                            {{ $ticket->category->name }}
+                                            {{ $ticket->category?->name ?? 'Kategória nélkül' }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">

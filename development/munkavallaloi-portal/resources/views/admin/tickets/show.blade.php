@@ -70,7 +70,7 @@
                         <div>
                             <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{{ __('Kategória') }}</p>
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
-                                {{ $ticket->category->name }}
+                                {{ $ticket->category?->name ?? 'Kategória nélkül' }}
                             </span>
                         </div>
                         @endif

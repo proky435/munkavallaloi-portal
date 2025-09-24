@@ -82,7 +82,7 @@ Route::middleware(['auth', 'check_first_login', 'check_profile_complete'])->grou
     Route::get('/data-change/request/{dataChangeRequest}', [DataChangeController::class, 'showRequest'])->name('data-change.show-request');
 
     // API Routes for Dynamic Forms
-    Route::get('/api/categories/{category}/form', [CategoryFormController::class, 'getForm'])->name('api.categories.form');
+    Route::get('/api/categories/{category}/form', [\App\Http\Controllers\Api\CategoryFormController::class, 'getForm'])->name('api.categories.form');
 
     // ============================
 });

@@ -14,78 +14,42 @@ class CategoryFormSeeder extends Seeder
      */
     public function run(): void
     {
-        // First, create the form fields
+        // Create basic form field types that can be reused
         $formFields = [
-            // Text fields
-            ['name' => 'problem_type', 'type' => 'select'],
-            ['name' => 'urgency', 'type' => 'select'],
-            ['name' => 'device_info', 'type' => 'text'],
-            ['name' => 'error_message', 'type' => 'textarea'],
-            ['name' => 'screenshot', 'type' => 'file'],
-            ['name' => 'request_type', 'type' => 'select'],
-            ['name' => 'start_date', 'type' => 'date'],
-            ['name' => 'end_date', 'type' => 'date'],
-            ['name' => 'reason', 'type' => 'textarea'],
-            ['name' => 'supporting_document', 'type' => 'file'],
-            ['name' => 'admin_type', 'type' => 'select'],
-            ['name' => 'location', 'type' => 'text'],
-            ['name' => 'priority', 'type' => 'select'],
-            ['name' => 'details', 'type' => 'textarea'],
-            ['name' => 'finance_type', 'type' => 'select'],
-            ['name' => 'amount', 'type' => 'number'],
-            ['name' => 'expense_date', 'type' => 'date'],
-            ['name' => 'description', 'type' => 'textarea'],
-            ['name' => 'receipts', 'type' => 'file'],
-            ['name' => 'request_category', 'type' => 'select'],
-            ['name' => 'subject', 'type' => 'text'],
-            ['name' => 'message', 'type' => 'textarea'],
-            ['name' => 'attachment', 'type' => 'file'],
-            // Lakás kategória mezők
-            ['name' => 'accommodation_type', 'type' => 'select'],
-            ['name' => 'move_in_date', 'type' => 'date'],
-            ['name' => 'move_out_date', 'type' => 'date'],
-            ['name' => 'room_type', 'type' => 'select'],
-            ['name' => 'special_requirements', 'type' => 'textarea'],
-            // Munkabér kategória mezők
-            ['name' => 'salary_issue_type', 'type' => 'select'],
-            ['name' => 'pay_period', 'type' => 'select'],
-            ['name' => 'expected_amount', 'type' => 'number'],
-            ['name' => 'actual_amount', 'type' => 'number'],
-            ['name' => 'payslip_attachment', 'type' => 'file'],
-            // Utalás kategória mezők
-            ['name' => 'transfer_type', 'type' => 'select'],
-            ['name' => 'transfer_amount', 'type' => 'number'],
-            ['name' => 'recipient_name', 'type' => 'text'],
-            ['name' => 'recipient_account', 'type' => 'text'],
-            ['name' => 'transfer_purpose', 'type' => 'textarea'],
-            // Munkáltatói igazolás kategória mezők
-            ['name' => 'certificate_type', 'type' => 'select'],
-            ['name' => 'certificate_purpose', 'type' => 'textarea'],
-            ['name' => 'needed_by_date', 'type' => 'date'],
-            ['name' => 'delivery_method', 'type' => 'select'],
-            ['name' => 'delivery_address', 'type' => 'textarea'],
-            // Repjegy kategória mezők
-            ['name' => 'flight_type', 'type' => 'select'],
-            ['name' => 'departure_city', 'type' => 'text'],
-            ['name' => 'destination_city', 'type' => 'text'],
-            ['name' => 'departure_date', 'type' => 'date'],
-            ['name' => 'return_date', 'type' => 'date'],
-            ['name' => 'passenger_count', 'type' => 'number'],
-            ['name' => 'travel_purpose', 'type' => 'textarea'],
-            // Bérelt autó kategória mezők
-            ['name' => 'rental_type', 'type' => 'select'],
-            ['name' => 'car_category', 'type' => 'select'],
-            ['name' => 'pickup_date', 'type' => 'date'],
-            ['name' => 'return_date_car', 'type' => 'date'],
-            ['name' => 'pickup_location', 'type' => 'text'],
-            ['name' => 'return_location', 'type' => 'text'],
-            ['name' => 'rental_purpose', 'type' => 'textarea'],
-            // Technikai probléma kategória mezők
-            ['name' => 'tech_problem_type', 'type' => 'select'],
-            ['name' => 'affected_system', 'type' => 'text'],
-            ['name' => 'problem_description', 'type' => 'textarea'],
-            ['name' => 'error_screenshot', 'type' => 'file'],
-            ['name' => 'tech_urgency', 'type' => 'select'],
+            // Rövid szöveg mezők (255 karakter)
+            ['name' => 'rovid_szoveg_nev', 'type' => 'text'],
+            ['name' => 'rovid_szoveg_cim', 'type' => 'text'],
+            ['name' => 'rovid_szoveg_hely', 'type' => 'text'],
+            ['name' => 'rovid_szoveg_telefonszam', 'type' => 'text'],
+            ['name' => 'rovid_szoveg_email', 'type' => 'text'],
+            ['name' => 'rovid_szoveg_egyeb', 'type' => 'text'],
+            
+            // Hosszú szöveg mezők (korlátlan)
+            ['name' => 'hosszu_szoveg_leiras', 'type' => 'textarea'],
+            ['name' => 'hosszu_szoveg_indoklas', 'type' => 'textarea'],
+            ['name' => 'hosszu_szoveg_megjegyzes', 'type' => 'textarea'],
+            ['name' => 'hosszu_szoveg_uzenet', 'type' => 'textarea'],
+            
+            // Legördülő listák
+            ['name' => 'lista_tipus', 'type' => 'select'],
+            ['name' => 'lista_prioritas', 'type' => 'select'],
+            ['name' => 'lista_statusz', 'type' => 'select'],
+            ['name' => 'lista_kategoria', 'type' => 'select'],
+            
+            // Dátum mezők
+            ['name' => 'datum_kezdes', 'type' => 'date'],
+            ['name' => 'datum_befejezés', 'type' => 'date'],
+            ['name' => 'datum_hataridő', 'type' => 'date'],
+            
+            // Szám mezők
+            ['name' => 'szam_osszeg', 'type' => 'number'],
+            ['name' => 'szam_mennyiseg', 'type' => 'number'],
+            ['name' => 'szam_ar', 'type' => 'number'],
+            
+            // Fájl mezők
+            ['name' => 'fajl_melleklet', 'type' => 'file'],
+            ['name' => 'fajl_dokumentum', 'type' => 'file'],
+            ['name' => 'fajl_kepernyo', 'type' => 'file'],
         ];
 
         foreach ($formFields as $fieldData) {
@@ -95,14 +59,14 @@ class CategoryFormSeeder extends Seeder
             );
         }
 
-        // Now create categories and assign form fields
+        // Create comprehensive categories
         $categoryConfigs = [
             [
                 'name' => 'IT Támogatás',
                 'description' => 'Informatikai problémák és kérések',
                 'fields' => [
                     [
-                        'field_name' => 'problem_type',
+                        'field_name' => 'lista_tipus',
                         'label' => 'Probléma típusa',
                         'required' => true,
                         'order' => 1,
@@ -112,39 +76,26 @@ class CategoryFormSeeder extends Seeder
                             'network' => 'Hálózati probléma',
                             'email' => 'Email probléma',
                             'printer' => 'Nyomtató probléma',
-                            'access' => 'Hozzáférési probléma',
                             'other' => 'Egyéb'
                         ]
                     ],
                     [
-                        'field_name' => 'urgency',
-                        'label' => 'Sürgősség',
-                        'required' => true,
-                        'order' => 2,
-                        'options' => [
-                            'low' => 'Alacsony - Nem sürgős',
-                            'medium' => 'Közepes - 1-2 napon belül',
-                            'high' => 'Magas - Azonnal szükséges',
-                            'critical' => 'Kritikus - Munka leáll'
-                        ]
+                        'field_name' => 'rovid_szoveg_nev',
+                        'label' => 'Eszköz/Számítógép neve',
+                        'required' => false,
+                        'order' => 2
                     ],
                     [
-                        'field_name' => 'device_info',
-                        'label' => 'Eszköz információ',
-                        'required' => false,
+                        'field_name' => 'hosszu_szoveg_leiras',
+                        'label' => 'Probléma részletes leírása',
+                        'required' => true,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'error_message',
-                        'label' => 'Hibaüzenet',
+                        'field_name' => 'fajl_kepernyo',
+                        'label' => 'Képernyőkép a hibáról',
                         'required' => false,
                         'order' => 4
-                    ],
-                    [
-                        'field_name' => 'screenshot',
-                        'label' => 'Képernyőkép',
-                        'required' => false,
-                        'order' => 5
                     ]
                 ]
             ],
@@ -153,40 +104,39 @@ class CategoryFormSeeder extends Seeder
                 'description' => 'Humán erőforrás kapcsolatos kérések',
                 'fields' => [
                     [
-                        'field_name' => 'request_type',
+                        'field_name' => 'lista_kategoria',
                         'label' => 'Kérés típusa',
                         'required' => true,
                         'order' => 1,
                         'options' => [
                             'leave' => 'Szabadság kérelem',
                             'sick_leave' => 'Betegszabadság',
-                            'overtime' => 'Túlóra elszámolás',
                             'certificate' => 'Igazolás kérés',
                             'training' => 'Képzés kérelem',
-                            'complaint' => 'Panasz bejelentés',
+                            'complaint' => 'Panasz',
                             'other' => 'Egyéb HR kérés'
                         ]
                     ],
                     [
-                        'field_name' => 'start_date',
+                        'field_name' => 'datum_kezdes',
                         'label' => 'Kezdő dátum',
                         'required' => false,
                         'order' => 2
                     ],
                     [
-                        'field_name' => 'end_date',
+                        'field_name' => 'datum_befejezés',
                         'label' => 'Befejező dátum',
                         'required' => false,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'reason',
-                        'label' => 'Indoklás',
+                        'field_name' => 'hosszu_szoveg_indoklas',
+                        'label' => 'Indoklás/Részletek',
                         'required' => true,
                         'order' => 4
                     ],
                     [
-                        'field_name' => 'supporting_document',
+                        'field_name' => 'fajl_dokumentum',
                         'label' => 'Támogató dokumentum',
                         'required' => false,
                         'order' => 5
@@ -194,11 +144,106 @@ class CategoryFormSeeder extends Seeder
                 ]
             ],
             [
-                'name' => 'Lakás',
+                'name' => 'Munkabér Kérdés',
+                'description' => 'Fizetéssel kapcsolatos kérdések és problémák',
+                'fields' => [
+                    [
+                        'field_name' => 'lista_tipus',
+                        'label' => 'Probléma típusa',
+                        'required' => true,
+                        'order' => 1,
+                        'options' => [
+                            'missing_payment' => 'Elmaradt fizetés',
+                            'incorrect_amount' => 'Hibás összeg',
+                            'overtime_missing' => 'Túlóra hiányzik',
+                            'bonus_missing' => 'Prémium hiányzik',
+                            'deduction_question' => 'Levonás kérdés',
+                            'payslip_error' => 'Bérszámfejtés hiba',
+                            'other' => 'Egyéb bér kérdés'
+                        ]
+                    ],
+                    [
+                        'field_name' => 'szam_osszeg',
+                        'label' => 'Érintett összeg (EUR)',
+                        'required' => false,
+                        'order' => 2
+                    ],
+                    [
+                        'field_name' => 'datum_kezdes',
+                        'label' => 'Fizetési időszak',
+                        'required' => false,
+                        'order' => 3
+                    ],
+                    [
+                        'field_name' => 'hosszu_szoveg_leiras',
+                        'label' => 'Probléma részletes leírása',
+                        'required' => true,
+                        'order' => 4
+                    ],
+                    [
+                        'field_name' => 'fajl_dokumentum',
+                        'label' => 'Bérszámfejtés/Dokumentum',
+                        'required' => false,
+                        'order' => 5
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Utalás Kérdés',
+                'description' => 'Pénzátutalási kérések (bér, előleg, menetlevelek)',
+                'fields' => [
+                    [
+                        'field_name' => 'lista_tipus',
+                        'label' => 'Utalás típusa',
+                        'required' => true,
+                        'order' => 1,
+                        'options' => [
+                            'salary_transfer' => 'Bér átutalás',
+                            'advance_payment' => 'Előleg kifizetés',
+                            'travel_allowance' => 'Menetlevél/Utazási költség',
+                            'expense_reimbursement' => 'Költségtérítés',
+                            'bonus_payment' => 'Prémium kifizetés',
+                            'other_transfer' => 'Egyéb átutalás'
+                        ]
+                    ],
+                    [
+                        'field_name' => 'szam_osszeg',
+                        'label' => 'Összeg (EUR)',
+                        'required' => true,
+                        'order' => 2
+                    ],
+                    [
+                        'field_name' => 'rovid_szoveg_nev',
+                        'label' => 'Kedvezményezett neve',
+                        'required' => true,
+                        'order' => 3
+                    ],
+                    [
+                        'field_name' => 'rovid_szoveg_egyeb',
+                        'label' => 'Számlaszám/IBAN',
+                        'required' => true,
+                        'order' => 4
+                    ],
+                    [
+                        'field_name' => 'hosszu_szoveg_indoklas',
+                        'label' => 'Átutalás célja/Indoklás',
+                        'required' => true,
+                        'order' => 5
+                    ],
+                    [
+                        'field_name' => 'fajl_melleklet',
+                        'label' => 'Támogató dokumentumok',
+                        'required' => false,
+                        'order' => 6
+                    ]
+                ]
+            ],
+            [
+                'name' => 'Lakás/Szállás',
                 'description' => 'Szállás és lakhatási kérések',
                 'fields' => [
                     [
-                        'field_name' => 'accommodation_type',
+                        'field_name' => 'lista_tipus',
                         'label' => 'Szállás típusa',
                         'required' => true,
                         'order' => 1,
@@ -211,238 +256,129 @@ class CategoryFormSeeder extends Seeder
                         ]
                     ],
                     [
-                        'field_name' => 'move_in_date',
+                        'field_name' => 'datum_kezdes',
                         'label' => 'Beköltözés dátuma',
                         'required' => true,
                         'order' => 2
                     ],
                     [
-                        'field_name' => 'move_out_date',
-                        'label' => 'Kiköltözés dátuma',
+                        'field_name' => 'datum_befejezés',
+                        'label' => 'Kiköltözés dátuma (ha ismert)',
                         'required' => false,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'room_type',
-                        'label' => 'Szoba típus',
-                        'required' => false,
-                        'order' => 4,
-                        'options' => [
-                            'single' => 'Egyágyas',
-                            'double' => 'Kétágyas',
-                            'shared' => 'Megosztott',
-                            'studio' => 'Stúdió',
-                            'apartment' => 'Teljes lakás'
-                        ]
-                    ],
-                    [
-                        'field_name' => 'special_requirements',
-                        'label' => 'Különleges igények',
-                        'required' => false,
-                        'order' => 5
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Munkabér',
-                'description' => 'Fizetéssel kapcsolatos kérdések és problémák',
-                'fields' => [
-                    [
-                        'field_name' => 'salary_issue_type',
-                        'label' => 'Probléma típusa',
-                        'required' => true,
-                        'order' => 1,
-                        'options' => [
-                            'missing_payment' => 'Elmaradt fizetés',
-                            'incorrect_amount' => 'Hibás összeg',
-                            'overtime_missing' => 'Túlóra hiányzik',
-                            'bonus_missing' => 'Prémium hiányzik',
-                            'deduction_question' => 'Levonás kérdés',
-                            'payslip_error' => 'Bérszámfejtés hiba'
-                        ]
-                    ],
-                    [
-                        'field_name' => 'pay_period',
-                        'label' => 'Fizetési időszak',
-                        'required' => true,
-                        'order' => 2,
-                        'options' => [
-                            'current_month' => 'Aktuális hónap',
-                            'previous_month' => 'Előző hónap',
-                            'specific_period' => 'Meghatározott időszak'
-                        ]
-                    ],
-                    [
-                        'field_name' => 'expected_amount',
-                        'label' => 'Várt összeg (EUR)',
-                        'required' => false,
-                        'order' => 3
-                    ],
-                    [
-                        'field_name' => 'actual_amount',
-                        'label' => 'Kapott összeg (EUR)',
+                        'field_name' => 'rovid_szoveg_hely',
+                        'label' => 'Preferált helyszín',
                         'required' => false,
                         'order' => 4
                     ],
                     [
-                        'field_name' => 'payslip_attachment',
-                        'label' => 'Bérszámfejtés melléklet',
+                        'field_name' => 'hosszu_szoveg_megjegyzes',
+                        'label' => 'Különleges igények/Megjegyzések',
                         'required' => false,
                         'order' => 5
                     ]
                 ]
             ],
             [
-                'name' => 'Utalás',
-                'description' => 'Pénzátutalási kérések és problémák',
-                'fields' => [
-                    [
-                        'field_name' => 'transfer_type',
-                        'label' => 'Utalás típusa',
-                        'required' => true,
-                        'order' => 1,
-                        'options' => [
-                            'salary_transfer' => 'Fizetés átutalás',
-                            'expense_reimbursement' => 'Költségtérítés',
-                            'advance_payment' => 'Előleg',
-                            'bonus_payment' => 'Prémium kifizetés',
-                            'other_transfer' => 'Egyéb átutalás'
-                        ]
-                    ],
-                    [
-                        'field_name' => 'transfer_amount',
-                        'label' => 'Összeg (EUR)',
-                        'required' => true,
-                        'order' => 2
-                    ],
-                    [
-                        'field_name' => 'recipient_name',
-                        'label' => 'Kedvezményezett neve',
-                        'required' => true,
-                        'order' => 3
-                    ],
-                    [
-                        'field_name' => 'recipient_account',
-                        'label' => 'Kedvezményezett számlaszáma',
-                        'required' => true,
-                        'order' => 4
-                    ],
-                    [
-                        'field_name' => 'transfer_purpose',
-                        'label' => 'Átutalás célja',
-                        'required' => true,
-                        'order' => 5
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Munkáltatói igazolás',
+                'name' => 'Munkáltatói Igazolás',
                 'description' => 'Munkáltatói igazolások kérése',
                 'fields' => [
                     [
-                        'field_name' => 'certificate_type',
+                        'field_name' => 'lista_tipus',
                         'label' => 'Igazolás típusa',
                         'required' => true,
                         'order' => 1,
                         'options' => [
-                            'employment_certificate' => 'Munkaviszony igazolás',
-                            'salary_certificate' => 'Jövedelemigazolás',
-                            'work_experience' => 'Munkatapasztalat igazolás',
-                            'character_reference' => 'Erkölcsi bizonyítvány',
-                            'custom_certificate' => 'Egyedi igazolás'
+                            'employment' => 'Munkaviszony igazolás',
+                            'salary' => 'Jövedelemigazolás',
+                            'experience' => 'Munkatapasztalat igazolás',
+                            'character' => 'Erkölcsi bizonyítvány',
+                            'custom' => 'Egyedi igazolás'
                         ]
                     ],
                     [
-                        'field_name' => 'certificate_purpose',
+                        'field_name' => 'hosszu_szoveg_indoklas',
                         'label' => 'Igazolás célja',
                         'required' => true,
                         'order' => 2
                     ],
                     [
-                        'field_name' => 'needed_by_date',
+                        'field_name' => 'datum_hataridő',
                         'label' => 'Szükséges dátum',
                         'required' => true,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'delivery_method',
-                        'label' => 'Kézbesítési mód',
-                        'required' => true,
-                        'order' => 4,
-                        'options' => [
-                            'email' => 'Email',
-                            'postal_mail' => 'Postai küldemény',
-                            'personal_pickup' => 'Személyes átvétel',
-                            'courier' => 'Futárszolgálat'
-                        ]
-                    ],
-                    [
-                        'field_name' => 'delivery_address',
-                        'label' => 'Kézbesítési cím',
+                        'field_name' => 'rovid_szoveg_email',
+                        'label' => 'Email cím (kézbesítéshez)',
                         'required' => false,
-                        'order' => 5
+                        'order' => 4
                     ]
                 ]
             ],
             [
-                'name' => 'Repjegy',
-                'description' => 'Repülőjegy foglalási kérések',
+                'name' => 'Repjegy/Csomag',
+                'description' => 'Repülőjegy foglalás és csomag küldés',
                 'fields' => [
                     [
-                        'field_name' => 'flight_type',
-                        'label' => 'Repülés típusa',
+                        'field_name' => 'lista_tipus',
+                        'label' => 'Kérés típusa',
                         'required' => true,
                         'order' => 1,
                         'options' => [
-                            'one_way' => 'Egyirányú',
-                            'round_trip' => 'Oda-vissza',
-                            'multi_city' => 'Több város'
+                            'flight_booking' => 'Repülőjegy foglalás',
+                            'package_send' => 'Csomag küldés',
+                            'package_receive' => 'Csomag fogadás',
+                            'flight_change' => 'Jegy módosítás',
+                            'flight_cancel' => 'Jegy lemondás'
                         ]
                     ],
                     [
-                        'field_name' => 'departure_city',
-                        'label' => 'Indulási város',
+                        'field_name' => 'rovid_szoveg_hely',
+                        'label' => 'Indulási hely/Feladó',
                         'required' => true,
                         'order' => 2
                     ],
                     [
-                        'field_name' => 'destination_city',
-                        'label' => 'Célállomás',
+                        'field_name' => 'rovid_szoveg_cim',
+                        'label' => 'Célállomás/Címzett',
                         'required' => true,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'departure_date',
-                        'label' => 'Indulás dátuma',
+                        'field_name' => 'datum_kezdes',
+                        'label' => 'Indulás/Küldés dátuma',
                         'required' => true,
                         'order' => 4
                     ],
                     [
-                        'field_name' => 'return_date',
-                        'label' => 'Visszaút dátuma',
+                        'field_name' => 'datum_befejezés',
+                        'label' => 'Visszaút dátuma (ha szükséges)',
                         'required' => false,
                         'order' => 5
                     ],
                     [
-                        'field_name' => 'passenger_count',
-                        'label' => 'Utasok száma',
+                        'field_name' => 'szam_mennyiseg',
+                        'label' => 'Utasok száma/Csomagok száma',
                         'required' => true,
                         'order' => 6
                     ],
                     [
-                        'field_name' => 'travel_purpose',
-                        'label' => 'Utazás célja',
+                        'field_name' => 'hosszu_szoveg_megjegyzes',
+                        'label' => 'Részletek/Megjegyzések',
                         'required' => true,
                         'order' => 7
                     ]
                 ]
             ],
             [
-                'name' => 'Bérelt autó',
-                'description' => 'Autóbérlési kérések',
+                'name' => 'Bérelt Autó',
+                'description' => 'Autóbérlési kérések és problémák',
                 'fields' => [
                     [
-                        'field_name' => 'rental_type',
+                        'field_name' => 'lista_tipus',
                         'label' => 'Bérlés típusa',
                         'required' => true,
                         'order' => 1,
@@ -450,11 +386,13 @@ class CategoryFormSeeder extends Seeder
                             'business_trip' => 'Üzleti út',
                             'airport_transfer' => 'Repülőtéri transzfer',
                             'local_transport' => 'Helyi közlekedés',
-                            'long_term' => 'Hosszú távú bérlés'
+                            'long_term' => 'Hosszú távú bérlés',
+                            'emergency' => 'Sürgősségi autó',
+                            'problem_report' => 'Probléma bejelentés'
                         ]
                     ],
                     [
-                        'field_name' => 'car_category',
+                        'field_name' => 'lista_kategoria',
                         'label' => 'Autó kategória',
                         'required' => true,
                         'order' => 2,
@@ -464,97 +402,47 @@ class CategoryFormSeeder extends Seeder
                             'intermediate' => 'Középkategória',
                             'full_size' => 'Nagy méretű',
                             'luxury' => 'Luxus',
-                            'van' => 'Kisbusz'
+                            'van' => 'Kisbusz/Van'
                         ]
                     ],
                     [
-                        'field_name' => 'pickup_date',
+                        'field_name' => 'datum_kezdes',
                         'label' => 'Átvétel dátuma',
                         'required' => true,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'return_date_car',
+                        'field_name' => 'datum_befejezés',
                         'label' => 'Visszaadás dátuma',
                         'required' => true,
                         'order' => 4
                     ],
                     [
-                        'field_name' => 'pickup_location',
+                        'field_name' => 'rovid_szoveg_hely',
                         'label' => 'Átvételi helyszín',
                         'required' => true,
                         'order' => 5
                     ],
                     [
-                        'field_name' => 'return_location',
+                        'field_name' => 'rovid_szoveg_cim',
                         'label' => 'Visszaadási helyszín',
-                        'required' => true,
+                        'required' => false,
                         'order' => 6
                     ],
                     [
-                        'field_name' => 'rental_purpose',
-                        'label' => 'Bérlés célja',
+                        'field_name' => 'hosszu_szoveg_megjegyzes',
+                        'label' => 'Bérlés célja/Különleges igények',
                         'required' => true,
                         'order' => 7
                     ]
                 ]
             ],
             [
-                'name' => 'Technikai probléma',
-                'description' => 'Technikai problémák és hibabejelentések',
-                'fields' => [
-                    [
-                        'field_name' => 'tech_problem_type',
-                        'label' => 'Probléma típusa',
-                        'required' => true,
-                        'order' => 1,
-                        'options' => [
-                            'system_error' => 'Rendszerhiba',
-                            'login_issue' => 'Bejelentkezési probléma',
-                            'performance_issue' => 'Teljesítmény probléma',
-                            'data_loss' => 'Adatvesztés',
-                            'connectivity_issue' => 'Kapcsolódási probléma',
-                            'software_bug' => 'Szoftver hiba'
-                        ]
-                    ],
-                    [
-                        'field_name' => 'affected_system',
-                        'label' => 'Érintett rendszer',
-                        'required' => true,
-                        'order' => 2
-                    ],
-                    [
-                        'field_name' => 'problem_description',
-                        'label' => 'Probléma leírása',
-                        'required' => true,
-                        'order' => 3
-                    ],
-                    [
-                        'field_name' => 'error_screenshot',
-                        'label' => 'Hiba képernyőkép',
-                        'required' => false,
-                        'order' => 4
-                    ],
-                    [
-                        'field_name' => 'tech_urgency',
-                        'label' => 'Sürgősség',
-                        'required' => true,
-                        'order' => 5,
-                        'options' => [
-                            'low' => 'Alacsony',
-                            'medium' => 'Közepes',
-                            'high' => 'Magas',
-                            'critical' => 'Kritikus'
-                        ]
-                    ]
-                ]
-            ],
-            [
-                'name' => 'Általános kérés',
+                'name' => 'Általános Kérés',
                 'description' => 'Egyéb általános kérések és javaslatok',
                 'fields' => [
                     [
-                        'field_name' => 'request_category',
+                        'field_name' => 'lista_kategoria',
                         'label' => 'Kérés kategória',
                         'required' => true,
                         'order' => 1,
@@ -568,19 +456,19 @@ class CategoryFormSeeder extends Seeder
                         ]
                     ],
                     [
-                        'field_name' => 'subject',
+                        'field_name' => 'rovid_szoveg_cim',
                         'label' => 'Tárgy',
                         'required' => true,
                         'order' => 2
                     ],
                     [
-                        'field_name' => 'message',
+                        'field_name' => 'hosszu_szoveg_uzenet',
                         'label' => 'Üzenet',
                         'required' => true,
                         'order' => 3
                     ],
                     [
-                        'field_name' => 'attachment',
+                        'field_name' => 'fajl_melleklet',
                         'label' => 'Melléklet',
                         'required' => false,
                         'order' => 4

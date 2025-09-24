@@ -51,4 +51,5 @@ return array (
   'melohely_kotelezo' => 'workplace_id',
   0 => 'name',
   1 => 'name',
+  'bank_name' => 'bank_account',
 );

@@ -64,7 +64,7 @@
                                                 <span x-show="field.is_required" class="text-red-500">*</span>
                                             </label>
                                             <input :type="field.type" :id="`field_${field.id}`" :name="`form_data[${field.id}]`" 
-                                                   :required="field.is_required"
+                                                   :required="field.is_required ? 'required' : null"
                                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200">
                                         </div>
                                     </template>
@@ -77,7 +77,7 @@
                                                 <span x-show="field.is_required" class="text-red-500">*</span>
                                             </label>
                                             <textarea :id="`field_${field.id}`" :name="`form_data[${field.id}]`" rows="4"
-                                                      :required="field.is_required"
+                                                      :required="field.is_required ? 'required' : null"
                                                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200"></textarea>
                                         </div>
                                     </template>
@@ -90,11 +90,11 @@
                                                 <span x-show="field.is_required" class="text-red-500">*</span>
                                             </label>
                                             <select :id="`field_${field.id}`" :name="`form_data[${field.id}]`" 
-                                                    :required="field.is_required"
+                                                    :required="field.is_required ? 'required' : null"
                                                     class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200">
                                                 <option value="">{{ __('-- Válasszon --') }}</option>
-                                                <template x-for="option in field.field_options" :key="option">
-                                                    <option :value="option" x-text="option"></option>
+                                                <template x-for="(label, value) in field.field_options" :key="value">
+                                                    <option :value="value" x-text="label"></option>
                                                 </template>
                                             </select>
                                         </div>
@@ -108,7 +108,7 @@
                                                 <span x-show="field.is_required" class="text-red-500">*</span>
                                             </label>
                                             <input type="date" :id="`field_${field.id}`" :name="`form_data[${field.id}]`" 
-                                                   :required="field.is_required"
+                                                   :required="field.is_required ? 'required' : null"
                                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200">
                                         </div>
                                     </template>
@@ -121,23 +121,24 @@
                                                 <span x-show="field.is_required" class="text-red-500">*</span>
                                             </label>
                                             <input type="file" :id="`field_${field.id}`" :name="`form_data[${field.id}]`" 
-                                                   :required="field.is_required"
+                                                   :required="field.is_required ? 'required' : null"
                                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200">
                                         </div>
                                     </template>
 
                                     <!-- Checkbox -->
-                                    <div x-show="field.type === 'checkbox'">
-                                        <label class="flex items-center">
-                                            <input type="checkbox" :id="`field_${field.id}`" :name="`form_data[${field.id}]`" value="1"
-                                                   :required="field.is_required"
-                                                   class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400">
-                                            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                                                <span x-text="field.label"></span>
-                                                <span x-show="field.is_required" class="text-red-500">*</span>
-                                            </span>
-                                        </label>
-                                    </div>
+                                    <template x-if="field.type === 'checkbox'">
+                                        <div>
+                                            <label class="flex items-center">
+                                                <input type="checkbox" :id="`field_${field.id}`" :name="`form_data[${field.id}]`" value="1"
+                                                       class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400">
+                                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                                                    <span x-text="field.label"></span>
+                                                    <span x-show="field.is_required" class="text-red-500">*</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </template>
 
                                     <!-- Number/Currency Input -->
                                     <template x-if="field.type === 'number' || field.type === 'currency'">
@@ -147,7 +148,7 @@
                                                 <span x-show="field.is_required" class="text-red-500">*</span>
                                             </label>
                                             <input type="number" :id="`field_${field.id}`" :name="`form_data[${field.id}]`" 
-                                                   :required="field.is_required" step="0.01" min="0"
+                                                   :required="field.is_required ? 'required' : null" step="0.01" min="0"
                                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors duration-200">
                                         </div>
                                     </template>
@@ -194,6 +195,7 @@ function dynamicTicketForm() {
                 if (data.success) {
                     this.formFields = data.form_fields;
                     this.categoryName = data.category.name;
+                    console.log('Loaded form fields:', this.formFields);
                 } else {
                     console.error('Failed to load form fields');
                     this.formFields = [];

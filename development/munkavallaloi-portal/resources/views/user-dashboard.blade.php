@@ -108,7 +108,7 @@
                     <div class="flex-1">
                         <h4 class="font-medium text-gray-900 dark:text-white">{{ $ticket->title }}</h4>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {{ $ticket->category->name }} • {{ $ticket->created_at->diffForHumans() }}
+                            {{ $ticket->category?->name ?? 'Kategória nélkül' }} • {{ $ticket->created_at->diffForHumans() }}
                         </p>
                     </div>
                     <div class="flex items-center space-x-3">

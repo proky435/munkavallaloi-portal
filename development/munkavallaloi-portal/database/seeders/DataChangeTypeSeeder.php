@@ -57,7 +57,7 @@ class DataChangeTypeSeeder extends Seeder
                         'type' => 'date',
                         'label' => 'Kezdés dátuma',
                         'required' => true,
-                        'validation' => 'required|date|after:today'
+                        'validation' => 'required|date|after_or_equal:today'
                     ],
                     [
                         'name' => 'reason',

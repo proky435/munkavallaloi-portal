@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RoleController as AdminRoleController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\WorkplaceController as AdminWorkplaceController;
+use App\Http\Controllers\Admin\UserWorkplaceController;
 use App\Http\Controllers\DataChangeController;
 use App\Http\Controllers\Admin\PreRegisteredUserController;
 use App\Http\Controllers\Admin\DataChangeApprovalController;
@@ -99,6 +100,14 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('roles', AdminRoleController::class);
     Route::resource('users', AdminUserController::class);
     Route::resource('workplaces', AdminWorkplaceController::class);
+    
+    // User Workplace Management
+    Route::get('/user-workplaces', [UserWorkplaceController::class, 'index'])->name('user-workplaces.index');
+    Route::get('/users/{user}/workplaces', [UserWorkplaceController::class, 'show'])->name('user-workplaces.show');
+    Route::post('/users/{user}/workplaces', [UserWorkplaceController::class, 'store'])->name('user-workplaces.store');
+    Route::put('/users/{user}/workplaces/{userWorkplace}', [UserWorkplaceController::class, 'update'])->name('user-workplaces.update');
+    Route::delete('/users/{user}/workplaces/{userWorkplace}', [UserWorkplaceController::class, 'destroy'])->name('user-workplaces.destroy');
+    Route::post('/users/{user}/workplace-transition', [UserWorkplaceController::class, 'createTransition'])->name('user-workplaces.transition');
     
     // Data Change Requests Management
     Route::get('/data-change-requests', [DataChangeRequestController::class, 'index'])->name('data-change-requests.index');

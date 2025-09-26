@@ -16,11 +16,14 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('workplace_id')->constrained()->onDelete('cascade');
             $table->boolean('is_primary')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
             
-            $table->unique(['user_id', 'workplace_id']);
+            // Remove unique constraint to allow multiple assignments per user-workplace pair
+            // $table->unique(['user_id', 'workplace_id']);
         });
     }
 

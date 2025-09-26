@@ -231,4 +231,98 @@ public function hasRole(string $roleName): bool
         // Regular users cannot manage any categories in admin
         return collect();
     }
+
+    /**
+     * User workplace assignments relationship
+     */
+    public function userWorkplaces(): HasMany
+    {
+        return $this->hasMany(UserWorkplace::class);
+    }
+
+    /**
+     * Get all permanent workplace assignments
+     */
+    public function getPermanentWorkplaces()
+    {
+        return $this->userWorkplaces()
+                   ->permanent()
+                   ->with('workplace')
+                   ->get()
+                   ->pluck('workplace');
+    }
+
+    /**
+     * Get all current workplaces (permanent + temporary active)
+     */
+    public function getAllCurrentWorkplaces()
+    {
+        return $this->userWorkplaces()
+                   ->current()
+                   ->with('workplace')
+                   ->get()
+                   ->pluck('workplace');
+    }
+
+    /**
+     * Get future workplace assignments
+     */
+    public function getFutureWorkplaces()
+    {
+        return $this->userWorkplaces()
+                   ->with('workplace')
+                   ->future()
+                   ->get();
+    }
+
+    /**
+     * Get past workplace assignments
+     */
+    public function getPastWorkplaces()
+    {
+        return $this->userWorkplaces()
+                   ->with('workplace')
+                   ->past()
+                   ->get();
+    }
+
+    /**
+     * Get primary current workplace (for backward compatibility)
+     */
+    public function getCurrentWorkplace()
+    {
+        $current = $this->getCurrentWorkplaces()->first();
+        return $current ? $current->workplace : $this->workplace;
+    }
+
+    /**
+     * Get next workplace transition
+     */
+    public function getNextWorkplaceTransition()
+    {
+        return $this->userWorkplaces()
+                   ->with('workplace')
+                   ->future()
+                   ->orderBy('start_date')
+                   ->first();
+    }
+
+    /**
+     * Check if user has workplace transition scheduled
+     */
+    public function hasUpcomingTransition(): bool
+    {
+        return $this->getFutureWorkplaces()->isNotEmpty();
+    }
+
+    /**
+     * Get all workplace assignments for display
+     */
+    public function getAllWorkplaceAssignments()
+    {
+        return $this->userWorkplaces()
+                   ->with('workplace')
+                   ->orderBy('start_date')
+                   ->get();
+    }
 }

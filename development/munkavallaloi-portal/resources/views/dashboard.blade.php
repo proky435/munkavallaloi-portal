@@ -30,14 +30,53 @@
                 </div>
             </div>
             
-            <!-- Workplace Card -->
             <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50 p-6 hover:shadow-xl transition-all duration-300">
                 <div class="flex items-center justify-between">
-                    <div>
+                    <div class="flex-1">
                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">{{ __('Workplace') }}</h3>
-                        <p class="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mt-2">
-                            {{ auth()->user()->workplace ?? __('Not set') }}
-                        </p>
+                        @php
+                            $currentWorkplace = auth()->user()->getCurrentWorkplace();
+                            $allCurrentWorkplaces = auth()->user()->getAllCurrentWorkplaces();
+                            $permanentWorkplaces = auth()->user()->getPermanentWorkplaces();
+                            $nextTransition = auth()->user()->getNextWorkplaceTransition();
+                        @endphp
+                        
+                        <div class="mt-2">
+                            <p class="text-lg font-semibold text-emerald-600 dark:text-emerald-400">
+                                {{ $currentWorkplace ? $currentWorkplace->name : (auth()->user()->workplace ?? __('Not set')) }}
+                            </p>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ __('Current workplaces') }}:
+                                </p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 dark:text-gray-400">
+                                    @foreach($allCurrentWorkplaces as $workplace)
+                                        <li>{{ $workplace->name }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ __('Permanent workplaces') }}:
+                                </p>
+                                <ul class="list-disc list-inside text-sm text-gray-500 dark:text-gray-400">
+                                    @foreach($permanentWorkplaces as $workplace)
+                                        <li>{{ $workplace->name }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @if($nextTransition)
+                                <div class="mt-2 p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+                                    <p class="text-xs text-amber-700 dark:text-amber-300 font-medium">
+                                        🔄 {{ __('Upcoming transition') }}
+                                    </p>
+                                    <p class="text-sm text-amber-800 dark:text-amber-200">
+                                        {{ $nextTransition->workplace->name }} 
+                                        <span class="text-xs">{{ __('from') }} {{ $nextTransition->start_date->format('Y.m.d') }}</span>
+                                    </p>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <div class="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
                         <svg class="w-8 h-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -158,5 +158,340 @@
                 {{ $slot ?? '' }}
             </main>
         </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 hidden">
+            <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
+                <div class="mt-3">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white" id="helpTitle">Segítség</h3>
+                        <button onclick="closeHelp()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="text-sm text-gray-700 dark:text-gray-300" id="helpContent">
+                        <!-- Help content will be loaded here -->
+                    </div>
+                    <div class="flex justify-end mt-6">
+                        <button onclick="closeHelp()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200">
+                            Bezárás
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help System JavaScript -->
+        <script>
+        const helpContent = {
+            'tickets-management': {
+                title: 'Jegyek Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎫 Jegyek áttekintése</h4>
+                            <p>Itt láthatja az összes beérkezett bejelentést. A jegyek státusz szerint szűrhetők és kereshetők.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔍 Szűrési lehetőségek</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Kategória:</strong> Szűrés bejelentés típusa szerint</li>
+                                <li><strong>Státusz:</strong> Nyitott, folyamatban, lezárt jegyek</li>
+                                <li><strong>Keresés:</strong> Szöveg alapú keresés a jegyek között</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚡ Gyors műveletek</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Kattintson egy jegyre a részletek megtekintéséhez</li>
+                                <li>A státusz oszlopban láthatja az aktuális állapotot</li>
+                                <li>A dátum oszlop mutatja a beérkezés idejét</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'categories-management': {
+                title: 'Kategóriák Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📂 Kategóriák áttekintése</h4>
+                            <p>A kategóriák segítségével csoportosíthatja a különböző típusú bejelentéseket (IT, HR, Pénzügy, stb.).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">➕ Új kategória létrehozása</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Kattintson az "Új kategória" gombra</li>
+                                <li>Adja meg a kategória nevét és leírását</li>
+                                <li>Állítsa be a felelős email címet (opcionális)</li>
+                                <li>Mentse el a változtatásokat</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">✏️ Kategória szerkesztése</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Kattintson a "Szerkesztés" gombra a kategória mellett</li>
+                                <li>Módosítsa a szükséges adatokat</li>
+                                <li>A form mezők hozzáadásához használja a "Form kezelés" menüt</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'users-management': {
+                title: 'Felhasználók Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">👥 Felhasználók áttekintése</h4>
+                            <p>Itt kezelheti a rendszer összes felhasználóját, szerepköreit és jogosultságait.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔐 Szerepkörök</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Super Admin:</strong> Teljes rendszer hozzáférés</li>
+                                <li><strong>Admin:</strong> Kategória-specifikus adminisztráció</li>
+                                <li><strong>HR Admin:</strong> HR kategóriák kezelése</li>
+                                <li><strong>Finance Admin:</strong> Pénzügyi kategóriák kezelése</li>
+                                <li><strong>User:</strong> Alapvető felhasználói jogok</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚙️ Felhasználó szerkesztése</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Szerepkör módosítása</li>
+                                <li>Kategória hozzáférések beállítása</li>
+                                <li>Munkahely információk frissítése</li>
+                                <li>Admin jogosultságok kezelése</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'roles-management': {
+                title: 'Szerepkörök Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎭 Szerepkörök áttekintése</h4>
+                            <p>A szerepkörök határozzák meg, hogy a felhasználók milyen funkciókat érhetnek el a rendszerben.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔧 Jogosultságok</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>manage_all_tickets:</strong> Összes jegy kezelése</li>
+                                <li><strong>manage_categories:</strong> Kategóriák kezelése</li>
+                                <li><strong>manage_users:</strong> Felhasználók kezelése</li>
+                                <li><strong>manage_roles:</strong> Szerepkörök kezelése</li>
+                                <li><strong>view_admin_dashboard:</strong> Admin dashboard elérése</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚠️ Figyelem</h4>
+                            <p class="text-amber-600 dark:text-amber-400">A szerepkörök módosítása azonnal hatályba lép. Legyen óvatos a jogosultságok megváltoztatásakor!</p>
+                        </div>
+                    </div>
+                `
+            },
+            'workplaces-management': {
+                title: 'Munkahelyek Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🏢 Munkahelyek áttekintése</h4>
+                            <p>Itt kezelheti a különböző munkahelyeket és telephelyeket a rendszerben.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">➕ Új munkahely hozzáadása</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Adja meg a munkahely nevét</li>
+                                <li>Írja be a címet és elérhetőségeket</li>
+                                <li>Állítsa be a kapcsolattartó személyt</li>
+                                <li>Mentse el az adatokat</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">👥 Felhasználók hozzárendelése</h4>
+                            <p>A felhasználók szerkesztésekor kiválaszthatja, hogy melyik munkahelyen dolgoznak.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'preregistered-users': {
+                title: 'Előregisztrált Felhasználók - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📋 Előregisztráció áttekintése</h4>
+                            <p>Az előregisztrált felhasználók még nem aktiválták a fiókjukat, de már szerepelnek a rendszerben.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">➕ Új előregisztráció</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Adja meg a felhasználó alapadatait</li>
+                                <li>Állítsa be az adóazonosítót és születési dátumot</li>
+                                <li>Válassza ki a munkahelyet</li>
+                                <li>A felhasználó ezekkel az adatokkal tud majd bejelentkezni</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔐 Első bejelentkezés</h4>
+                            <p>Az előregisztrált felhasználók az adóazonosítójukkal és születési dátumukkal tudnak először bejelentkezni.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'data-change-requests': {
+                title: 'Adatváltozás Kérések - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📝 Adatváltozás kérések</h4>
+                            <p>A felhasználók itt kérhetik személyes adataik módosítását (név, cím, bankszámlaszám, stb.).</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">✅ Jóváhagyási folyamat</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Tekintse át a kért változtatásokat</li>
+                                <li>Ellenőrizze a csatolt dokumentumokat</li>
+                                <li>Hagyja jóvá vagy utasítsa el a kérést</li>
+                                <li>A jóváhagyott változtatások automatikusan érvénybe lépnek</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔒 Biztonság</h4>
+                            <p>Minden adatváltozás naplózásra kerül és visszakövethetően tárolódik a rendszerben.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'forms-management': {
+                title: 'Formák Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📋 Dinamikus formák</h4>
+                            <p>Itt kezelheti a kategóriákhoz tartozó form mezőket és azok beállításait.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔧 Mező típusok</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Rövid szöveg:</strong> Egyszerű szöveges bevitel (max 255 karakter)</li>
+                                <li><strong>Hosszú szöveg:</strong> Többsoros szöveges terület</li>
+                                <li><strong>Legördülő lista:</strong> Előre definiált opciók</li>
+                                <li><strong>Dátum:</strong> Dátum választó</li>
+                                <li><strong>Szám:</strong> Numerikus bevitel</li>
+                                <li><strong>Fájl:</strong> Dokumentum feltöltés</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚙️ Mező beállítások</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Kötelező mező jelölése</li>
+                                <li>Mező címke és leírás</li>
+                                <li>Sorrend meghatározása</li>
+                                <li>Validációs szabályok</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'field-mapping': {
+                title: 'Mező Hozzárendelés - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔗 Mező hozzárendelés</h4>
+                            <p>Itt rendelheti hozzá a form mezőket a felhasználói adatmodell mezőihez az automatikus adatfrissítéshez.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📊 Támogatott mezők</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>name:</strong> Teljes név</li>
+                                <li><strong>email:</strong> Email cím</li>
+                                <li><strong>phone:</strong> Telefonszám</li>
+                                <li><strong>address:</strong> Lakcím</li>
+                                <li><strong>bank_account:</strong> Bankszámlaszám</li>
+                                <li><strong>tax_number:</strong> Adóazonosító</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚡ Automatikus frissítés</h4>
+                            <p>A hozzárendelt mezők jóváhagyott adatváltozás kérések esetén automatikusan frissülnek a felhasználó profiljában.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'articles-management': {
+                title: 'Tudásbázis Kezelése - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📚 Tudásbázis áttekintése</h4>
+                            <p>Itt kezelheti a tudásbázis cikkeit, amelyek segítséget nyújtanak a felhasználóknak a gyakori kérdésekben.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">✍️ Cikk létrehozása</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Adjon meg egy beszédes címet</li>
+                                <li>Írja meg a cikk tartalmát Markdown formátumban</li>
+                                <li>Állítsa be a cikk státuszát (draft/published)</li>
+                                <li>Rendeljen hozzá kategóriákat a könnyebb kereséshez</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔍 Keresés és szűrés</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Keresés cím és tartalom alapján</li>
+                                <li>Szűrés státusz szerint</li>
+                                <li>Rendezés dátum vagy népszerűség szerint</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📈 Statisztikák</h4>
+                            <p>Követheti nyomon, hogy mely cikkek a legnépszerűbbek és melyek szorulnak frissítésre.</p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function showHelp(helpKey) {
+            const modal = document.getElementById('helpModal');
+            const title = document.getElementById('helpTitle');
+            const content = document.getElementById('helpContent');
+            
+            if (helpContent[helpKey]) {
+                title.textContent = helpContent[helpKey].title;
+                content.innerHTML = helpContent[helpKey].content;
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeHelp() {
+            const modal = document.getElementById('helpModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('helpModal');
+            if (event.target === modal) {
+                closeHelp();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeHelp();
+            }
+        });
+        </script>
     </body>
 </html>

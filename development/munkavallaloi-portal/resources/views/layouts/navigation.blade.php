@@ -84,6 +84,7 @@
                             <a href="{{ route('admin.users.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Felhasználók') }}</a>
                             <a href="{{ route('admin.roles.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Szerepkörök') }}</a>
                             <a href="{{ route('admin.workplaces.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Munkahelyek') }}</a>
+                            <a href="{{ route('admin.user-workplaces.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Munkahely Hozzárendelések') }}</a>
                             <a href="{{ route('admin.pre-registered-users.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">{{ __('Előregisztráltak') }}</a>
                         </div>
                     </div>

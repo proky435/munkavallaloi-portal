@@ -39,7 +39,6 @@ class DataChangeController extends Controller
     
     public function store(Request $request, DataChangeType $dataChangeType)
     {
-        
         try {
             // Build validation rules from form fields
             $rules = [];

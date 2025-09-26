@@ -20,17 +20,104 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                         </div>
-                        <div>
+                        <div class="flex-1">
                             <h3 class="font-semibold text-blue-800 dark:text-blue-300">{{ __('Munkahely') }}</h3>
-                            <p class="text-blue-600 dark:text-blue-400">
-                                @if(auth()->user()->workplaceModel)
-                                    {{ auth()->user()->workplaceModel->name }}
-                                @elseif(auth()->user()->workplace)
-                                    {{ auth()->user()->workplace }}
-                                @else
-                                    {{ __('Nincs beállítva') }}
+                            @php
+                                $currentWorkplace = auth()->user()->getCurrentWorkplace();
+                                $allCurrentWorkplaces = auth()->user()->getAllCurrentWorkplaces();
+                                $permanentWorkplaces = auth()->user()->getPermanentWorkplaces();
+                                $nextTransition = auth()->user()->getNextWorkplaceTransition();
+                                $allAssignments = auth()->user()->getAllWorkplaceAssignments();
+                            @endphp
+                            
+                            <div class="mt-1">
+                                <p class="text-blue-600 dark:text-blue-400 font-medium">
+                                    {{ $currentWorkplace ? $currentWorkplace->name : (auth()->user()->workplace ?? __('Nincs beállítva')) }}
+                                </p>
+                                
+                                @if($permanentWorkplaces->count() > 0)
+                                    <div class="mt-2 p-2 bg-purple-50 dark:bg-purple-900/20 rounded border border-purple-200 dark:border-purple-800">
+                                        <p class="text-xs text-purple-700 dark:text-purple-300 font-medium">
+                                            🏢 {{ __('Állandó munkahelyek') }}
+                                        </p>
+                                        <div class="flex flex-wrap gap-1 mt-1">
+                                            @foreach($permanentWorkplaces as $workplace)
+                                                <span class="inline-block px-2 py-1 text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 rounded">
+                                                    {{ $workplace->name }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 @endif
-                            </p>
+                                
+                                @if($allCurrentWorkplaces->count() > 1)
+                                    <div class="mt-2 p-2 bg-green-50 dark:bg-green-900/20 rounded border border-green-200 dark:border-green-800">
+                                        <p class="text-xs text-green-700 dark:text-green-300 font-medium">
+                                            📍 {{ __('Összes jelenlegi munkahely') }}
+                                        </p>
+                                        <div class="flex flex-wrap gap-1 mt-1">
+                                            @foreach($allCurrentWorkplaces as $workplace)
+                                                <span class="inline-block px-2 py-1 text-xs bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 rounded">
+                                                    {{ $workplace->name }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                                
+                                @if($nextTransition)
+                                    <div class="mt-2 p-2 bg-amber-50 dark:bg-amber-900/20 rounded border border-amber-200 dark:border-amber-800">
+                                        <p class="text-xs text-amber-700 dark:text-amber-300 font-medium">
+                                            🔄 {{ __('Közelgő váltás') }}
+                                        </p>
+                                        <p class="text-sm text-amber-800 dark:text-amber-200">
+                                            {{ $nextTransition->workplace->name }} 
+                                            <span class="text-xs">({{ $nextTransition->start_date->format('Y.m.d') }}-től)</span>
+                                        </p>
+                                    </div>
+                                @endif
+                                
+                                @if($allAssignments->count() > 1)
+                                    <button onclick="toggleWorkplaceHistory()" class="mt-2 text-xs text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                        {{ __('Munkahely történet megtekintése') }} ({{ $allAssignments->count() }} {{ __('bejegyzés') }})
+                                    </button>
+                                    
+                                    <div id="workplaceHistory" class="hidden mt-2 space-y-1">
+                                        @foreach($allAssignments as $assignment)
+                                            <div class="text-xs p-2 bg-gray-50 dark:bg-gray-800 rounded border">
+                                                <div class="flex justify-between items-center">
+                                                    <span class="font-medium">{{ $assignment->workplace->name }}</span>
+                                                    <span class="px-2 py-1 rounded text-xs
+                                                        @if($assignment->status === 'permanent') bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300
+                                                        @elseif($assignment->status === 'current') bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300
+                                                        @elseif($assignment->status === 'future') bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300
+                                                        @else bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300
+                                                        @endif">
+                                                        @if($assignment->status === 'permanent') {{ __('Állandó') }}
+                                                        @elseif($assignment->status === 'current') {{ __('Jelenlegi') }}
+                                                        @elseif($assignment->status === 'future') {{ __('Jövőbeli') }}
+                                                        @else {{ __('Korábbi') }}
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="text-gray-600 dark:text-gray-400 mt-1">
+                                                    @if($assignment->is_permanent)
+                                                        <span class="text-purple-600 dark:text-purple-400 font-medium">{{ __('Állandó hozzárendelés') }}</span>
+                                                    @else
+                                                        {{ $assignment->start_date->format('Y.m.d') }} - 
+                                                        {{ $assignment->end_date ? $assignment->end_date->format('Y.m.d') : __('folyamatban') }}
+                                                    @endif
+                                                </div>
+                                                @if($assignment->notes)
+                                                    <div class="text-gray-500 dark:text-gray-500 mt-1 italic">
+                                                        {{ $assignment->notes }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,4 +183,15 @@
         </div>
     </div>
 </div>
+
+<script>
+function toggleWorkplaceHistory() {
+    const historyDiv = document.getElementById('workplaceHistory');
+    if (historyDiv.classList.contains('hidden')) {
+        historyDiv.classList.remove('hidden');
+    } else {
+        historyDiv.classList.add('hidden');
+    }
+}
+</script>
 @endsection

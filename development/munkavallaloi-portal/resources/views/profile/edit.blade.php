@@ -32,7 +32,7 @@
                             
                             <div class="mt-1">
                                 <p class="text-blue-600 dark:text-blue-400 font-medium">
-                                    {{ $currentWorkplace ? $currentWorkplace->name : (auth()->user()->workplace ?? __('Nincs beállítva')) }}
+                                    {{ $currentWorkplace ? $currentWorkplace->name : __('Nincs beállítva') }}
                                 </p>
                                 
                                 @if($permanentWorkplaces->count() > 0)

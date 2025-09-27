@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munkavállalói Portál - Fejlesztői Dokumentáció</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        .feature-box {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .status-completed {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        .status-pending {
+            background: #fff3cd;
+            border-color: #ffeaa7;
+            color: #856404;
+        }
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .tech-item {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .url-box {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+        .nav-menu {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .nav-menu a {
+            color: #3498db;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        .nav-menu a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏢 Munkavállalói Portál - Teljes Dokumentáció</h1>
+        
+        <div class="nav-menu">
+            <strong>Gyors navigáció:</strong>
+            <a href="#overview">Áttekintés</a>
+            <a href="#features">Funkciók</a>
+            <a href="#tech">Technológiák</a>
+            <a href="#installation">Telepítés</a>
+            <a href="#usage">Használat</a>
+            <a href="#admin">Admin</a>
+            <a href="#api">API</a>
+        </div>
+
+        <section id="overview">
+            <h2>📋 Projekt Áttekintés</h2>
+            <div class="feature-box">
+                <p><strong>Projekt neve:</strong> Munkavállalói Portál (munkavallaloi-portal)</p>
+                <p><strong>Verzió:</strong> 2.0</p>
+                <p><strong>Fejlesztés dátuma:</strong> 2024-2025</p>
+                <p><strong>Elsődleges nyelv:</strong> Magyar (hu)</p>
+                <p><strong>Támogatott nyelvek:</strong> Magyar, Angol, Spanyol</p>
+            </div>
+
+            <h3>🎯 Projekt Célja</h3>
+            <p>Modern, mobilbarát webalkalmazás munkavállalók számára, amely lehetővé teszi:</p>
+            <ul>
+                <li>Bejelentések/jegyek kezelését különböző kategóriákban</li>
+                <li>Munkahely információk kezelését</li>
+                <li>Személyes adatok frissítését</li>
+                <li>Többszintű munkahely hozzárendeléseket</li>
+                <li>Szerepkör-alapú hozzáférés-vezérlést</li>
+            </ul>
+        </section>
+
+        <section id="features">
+            <h2>⚡ Főbb Funkciók</h2>
+
+            <h3>✅ Befejezett Funkciók</h3>
+            
+            <div class="feature-box status-completed">
+                <h4>🔐 Felhasználói Rendszer</h4>
+                <ul>
+                    <li>Laravel Breeze alapú hitelesítés</li>
+                    <li>Szerepkör-alapú jogosultságkezelés (RBAC)</li>
+                    <li>5 szerepkör: super_admin, admin, hr_admin, finance_admin, user</li>
+                    <li>Személyes profil kezelés kiterjesztett adatokkal</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>🏢 Munkahely Rendszer</h4>
+                <ul>
+                    <li>Többszörös munkahely hozzárendelés</li>
+                    <li>Időzített munkahely váltások</li>
+                    <li>Állandó és időszakos hozzárendelések</li>
+                    <li>3 munkahely: Brema, Boden, Tarragona</li>
+                    <li>Dashboard figyelmeztetések közelgő váltásokról</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>🎫 Jegy/Bejelentés Rendszer</h4>
+                <ul>
+                    <li>7 kategória: Lakás, Munkabér, Utalás, Munkáltatói igazolás, Repjegy, Bérelt autó, Adatváltozás</li>
+                    <li>Dinamikus űrlapok kategóriánként</li>
+                    <li>Fájl csatolás lehetősége</li>
+                    <li>Státusz követés (új, folyamatban, lezárva)</li>
+                    <li>Admin válaszok és beszélgetések</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>🌍 Többnyelvűség</h4>
+                <ul>
+                    <li>Teljes Laravel lokalizáció</li>
+                    <li>220+ fordítási kulcs</li>
+                    <li>Magyar (elsődleges), Angol, Spanyol</li>
+                    <li>Dinamikus nyelvváltás</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>🎨 Modern UI/UX</h4>
+                <ul>
+                    <li>Glassmorphism design</li>
+                    <li>Dark/Light mode támogatás</li>
+                    <li>Responsive design (mobil-first)</li>
+                    <li>Tailwind CSS framework</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tech">
+            <h2>🛠️ Technológiai Stack</h2>
+            
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h4>Backend</h4>
+                    <ul>
+                        <li>Laravel 10.x</li>
+                        <li>PHP 8.1+</li>
+                        <li>MySQL/MariaDB</li>
+                        <li>Laravel Breeze</li>
+                    </ul>
+                </div>
+                <div class="tech-item">
+                    <h4>Frontend</h4>
+                    <ul>
+                        <li>Blade Templates</li>
+                        <li>Tailwind CSS</li>
+                        <li>Alpine.js</li>
+                        <li>Vite</li>
+                    </ul>
+                </div>
+                <div class="tech-item">
+                    <h4>Adatbázis</h4>
+                    <ul>
+                        <li>MySQL 8.0+</li>
+                        <li>Laravel Migrations</li>
+                        <li>Eloquent ORM</li>
+                        <li>Database Seeding</li>
+                    </ul>
+                </div>
+                <div class="tech-item">
+                    <h4>Egyéb</h4>
+                    <ul>
+                        <li>Composer</li>
+                        <li>NPM/Node.js</li>
+                        <li>Git verziókezelés</li>
+                        <li>Laravel Artisan</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation">
+            <h2>🚀 Telepítési Útmutató</h2>
+            
+            <h3>Előfeltételek</h3>
+            <ul>
+                <li>PHP 8.1 vagy újabb</li>
+                <li>Composer</li>
+                <li>Node.js és NPM</li>
+                <li>MySQL/MariaDB</li>
+                <li>Webszerver (Apache/Nginx)</li>
+            </ul>
+
+            <h3>Telepítési Lépések</h3>
+            <div class="feature-box">
+                <ol>
+                    <li><strong>Repository klónozása:</strong><br>
+                        <code>git clone [repository-url]</code></li>
+                    
+                    <li><strong>Függőségek telepítése:</strong><br>
+                        <code>composer install</code><br>
+                        <code>npm install</code></li>
+                    
+                    <li><strong>Környezeti változók:</strong><br>
+                        <code>cp .env.example .env</code><br>
+                        <code>php artisan key:generate</code></li>
+                    
+                    <li><strong>Adatbázis konfiguráció (.env):</strong><br>
+                        <code>DB_CONNECTION=mysql<br>
+                        DB_HOST=127.0.0.1<br>
+                        DB_PORT=3306<br>
+                        DB_DATABASE=munkavallaloi_portal<br>
+                        DB_USERNAME=root<br>
+                        DB_PASSWORD=</code></li>
+                    
+                    <li><strong>Adatbázis migrációk:</strong><br>
+                        <code>php artisan migrate</code></li>
+                    
+                    <li><strong>Seeding (alapadatok):</strong><br>
+                        <code>php artisan db:seed</code></li>
+                    
+                    <li><strong>Asset build:</strong><br>
+                        <code>npm run build</code></li>
+                    
+                    <li><strong>Szerver indítása:</strong><br>
+                        <code>php artisan serve</code></li>
+                </ol>
+            </div>
+
+            <div class="url-box">
+                <strong>🌐 Alapértelmezett URL:</strong> http://localhost:8000
+            </div>
+        </section>
+
+        <section id="usage">
+            <h2>👥 Felhasználói Útmutató</h2>
+
+            <h3>🔑 Bejelentkezés</h3>
+            <div class="feature-box">
+                <p><strong>URL:</strong> <code>/login</code></p>
+                <p><strong>Első bejelentkezés:</strong> Előregisztrált felhasználók az adóazonosítójukat és születési dátumukat használhatják.</p>
+                <p><strong>Nyelvváltás:</strong> A bejelentkezési oldalon elérhető a nyelv selector.</p>
+            </div>
+
+            <h3>📊 Dashboard</h3>
+            <div class="feature-box">
+                <p><strong>URL:</strong> <code>/dashboard</code></p>
+                <p><strong>Funkciók:</strong></p>
+                <ul>
+                    <li>Jelenlegi munkahely megjelenítése</li>
+                    <li>Közelgő munkahely váltások figyelmeztetése</li>
+                    <li>Állandó munkahelyek listája</li>
+                    <li>Gyors műveletek (új bejelentés, jegyek, tudásbázis)</li>
+                    <li>Legutóbbi bejelentések</li>
+                </ul>
+            </div>
+
+            <h3>🎫 Bejelentések/Jegyek</h3>
+            <div class="feature-box">
+                <p><strong>Új bejelentés:</strong> <code>/tickets/create</code></p>
+                <p><strong>Saját jegyek:</strong> <code>/tickets</code></p>
+                
+                <h4>Kategóriák:</h4>
+                <div class="table-responsive">
+                    <table>
+                        <tr><th>Kategória</th><th>Leírás</th><th>Fájl csatolás</th></tr>
+                        <tr><td>Lakás</td><td>Szállással kapcsolatos kérdések</td><td>Nem</td></tr>
+                        <tr><td>Munkabér kérdés</td><td>Fizetéssel kapcsolatos ügyek</td><td>Nem</td></tr>
+                        <tr><td>Utalás kérdés</td><td>Pénzügyi utalások, előlegek</td><td>Nem</td></tr>
+                        <tr><td>Munkáltatói igazolás</td><td>Hivatalos igazolások</td><td>Igen</td></tr>
+                        <tr><td>Repjegy / csomag</td><td>Utazással kapcsolatos ügyek</td><td>Nem</td></tr>
+                        <tr><td>Bérelt autó</td><td>Járműbérlés</td><td>Nem</td></tr>
+                        <tr><td>Adatváltozás bejelentés</td><td>Személyes adatok módosítása</td><td>Igen</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <h3>👤 Profil Kezelés</h3>
+            <div class="feature-box">
+                <p><strong>URL:</strong> <code>/profile</code></p>
+                <p><strong>Szerkeszthető adatok:</strong></p>
+                <ul>
+                    <li>Alapadatok: név, email</li>
+                    <li>Személyes adatok: telefon, születési dátum, hely</li>
+                    <li>Cím: utca, város, irányítószám, ország</li>
+                    <li>Pénzügyi adatok: bankszámlaszám, adószám, TAJ szám</li>
+                    <li>Vészhelyzeti kapcsolat</li>
+                    <li>Munkahely történet megtekintése</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="admin">
+            <h2>⚙️ Admin Felület</h2>
+
+            <h3>🔐 Admin Hozzáférés</h3>
+            <div class="feature-box">
+                <p><strong>URL:</strong> <code>/admin</code></p>
+                <p><strong>Jogosultságok:</strong> admin, hr_admin, finance_admin, super_admin szerepkörök</p>
+            </div>
+
+            <h3>📋 Admin Funkciók</h3>
+            
+            <div class="feature-box">
+                <h4>👥 Felhasználó Kezelés</h4>
+                <p><strong>URL:</strong> <code>/admin/users</code></p>
+                <ul>
+                    <li>Felhasználók listázása és szűrése</li>
+                    <li>Szerepkör hozzárendelés</li>
+                    <li>Munkahely hozzárendelések kezelése</li>
+                    <li>Kategória hozzáférések beállítása</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>🏢 Munkahely Hozzárendelések</h4>
+                <p><strong>URL:</strong> <code>/admin/user-workplaces</code></p>
+                <ul>
+                    <li>Felhasználónkénti munkahely történet</li>
+                    <li>Gyors munkahely váltás eszköz</li>
+                    <li>Új hozzárendelések létrehozása</li>
+                    <li>Állandó és időszakos hozzárendelések</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>🎫 Jegy Kezelés</h4>
+                <p><strong>URL:</strong> <code>/admin/tickets</code></p>
+                <ul>
+                    <li>Beérkezett jegyek kezelése</li>
+                    <li>Státusz frissítések</li>
+                    <li>Válaszok írása</li>
+                    <li>Kategória-alapú szűrés (szerepkör szerint)</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>🏗️ Rendszer Kezelés</h4>
+                <ul>
+                    <li><strong>Szerepkörök:</strong> <code>/admin/roles</code></li>
+                    <li><strong>Kategóriák:</strong> <code>/admin/categories</code></li>
+                    <li><strong>Munkahelyek:</strong> <code>/admin/workplaces</code></li>
+                    <li><strong>Tudásbázis:</strong> <code>/admin/articles</code></li>
+                </ul>
+            </div>
+
+            <h3>🔒 Szerepkör Jogosultságok</h3>
+            <div class="table-responsive">
+                <table>
+                    <tr><th>Szerepkör</th><th>Jogosultságok</th><th>Kategória Korlátozás</th></tr>
+                    <tr><td>super_admin</td><td>Teljes rendszer hozzáférés</td><td>Nincs</td></tr>
+                    <tr><td>admin</td><td>Általános admin funkciók</td><td>Beállítható</td></tr>
+                    <tr><td>hr_admin</td><td>HR specifikus funkciók</td><td>Fizetés, Adatváltozás</td></tr>
+                    <tr><td>finance_admin</td><td>Pénzügyi funkciók</td><td>Fizetés, Utalás</td></tr>
+                    <tr><td>user</td><td>Alapvető felhasználói funkciók</td><td>Nincs</td></tr>
+                </table>
+            </div>
+        </section>
+
+        <section id="api">
+            <h2>🔌 API és Technikai Részletek</h2>
+
+            <h3>📁 Fájlstruktúra</h3>
+            <div class="feature-box">
+                <pre><code>munkavallaloi-portal/
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Admin/
+│   │   ├── Auth/
+│   │   └── User/
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Workplace.php
+│   │   ├── UserWorkplace.php
+│   │   ├── Ticket.php
+│   │   ├── Category.php
+│   │   └── Role.php
+│   └── Services/
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── resources/
+│   ├── views/
+│   │   ├── admin/
+│   │   ├── auth/
+│   │   └── user/
+│   └── lang/
+│       ├── hu/
+│       ├── en/
+│       └── es/
+└── routes/
+    ├── web.php
+    └── admin.php</code></pre>
+            </div>
+
+            <h3>🗄️ Adatbázis Táblák</h3>
+            <div class="table-responsive">
+                <table>
+                    <tr><th>Tábla</th><th>Leírás</th><th>Főbb mezők</th></tr>
+                    <tr><td>users</td><td>Felhasználók</td><td>name, email, role_id, personal data</td></tr>
+                    <tr><td>roles</td><td>Szerepkörök</td><td>name, display_name, permissions</td></tr>
+                    <tr><td>workplaces</td><td>Munkahelyek</td><td>name, code, address, active</td></tr>
+                    <tr><td>user_workplaces</td><td>Munkahely hozzárendelések</td><td>user_id, workplace_id, dates, status</td></tr>
+                    <tr><td>tickets</td><td>Bejelentések</td><td>title, content, status, category_id</td></tr>
+                    <tr><td>categories</td><td>Kategóriák</td><td>name, form_fields, responsible_email</td></tr>
+                    <tr><td>ticket_replies</td><td>Jegy válaszok</td><td>ticket_id, user_id, content</td></tr>
+                </table>
+            </div>
+
+            <h3>🔧 Artisan Parancsok</h3>
+            <div class="feature-box">
+                <ul>
+                    <li><code>php artisan migrate</code> - Adatbázis migrációk</li>
+                    <li><code>php artisan db:seed</code> - Alapadatok betöltése</li>
+                    <li><code>php artisan view:clear</code> - View cache törlése</li>
+                    <li><code>php artisan config:clear</code> - Config cache törlése</li>
+                    <li><code>php artisan route:clear</code> - Route cache törlése</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="warning">
+            <h3>⚠️ Fontos Megjegyzések</h3>
+            <ul>
+                <li>Az alkalmazás elsődleges nyelve magyar</li>
+                <li>Minden adat törlés előtt explicit engedély szükséges</li>
+                <li>A rendszer teljes mértékben GDPR kompatibilis</li>
+                <li>Regular backup ajánlott az adatbázisról</li>
+                <li>SSL tanúsítvány használata kötelező production környezetben</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
+            <p><strong>Munkavállalói Portál v2.0</strong> - Fejlesztve 2024-2025</p>
+            <p>Utolsó frissítés: 2025. szeptember 27.</p>
+        </footer>
+    </div>
+</body>
+</html>

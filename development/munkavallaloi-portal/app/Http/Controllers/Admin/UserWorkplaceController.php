@@ -14,7 +14,6 @@ class UserWorkplaceController extends Controller
     public function index()
     {
         $users = User::with(['userWorkplaces.workplace'])
-                    ->whereHas('userWorkplaces')
                     ->paginate(15);
                     
         return view('admin.user-workplaces.index', compact('users'));

@@ -36,7 +36,20 @@
                     <div>
                         <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">{{ __('Workplace') }}</h3>
                         <p class="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mt-2">
-                            {{ auth()->user()->workplace ?? __('Not set') }}
+                            @php
+                                $currentWorkplace = auth()->user()->getCurrentWorkplace();
+                                $allCurrentWorkplaces = auth()->user()->getAllCurrentWorkplaces();
+                            @endphp
+                            @if($currentWorkplace)
+                                {{ $currentWorkplace->name }}
+                                @if($allCurrentWorkplaces->count() > 1)
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                        (+{{ $allCurrentWorkplaces->count() - 1 }} {{ __('további') }})
+                                    </span>
+                                @endif
+                            @else
+                                {{ __('Not set') }}
+                            @endif
                         </p>
                     </div>
                     <div class="p-3 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
@@ -97,6 +110,68 @@
                 </a>
             </div>
         </div>
+
+        <!-- Workplace Transition Alerts -->
+        @php
+            $nextTransition = auth()->user()->getNextWorkplaceTransition();
+            $permanentWorkplaces = auth()->user()->getPermanentWorkplaces();
+        @endphp
+        
+        @if($nextTransition)
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-6 mb-8">
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                        🏢 {{ __('Közelgő munkahely váltás') }}
+                    </h3>
+                    <p class="text-blue-800 dark:text-blue-200 mb-3">
+                        {{ $nextTransition->start_date->format('Y. m. d.') }}-től új munkahelyen fog dolgozni: 
+                        <strong>{{ $nextTransition->workplace->name }}</strong>
+                    </p>
+                    <div class="text-sm text-blue-700 dark:text-blue-300">
+                        <span class="font-medium">{{ __('Átállás') }}:</span> 
+                        {{ $nextTransition->start_date->diffForHumans() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if($permanentWorkplaces->count() > 0)
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-2xl p-6 mb-8">
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-purple-900 dark:text-purple-100 mb-2">
+                        🏢 {{ __('Állandó munkahelyek') }}
+                    </h3>
+                    <p class="text-purple-800 dark:text-purple-200 mb-3">
+                        {{ __('Ön állandó hozzárendeléssel rendelkezik a következő munkahelyekhez') }}:
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach($permanentWorkplaces as $workplace)
+                            <span class="inline-block px-3 py-1 text-sm bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300 rounded-full">
+                                {{ $workplace->name }}
+                            </span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <!-- Recent Tickets -->
         @if($recentTickets->count() > 0)

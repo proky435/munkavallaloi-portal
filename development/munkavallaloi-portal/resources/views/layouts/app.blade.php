@@ -320,6 +320,45 @@
                     </div>
                 `
             },
+            'user-workplaces-management': {
+                title: 'Munkahely Hozzárendelések - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🏢 Munkahely hozzárendelések áttekintése</h4>
+                            <p>Itt kezelheti a felhasználók munkahely hozzárendeléseit, beleértve az állandó és időszakos hozzárendeléseket is.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚡ Hozzárendelés típusok</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Állandó hozzárendelés:</strong> Időkorlát nélküli munkahely hozzárendelés</li>
+                                <li><strong>Időszakos hozzárendelés:</strong> Meghatározott időtartamra szóló hozzárendelés</li>
+                                <li><strong>Elsődleges munkahely:</strong> A felhasználó fő munkahelye</li>
+                                <li><strong>Másodlagos munkahely:</strong> További munkahelyek</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">➕ Új hozzárendelés létrehozása</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li>Kattintson a "Manage" gombra a felhasználó mellett</li>
+                                <li>Válassza ki a munkahelyet</li>
+                                <li>Állítsa be a hozzárendelés típusát (állandó/időszakos)</li>
+                                <li>Időszakos hozzárendelésnél adja meg a dátumokat</li>
+                                <li>Jelölje meg, ha ez az elsődleges munkahely</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔍 Státusz jelentések</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs">Állandó</span> - Időkorlát nélküli hozzárendelés</li>
+                                <li><span class="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">Jelenlegi</span> - Aktív időszakos hozzárendelés</li>
+                                <li><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">Jövőbeli</span> - Még nem kezdődött el</li>
+                                <li><span class="px-2 py-1 bg-gray-100 text-gray-800 rounded text-xs">Korábbi</span> - Lejárt hozzárendelés</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
             'preregistered-users': {
                 title: 'Előregisztrált Felhasználók - Segítség',
                 content: `

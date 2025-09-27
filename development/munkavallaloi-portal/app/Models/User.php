@@ -291,8 +291,21 @@ public function hasRole(string $roleName): bool
      */
     public function getCurrentWorkplace()
     {
-        $current = $this->getCurrentWorkplaces()->first();
-        return $current ? $current->workplace : $this->workplace;
+        $current = $this->userWorkplaces()
+                       ->current()
+                       ->with('workplace')
+                       ->first();
+        
+        if ($current) {
+            return $current->workplace;
+        }
+        
+        // Fallback to old workplace relationship if exists
+        if ($this->workplace_id) {
+            return $this->belongsTo(Workplace::class, 'workplace_id')->first();
+        }
+        
+        return null;
     }
 
     /**

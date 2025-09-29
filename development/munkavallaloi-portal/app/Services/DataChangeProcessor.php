@@ -27,8 +27,14 @@ class DataChangeProcessor
         
         if (file_exists($configPath)) {
             $this->fieldMapping = require $configPath;
+            Log::info('Field mappings loaded from config file', [
+                'path' => $configPath, 
+                'count' => count($this->fieldMapping),
+                'has_relationship' => array_key_exists('relationship', $this->fieldMapping)
+            ]);
         } else {
             $this->fieldMapping = $this->getDefaultMappings();
+            Log::info('Field mappings loaded from default mappings');
         }
     }
     
@@ -64,42 +70,58 @@ class DataChangeProcessor
         
         // Contact Information
         'email' => 'email',
+        'new_email' => 'email',
         'uj_email' => 'email',
         'phone' => 'phone',
+        'new_phone' => 'phone',
         'telefon' => 'phone',
         'uj_telefon' => 'phone',
         
         // Personal Data
         'birth_date' => 'birth_date',
+        'new_birth_date' => 'birth_date',
         'szuletesi_datum' => 'birth_date',
         'birth_place' => 'birth_place',
+        'new_birth_place' => 'birth_place',
         'szuletesi_hely' => 'birth_place',
         
         // Address Information
-        'address_street' => 'address_street',
-        'utca' => 'address_street',
-        'cim_utca' => 'address_street',
-        'address_city' => 'address_city',
-        'varos' => 'address_city',
-        'cim_varos' => 'address_city',
-        'address_postal_code' => 'address_postal_code',
-        'iranyitoszam' => 'address_postal_code',
-        'address_country' => 'address_country',
-        'orszag' => 'address_country',
+        'street_address' => 'street_address',
+        'new_street_address' => 'street_address',
+        'utca' => 'street_address',
+        'cim_utca' => 'street_address',
+        'city' => 'city',
+        'new_city' => 'city',
+        'varos' => 'city',
+        'cim_varos' => 'city',
+        'postal_code' => 'postal_code',
+        'new_postal_code' => 'postal_code',
+        'iranyitoszam' => 'postal_code',
+        'country' => 'country',
+        'new_country' => 'country',
+        'orszag' => 'country',
         
         // Financial Information
-        'bank_account' => 'bank_account',
-        'bankszamla' => 'bank_account',
+        'bank_account' => 'bank_account_number',
+        'bankszamla' => 'bank_account_number',
+        'new_bank_account' => 'bank_account_number',
         'tax_number' => 'tax_number',
+        'new_tax_number' => 'tax_number',
         'adoszam' => 'tax_number',
         'social_security_number' => 'social_security_number',
+        'new_social_security_number' => 'social_security_number',
         'taj_szam' => 'social_security_number',
         
         // Emergency Contact
         'emergency_contact_name' => 'emergency_contact_name',
+        'new_emergency_contact_name' => 'emergency_contact_name',
         'sulyossegi_kapcsolat_nev' => 'emergency_contact_name',
         'emergency_contact_phone' => 'emergency_contact_phone',
+        'new_emergency_contact_phone' => 'emergency_contact_phone',
         'sulyossegi_kapcsolat_telefon' => 'emergency_contact_phone',
+        'relationship' => null, // Rokonsági fok - kihagyva
+        'rokonság' => null,
+        'kapcsolat' => null,
         
         // Workplace (special handling)
         'new_workplace_id' => 'workplace_id',
@@ -207,7 +229,7 @@ class DataChangeProcessor
     private function processField(User $user, string $formField, $newValue): array
     {
         // Check if we have a mapping for this field
-        if (!isset($this->fieldMapping[$formField])) {
+        if (!array_key_exists($formField, $this->fieldMapping)) {
             // Try to guess the field mapping based on common patterns
             $guessedMapping = $this->guessFieldMapping($formField);
             if ($guessedMapping !== false) {
@@ -245,6 +267,15 @@ class DataChangeProcessor
             
             // Validate the new value
             $validatedValue = $this->validateFieldValue($userAttribute, $newValue);
+            
+            // Debug: Check if the attribute exists in fillable
+            if (!in_array($userAttribute, $user->getFillable())) {
+                return [
+                    'success' => false,
+                    'field' => $formField,
+                    'error' => 'A mező nem található a User model fillable tömbben: ' . $userAttribute
+                ];
+            }
             
             // Apply the change
             $user->setAttribute($userAttribute, $validatedValue);
@@ -360,11 +391,12 @@ class DataChangeProcessor
             'phone' => 'Telefon',
             'birth_date' => 'Születési dátum',
             'birth_place' => 'Születési hely',
-            'address_street' => 'Utca, házszám',
-            'address_city' => 'Város',
-            'address_postal_code' => 'Irányítószám',
-            'address_country' => 'Ország',
-            'bank_account' => 'Bankszámlaszám',
+            'street_address' => 'Utca, házszám',
+            'city' => 'Város',
+            'postal_code' => 'Irányítószám',
+            'country' => 'Ország',
+            'bank_account_number' => 'Bankszámlaszám',
+            'bank_name' => 'Bank neve',
             'tax_number' => 'Adószám',
             'social_security_number' => 'TAJ szám',
             'emergency_contact_name' => 'Vészhelyzeti kapcsolattartó neve',
@@ -383,8 +415,8 @@ class DataChangeProcessor
     {
         return $user->only([
             'name', 'email', 'phone', 'birth_date', 'birth_place',
-            'address_street', 'address_city', 'address_postal_code', 'address_country',
-            'bank_account', 'tax_number', 'social_security_number',
+            'street_address', 'city', 'postal_code', 'country',
+            'bank_account_number', 'bank_name', 'tax_number', 'social_security_number',
             'emergency_contact_name', 'emergency_contact_phone', 'workplace_id'
         ]);
     }
@@ -447,10 +479,16 @@ class DataChangeProcessor
         
         // Address fields
         if (str_contains($field, 'address') || str_contains($field, 'cim') || str_contains($field, 'utca')) {
-            return 'address_street';
+            return 'street_address';
         }
         if (str_contains($field, 'city') || str_contains($field, 'varos')) {
-            return 'address_city';
+            return 'city';
+        }
+        if (str_contains($field, 'postal') || str_contains($field, 'iranyito')) {
+            return 'postal_code';
+        }
+        if (str_contains($field, 'country') || str_contains($field, 'orszag')) {
+            return 'country';
         }
         
         // Fields that should be ignored (reason, description, etc.)
@@ -471,5 +509,13 @@ class DataChangeProcessor
     public function getFieldMappings(): array
     {
         return $this->fieldMapping;
+    }
+    
+    /**
+     * Reload field mappings from config file
+     */
+    public function reloadFieldMappings(): void
+    {
+        $this->loadFieldMappings();
     }
 }

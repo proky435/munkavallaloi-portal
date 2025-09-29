@@ -233,6 +233,25 @@
                     </div>
 
                     <div>
+                        <label for="bank_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            {{ __('Bank neve') }}
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <input id="bank_name" name="bank_name" type="text" value="{{ old('bank_name', $user->bank_name) }}"
+                                   class="block w-full pl-10 pr-3 py-3 border border-gray-300/50 dark:border-gray-500/50 rounded-xl bg-white/80 dark:bg-gray-600/80 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 cursor-not-allowed backdrop-blur-sm"
+                                   placeholder="Pl.: OTP Bank" readonly>
+                        </div>
+                        <x-input-error class="mt-2" :messages="$errors->get('bank_name')" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
                         <label for="tax_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             {{ __('Adószám') }}
                         </label>

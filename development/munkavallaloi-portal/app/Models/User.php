@@ -37,6 +37,7 @@ class User extends Authenticatable
         'postal_code',
         'country',
         'bank_account_number',
+        'bank_name',
         'tax_number',
         'social_security_number',
         'emergency_contact_name',

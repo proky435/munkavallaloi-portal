@@ -164,7 +164,7 @@
             <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white dark:bg-gray-800">
                 <div class="mt-3">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-medium text-gray-900 dark:text-white" id="helpTitle">Segítség</h3>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white" id="helpTitle">{{ __('Segítség') }}</h3>
                         <button onclick="closeHelp()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -176,7 +176,7 @@
                     </div>
                     <div class="flex justify-end mt-6">
                         <button onclick="closeHelp()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200">
-                            Bezárás
+                            {{ __('Bezárás') }}
                         </button>
                     </div>
                 </div>
@@ -187,111 +187,111 @@
         <script>
         const helpContent = {
             'tickets-management': {
-                title: 'Jegyek Kezelése - Segítség',
+                title: '{{ __("Jegyek Kezelése - Segítség") }}',
                 content: `
                     <div class="space-y-4">
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎫 Jegyek áttekintése</h4>
-                            <p>Itt láthatja az összes beérkezett bejelentést. A jegyek státusz szerint szűrhetők és kereshetők.</p>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎫 {{ __("Jegyek áttekintése") }}</h4>
+                            <p>{{ __("Itt láthatja az összes beérkezett bejelentést. A jegyek státusz szerint szűrhetők és kereshetők.") }}</p>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔍 Szűrési lehetőségek</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔍 {{ __("Szűrési lehetőségek") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li><strong>Kategória:</strong> Szűrés bejelentés típusa szerint</li>
-                                <li><strong>Státusz:</strong> Nyitott, folyamatban, lezárt jegyek</li>
-                                <li><strong>Keresés:</strong> Szöveg alapú keresés a jegyek között</li>
+                                <li><strong>{{ __("Kategória:") }}</strong> {{ __("Szűrés bejelentés típusa szerint") }}</li>
+                                <li><strong>{{ __("Státusz:") }}</strong> {{ __("Nyitott, folyamatban, lezárt jegyek") }}</li>
+                                <li><strong>{{ __("Keresés:") }}</strong> {{ __("Szöveg alapú keresés a jegyek között") }}</li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚡ Gyors műveletek</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚡ {{ __("Gyors műveletek") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li>Kattintson egy jegyre a részletek megtekintéséhez</li>
-                                <li>A státusz oszlopban láthatja az aktuális állapotot</li>
-                                <li>A dátum oszlop mutatja a beérkezés idejét</li>
+                                <li>{{ __("Kattintson egy jegyre a részletek megtekintéséhez") }}</li>
+                                <li>{{ __("A státusz oszlopban láthatja az aktuális állapotot") }}</li>
+                                <li>{{ __("A dátum oszlop mutatja a beérkezés idejét") }}</li>
                             </ul>
                         </div>
                     </div>
                 `
             },
             'categories-management': {
-                title: 'Kategóriák Kezelése - Segítség',
+                title: '{{ __("Kategóriák Kezelése - Segítség") }}',
                 content: `
                     <div class="space-y-4">
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📂 Kategóriák áttekintése</h4>
-                            <p>A kategóriák segítségével csoportosíthatja a különböző típusú bejelentéseket (IT, HR, Pénzügy, stb.).</p>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📂 {{ __("Kategóriák áttekintése") }}</h4>
+                            <p>{{ __("A kategóriák segítségével csoportosíthatja a különböző típusú bejelentéseket (IT, HR, Pénzügy, stb.).") }}</p>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">➕ Új kategória létrehozása</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">➕ {{ __("Új kategória létrehozása") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li>Kattintson az "Új kategória" gombra</li>
-                                <li>Adja meg a kategória nevét és leírását</li>
-                                <li>Állítsa be a felelős email címet (opcionális)</li>
-                                <li>Mentse el a változtatásokat</li>
+                                <li>{{ __("Kattintson az \"Új kategória\" gombra") }}</li>
+                                <li>{{ __("Adja meg a kategória nevét és leírását") }}</li>
+                                <li>{{ __("Állítsa be a felelős email címet (opcionális)") }}</li>
+                                <li>{{ __("Mentse el a változtatásokat") }}</li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">✏️ Kategória szerkesztése</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">✏️ {{ __("Kategória szerkesztése") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li>Kattintson a "Szerkesztés" gombra a kategória mellett</li>
-                                <li>Módosítsa a szükséges adatokat</li>
-                                <li>A form mezők hozzáadásához használja a "Form kezelés" menüt</li>
+                                <li>{{ __("Kattintson a \"Szerkesztés\" gombra a kategória mellett") }}</li>
+                                <li>{{ __("Módosítsa a szükséges adatokat") }}</li>
+                                <li>{{ __("A form mezők hozzáadásához használja a \"Form kezelés\" menüt") }}</li>
                             </ul>
                         </div>
                     </div>
                 `
             },
             'users-management': {
-                title: 'Felhasználók Kezelése - Segítség',
+                title: '{{ __("Felhasználók Kezelése - Segítség") }}',
                 content: `
                     <div class="space-y-4">
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">👥 Felhasználók áttekintése</h4>
-                            <p>Itt kezelheti a rendszer összes felhasználóját, szerepköreit és jogosultságait.</p>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">👥 {{ __("Felhasználók áttekintése") }}</h4>
+                            <p>{{ __("Itt kezelheti a rendszer összes felhasználóját, szerepköreit és jogosultságait.") }}</p>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔐 Szerepkörök</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔐 {{ __("Szerepkörök") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li><strong>Super Admin:</strong> Teljes rendszer hozzáférés</li>
-                                <li><strong>Admin:</strong> Kategória-specifikus adminisztráció</li>
-                                <li><strong>HR Admin:</strong> HR kategóriák kezelése</li>
-                                <li><strong>Finance Admin:</strong> Pénzügyi kategóriák kezelése</li>
-                                <li><strong>User:</strong> Alapvető felhasználói jogok</li>
+                                <li><strong>{{ __("Super Admin:") }}</strong> {{ __("Teljes rendszer hozzáférés") }}</li>
+                                <li><strong>{{ __("Admin:") }}</strong> {{ __("Kategória-specifikus adminisztráció") }}</li>
+                                <li><strong>{{ __("HR Admin:") }}</strong> {{ __("HR kategóriák kezelése") }}</li>
+                                <li><strong>{{ __("Finance Admin:") }}</strong> {{ __("Pénzügyi kategóriák kezelése") }}</li>
+                                <li><strong>{{ __("User:") }}</strong> {{ __("Alapvető felhasználói jogok") }}</li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚙️ Felhasználó szerkesztése</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚙️ {{ __("Felhasználó szerkesztése") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li>Szerepkör módosítása</li>
-                                <li>Kategória hozzáférések beállítása</li>
-                                <li>Munkahely információk frissítése</li>
-                                <li>Admin jogosultságok kezelése</li>
+                                <li>{{ __("Szerepkör módosítása") }}</li>
+                                <li>{{ __("Kategória hozzáférések beállítása") }}</li>
+                                <li>{{ __("Munkahely információk frissítése") }}</li>
+                                <li>{{ __("Admin jogosultságok kezelése") }}</li>
                             </ul>
                         </div>
                     </div>
                 `
             },
             'roles-management': {
-                title: 'Szerepkörök Kezelése - Segítség',
+                title: '{{ __("Szerepkörök Kezelése - Segítség") }}',
                 content: `
                     <div class="space-y-4">
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎭 Szerepkörök áttekintése</h4>
-                            <p>A szerepkörök határozzák meg, hogy a felhasználók milyen funkciókat érhetnek el a rendszerben.</p>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎭 {{ __("Szerepkörök áttekintése") }}</h4>
+                            <p>{{ __("A szerepkörök határozzák meg, hogy a felhasználók milyen funkciókat érhetnek el a rendszerben.") }}</p>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔧 Jogosultságok</h4>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔧 {{ __("Jogosultságok") }}</h4>
                             <ul class="list-disc list-inside space-y-1 text-sm">
-                                <li><strong>manage_all_tickets:</strong> Összes jegy kezelése</li>
-                                <li><strong>manage_categories:</strong> Kategóriák kezelése</li>
-                                <li><strong>manage_users:</strong> Felhasználók kezelése</li>
-                                <li><strong>manage_roles:</strong> Szerepkörök kezelése</li>
-                                <li><strong>view_admin_dashboard:</strong> Admin dashboard elérése</li>
+                                <li><strong>manage_all_tickets:</strong> {{ __("Összes jegy kezelése") }}</li>
+                                <li><strong>manage_categories:</strong> {{ __("Kategóriák kezelése") }}</li>
+                                <li><strong>manage_users:</strong> {{ __("Felhasználók kezelése") }}</li>
+                                <li><strong>manage_roles:</strong> {{ __("Szerepkörök kezelése") }}</li>
+                                <li><strong>view_admin_dashboard:</strong> {{ __("Admin dashboard elérése") }}</li>
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚠️ Figyelem</h4>
-                            <p class="text-amber-600 dark:text-amber-400">A szerepkörök módosítása azonnal hatályba lép. Legyen óvatos a jogosultságok megváltoztatásakor!</p>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚠️ {{ __("Figyelem") }}</h4>
+                            <p class="text-amber-600 dark:text-amber-400">{{ __("A szerepkörök módosítása azonnal hatályba lép. Legyen óvatos a jogosultságok megváltoztatásakor!") }}</p>
                         </div>
                     </div>
                 `
@@ -492,6 +492,73 @@
                         <div>
                             <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📈 Statisztikák</h4>
                             <p>Követheti nyomon, hogy mely cikkek a legnépszerűbbek és melyek szorulnak frissítésre.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'admin-dashboard': {
+                title: 'Admin Dashboard - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🎯 Főbb funkciók</h4>
+                            <ul class="list-disc list-inside space-y-1 text-sm">
+                                <li><strong>Jegyek:</strong> Bejelentések megtekintése és kezelése</li>
+                                <li><strong>Kategóriák:</strong> Jegy kategóriák szerkesztése</li>
+                                <li><strong>Tudásbázis:</strong> Cikkek és PDF-ek kezelése</li>
+                                <li><strong>Adatváltozás:</strong> Felhasználói kérések jóváhagyása</li>
+                                <li><strong>Felhasználók:</strong> Szerepkörök és jogosultságok</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📊 Statisztikák</h4>
+                            <p>A dashboard kártyákon láthatja a rendszer aktuális állapotát és a sürgős teendőket.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">💡 Tipp</h4>
+                            <p>A válaszoknál csatolhat dokumentumokat is!</p>
+                        </div>
+                    </div>
+                `
+            },
+            'ticket-creation': {
+                title: 'Bejelentés Létrehozása - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">📝 Hogyan működik</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-sm">
+                                <li><strong>Kategória:</strong> Válassza ki a megfelelő kategóriát (IT, HR, Admin, stb.)</li>
+                                <li><strong>Tárgy:</strong> Rövid, beszédes címet adjon meg</li>
+                                <li><strong>Leírás:</strong> Részletesen írja le a problémát vagy kérést</li>
+                                <li><strong>Prioritás:</strong> Válassza ki a sürgősségi szintet</li>
+                                <li><strong>Fájlok:</strong> Csatoljon képernyőképeket vagy dokumentumokat</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">💡 Tipp</h4>
+                            <p>Minél részletesebb a leírás, annál gyorsabb a megoldás!</p>
+                        </div>
+                    </div>
+                `
+            },
+            'data-change': {
+                title: 'Adatváltozás Bejelentés - Segítség',
+                content: `
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">🔄 Hogyan működik</h4>
+                            <ol class="list-decimal list-inside space-y-1 text-sm">
+                                <li><strong>Típus választás:</strong> Kattintson a módosítani kívánt adat típusára</li>
+                                <li><strong>Űrlap kitöltése:</strong> Adja meg az új adatokat</li>
+                                <li><strong>Dokumentumok:</strong> Csatolja a szükséges igazoló dokumentumokat</li>
+                                <li><strong>Jóváhagyás:</strong> A HR részleg ellenőrzi és jóváhagyja</li>
+                                <li><strong>Értesítés:</strong> Email értesítést kap a döntésről</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2">⚠️ Fontos</h4>
+                            <p>A változások csak jóváhagyás után lépnek életbe!</p>
                         </div>
                     </div>
                 `

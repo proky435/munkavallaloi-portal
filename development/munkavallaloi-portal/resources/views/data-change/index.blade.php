@@ -5,17 +5,16 @@
     <div class="max-w-4xl mx-auto">
         <!-- Header -->
         <div class="mb-8">
-            <div class="flex items-center space-x-3">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Adatváltozás bejelentés') }}</h1>
-                <x-help-tooltip 
-                    title="Adatváltozás Bejelentés"
-                    content="<strong>Hogyan működik:</strong><br>
-                    1. <strong>Típus választás:</strong> Kattintson a módosítani kívánt adat típusára<br>
-                    2. <strong>Űrlap kitöltése:</strong> Adja meg az új adatokat<br>
-                    3. <strong>Dokumentumok:</strong> Csatolja a szükséges igazoló dokumentumokat<br>
-                    4. <strong>Jóváhagyás:</strong> A HR részleg ellenőrzi és jóváhagyja<br>
-                    5. <strong>Értesítés:</strong> Email értesítést kap a döntésről<br><br>
-                    <strong>Fontos:</strong> A változások csak jóváhagyás után lépnek életbe!" />
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('Adatváltozás bejelentés') }}</h1>
+                </div>
+                <button onclick="showHelp('data-change')" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    {{ __('Segítség') }}
+                </button>
             </div>
             <p class="mt-2 text-gray-600 dark:text-gray-400">
                 {{ __('Válassza ki, milyen adatokat szeretne módosítani.') }}

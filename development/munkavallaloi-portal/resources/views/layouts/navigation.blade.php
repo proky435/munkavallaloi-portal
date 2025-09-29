@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Irányítópult') }}
                     </x-nav-link>
                 </div>
 
@@ -39,7 +39,7 @@
                     auth()->user()->hasPermission('view_assigned_tickets'))
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin-dashboard')">
-                        {{ __('Admin') }}
+                        {{ __('Admin Irányítópult') }}
                     </x-nav-link>
                     
                     <!-- Ticket Management Dropdown -->
@@ -195,7 +195,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Irányítópult') }}
             </x-responsive-nav-link>
             
             <!-- User Links -->
@@ -219,13 +219,55 @@
                     {{ __('Admin') }}
                 </div>
                 <x-responsive-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin-dashboard')">
-                    {{ __('Admin Felület') }}
+                    {{ __('Admin Irányítópult') }}
                 </x-responsive-nav-link>
+                
+                <!-- Jegyek & Tudás -->
+                <div class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {{ __('Jegyek & Tudás') }}
+                </div>
+                <x-responsive-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
+                    {{ __('Jegyek Kezelése') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.articles.index')" :active="request()->routeIs('admin.articles.*')">
+                    {{ __('Tudásbázis') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                    {{ __('Kategóriák') }}
+                </x-responsive-nav-link>
+                
+                <!-- Adatváltozás -->
+                <div class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {{ __('Adatváltozás') }}
+                </div>
                 <x-responsive-nav-link :href="route('admin.data-change-requests.index')" :active="request()->routeIs('admin.data-change-requests.*')">
-                    {{ __('Adatváltozás Kérések') }}
+                    {{ __('Kérések Kezelése') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.data-change-types.index')" :active="request()->routeIs('admin.data-change-types.*')">
+                    {{ __('Formák Kezelése') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.field-mapping.index')" :active="request()->routeIs('admin.field-mapping.*')">
+                    {{ __('Field Mapping') }}
+                </x-responsive-nav-link>
+                
+                <!-- Felhasználók -->
+                <div class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    {{ __('Felhasználók') }}
+                </div>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                     {{ __('Felhasználók') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                    {{ __('Szerepkörök') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.workplaces.index')" :active="request()->routeIs('admin.workplaces.*')">
+                    {{ __('Munkahelyek') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.user-workplaces.index')" :active="request()->routeIs('admin.user-workplaces.*')">
+                    {{ __('Munkahely Hozzárendelések') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.pre-registered-users.index')" :active="request()->routeIs('admin.pre-registered-users.*')">
+                    {{ __('Előregisztráltak') }}
                 </x-responsive-nav-link>
             </div>
             @endif

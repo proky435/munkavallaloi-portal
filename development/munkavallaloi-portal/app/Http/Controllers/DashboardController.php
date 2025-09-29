@@ -18,15 +18,8 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         
-        // Check if user has admin permissions - if so, redirect to admin dashboard
-        $hasAdminAccess = $user->is_admin || 
-                         $user->hasPermission('access_admin_dashboard') ||
-                         $user->hasPermission('manage_all_tickets') ||
-                         $user->hasPermission('view_assigned_tickets');
-        
-        if ($hasAdminAccess) {
-            return redirect()->route('admin.dashboard');
-        }
+        // Always show user dashboard regardless of admin permissions
+        // Admin users can access admin dashboard via separate link
         
         // Get user's recent tickets
         $recentTickets = Ticket::where('user_id', $user->id)

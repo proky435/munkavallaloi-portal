@@ -200,11 +200,12 @@
                                             <option value="phone">{{ __('Telefon (phone)') }}</option>
                                             <option value="birth_date">{{ __('Születési dátum (birth_date)') }}</option>
                                             <option value="birth_place">{{ __('Születési hely (birth_place)') }}</option>
-                                            <option value="address_street">{{ __('Utca, házszám (address_street)') }}</option>
-                                            <option value="address_city">{{ __('Város (address_city)') }}</option>
-                                            <option value="address_postal_code">{{ __('Irányítószám (address_postal_code)') }}</option>
-                                            <option value="address_country">{{ __('Ország (address_country)') }}</option>
-                                            <option value="bank_account">{{ __('Bankszámlaszám (bank_account)') }}</option>
+                                            <option value="street_address">{{ __('Utca, házszám (street_address)') }}</option>
+                                            <option value="city">{{ __('Város (city)') }}</option>
+                                            <option value="postal_code">{{ __('Irányítószám (postal_code)') }}</option>
+                                            <option value="country">{{ __('Ország (country)') }}</option>
+                                            <option value="bank_account_number">{{ __('Bankszámlaszám (bank_account_number)') }}</option>
+                                            <option value="bank_name">{{ __('Bank neve (bank_name)') }}</option>
                                             <option value="tax_number">{{ __('Adószám (tax_number)') }}</option>
                                             <option value="social_security_number">{{ __('TAJ szám (social_security_number)') }}</option>
                                             <option value="emergency_contact_name">{{ __('Vészhelyzeti kapcsolattartó neve (emergency_contact_name)') }}</option>

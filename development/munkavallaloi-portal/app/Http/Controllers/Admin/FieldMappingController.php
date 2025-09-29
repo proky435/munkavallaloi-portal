@@ -12,6 +12,8 @@ class FieldMappingController extends Controller
 {
     public function index(DataChangeProcessor $processor): View
     {
+        // Reload mappings to ensure we have the latest version
+        $processor->reloadFieldMappings();
         // Get all unique form fields from existing requests with better structure
         $allFormFields = collect();
         
@@ -47,7 +49,7 @@ class FieldMappingController extends Controller
         // Identify unmapped fields with suggestions
         $unmappedFields = $allFormFields->filter(function($field) use ($currentMappings) {
             $fieldName = is_array($field) ? $field['name'] : $field;
-            return !isset($currentMappings[$fieldName]);
+            return !array_key_exists($fieldName, $currentMappings);
         })->map(function($field) {
             $fieldName = is_array($field) ? $field['name'] : $field;
             $sampleValue = is_array($field) ? $field['sample_value'] : '';
@@ -90,6 +92,7 @@ class FieldMappingController extends Controller
         
         // Load current mappings from the processor
         $processor = new DataChangeProcessor();
+        $processor->reloadFieldMappings();
         $currentMappings = $processor->getFieldMappings();
         
         // Update the mappings
@@ -227,6 +230,11 @@ class FieldMappingController extends Controller
             return null;
         }
         
+        // Relationship fields (emergency contact relationship)
+        if (str_contains($field, 'relationship') || str_contains($field, 'rokonság') || str_contains($field, 'kapcsolat')) {
+            return null;
+        }
+        
         return false; // Unknown field
     }
     
@@ -234,7 +242,18 @@ class FieldMappingController extends Controller
     {
         $configPath = config_path('field_mappings.php');
         
-        $content = "<?php\n\nreturn " . var_export($mappings, true) . ";\n";
+        // Filter out numeric keys and clean the array
+        $cleanMappings = [];
+        foreach ($mappings as $key => $value) {
+            if (!is_numeric($key) && !empty($key)) {
+                $cleanMappings[$key] = $value;
+            }
+        }
+        
+        // Sort by key for better readability
+        ksort($cleanMappings);
+        
+        $content = "<?php\n\nreturn " . var_export($cleanMappings, true) . ";\n";
         
         file_put_contents($configPath, $content);
         
@@ -242,5 +261,8 @@ class FieldMappingController extends Controller
         if (function_exists('opcache_reset')) {
             opcache_reset();
         }
+        
+        // Also clear Laravel's config cache
+        \Artisan::call('config:clear');
     }
 }

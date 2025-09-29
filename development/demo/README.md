@@ -20,7 +20,7 @@ Ez a mappa tartalmazza a Munkavállalói Portál teljes dokumentációját:
 
 ### Projekt Információk
 - **Név:** munkavallaloi-portal
-- **Verzió:** 2.0
+- **Verzió:** 2.5
 - **Elsődleges nyelv:** Magyar (hu)
 - **Framework:** Laravel 10.x + Tailwind CSS
 - **Támogatott nyelvek:** Magyar, Angol, Spanyol
@@ -29,9 +29,13 @@ Ez a mappa tartalmazza a Munkavállalói Portál teljes dokumentációját:
 - ✅ Szerepkör-alapú felhasználói rendszer
 - ✅ Többszörös munkahely hozzárendelések
 - ✅ Dinamikus jegy/bejelentés rendszer
-- ✅ Teljes többnyelvűség (220+ fordítás)
+- ✅ Teljes többnyelvűség (500+ fordítás)
 - ✅ Modern glassmorphism UI design
 - ✅ Responsive mobil támogatás
+- ✅ Adatváltozás kezelő rendszer
+- ✅ Tudásbázis rendszer
+- ✅ Audit trail és naplózás
+- ✅ Kontextuális segítség rendszer
 
 ### Gyors Telepítés
 ```bash
@@ -89,15 +93,21 @@ php artisan serve
 - [x] Szerepkör-alapú jogosultságkezelés
 - [x] Munkahely rendszer többszörös hozzárendelésekkel
 - [x] Jegy/bejelentés rendszer 7 kategóriával
-- [x] Többnyelvűség (hu, en, es)
+- [x] Többnyelvűség (hu, en, es) - 500+ fordítás
 - [x] Modern responsive UI/UX
 - [x] Admin felület teljes funkcionalitással
+- [x] Adatváltozás kezelő rendszer
+- [x] Tudásbázis rendszer
+- [x] Audit trail és naplózás
+- [x] Kontextuális segítség rendszer
+- [x] Előregisztrált felhasználók kezelése
+- [x] Mező hozzárendelések
 
 ### Jövőbeli Fejlesztések
-- [ ] Adatváltozás feldolgozó rendszer
 - [ ] Email értesítések automatizálása
-- [ ] Tudásbázis bővítése
+- [ ] Push értesítések
 - [ ] Mobil alkalmazás fejlesztése
+- [ ] Fejlett riportok és statisztikák
 
 ## 🌐 Nyelvek
 
@@ -119,6 +129,6 @@ A dokumentáció bármely részével kapcsolatos kérdés esetén:
 
 ---
 
-**Utolsó frissítés:** 2025. szeptember 27.  
-**Dokumentáció verzió:** 2.0  
+**Utolsó frissítés:** 2025. szeptember 29.  
+**Dokumentáció verzió:** 2.5  
 **Projekt státusz:** ✅ Teljes funkcionalitás

@@ -198,9 +198,55 @@
                 <h4>🌍 Többnyelvűség</h4>
                 <ul>
                     <li>Teljes Laravel lokalizáció</li>
-                    <li>220+ fordítási kulcs</li>
+                    <li>500+ fordítási kulcs</li>
                     <li>Magyar (elsődleges), Angol, Spanyol</li>
                     <li>Dinamikus nyelvváltás</li>
+                    <li>Segítség rendszer háromnyelvű</li>
+                    <li>Admin felület teljes lokalizáció</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>📊 Adatváltozás Kezelés</h4>
+                <ul>
+                    <li>Dinamikus adatváltozás kérések</li>
+                    <li>Jóváhagyási workflow</li>
+                    <li>Automatikus adatfrissítés</li>
+                    <li>Audit trail minden változáshoz</li>
+                    <li>Szerepkör-alapú jóváhagyás</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>📚 Tudásbázis Rendszer</h4>
+                <ul>
+                    <li>Cikkek kezelése kategóriánként</li>
+                    <li>Rich text editor</li>
+                    <li>Keresési funkció</li>
+                    <li>Publikálási státusz</li>
+                    <li>Felhasználói és admin nézet</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>🔍 Audit és Naplózás</h4>
+                <ul>
+                    <li>Teljes audit trail rendszer</li>
+                    <li>Felhasználói tevékenységek naplózása</li>
+                    <li>Adatváltozások követése</li>
+                    <li>Admin műveletek rögzítése</li>
+                    <li>Biztonsági események naplózása</li>
+                </ul>
+            </div>
+
+            <div class="feature-box status-completed">
+                <h4>💡 Segítség Rendszer</h4>
+                <ul>
+                    <li>Kontextuális segítség minden oldalon</li>
+                    <li>Interaktív segítség modal-ok</li>
+                    <li>Lépésről-lépésre útmutatók</li>
+                    <li>Háromnyelvű segítség tartalom</li>
+                    <li>Egységes sárga segítség gombok</li>
                 </ul>
             </div>
 
@@ -414,12 +460,46 @@
             </div>
 
             <div class="feature-box">
+                <h4>📊 Adatváltozás Kezelés</h4>
+                <p><strong>URL:</strong> <code>/admin/data-change-requests</code></p>
+                <ul>
+                    <li>Beérkezett adatváltozás kérések</li>
+                    <li>Jóváhagyás/elutasítás workflow</li>
+                    <li>Automatikus adatfrissítés jóváhagyás után</li>
+                    <li>Audit trail minden változáshoz</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>📚 Tudásbázis Kezelés</h4>
+                <p><strong>URL:</strong> <code>/admin/articles</code></p>
+                <ul>
+                    <li>Cikkek létrehozása és szerkesztése</li>
+                    <li>Rich text editor</li>
+                    <li>Kategóriák kezelése</li>
+                    <li>Publikálási státusz</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
+                <h4>🔍 Audit Naplók</h4>
+                <p><strong>URL:</strong> <code>/admin/audit-logs</code></p>
+                <ul>
+                    <li>Rendszer események megtekintése</li>
+                    <li>Felhasználói tevékenységek</li>
+                    <li>Adatváltozások nyomon követése</li>
+                    <li>Biztonsági események</li>
+                </ul>
+            </div>
+
+            <div class="feature-box">
                 <h4>🏗️ Rendszer Kezelés</h4>
                 <ul>
                     <li><strong>Szerepkörök:</strong> <code>/admin/roles</code></li>
                     <li><strong>Kategóriák:</strong> <code>/admin/categories</code></li>
                     <li><strong>Munkahelyek:</strong> <code>/admin/workplaces</code></li>
-                    <li><strong>Tudásbázis:</strong> <code>/admin/articles</code></li>
+                    <li><strong>Előregisztrált felhasználók:</strong> <code>/admin/pre-registered-users</code></li>
+                    <li><strong>Mező hozzárendelések:</strong> <code>/admin/field-mapping</code></li>
                 </ul>
             </div>
 
@@ -482,7 +562,9 @@
                     <tr><td>user_workplaces</td><td>Munkahely hozzárendelések</td><td>user_id, workplace_id, dates, status</td></tr>
                     <tr><td>tickets</td><td>Bejelentések</td><td>title, content, status, category_id</td></tr>
                     <tr><td>categories</td><td>Kategóriák</td><td>name, form_fields, responsible_email</td></tr>
-                    <tr><td>ticket_replies</td><td>Jegy válaszok</td><td>ticket_id, user_id, content</td></tr>
+                    <tr><td>audit_logs</td><td>Audit naplók</td><td>user_id, action, model, changes</td></tr>
+                    <tr><td>data_change_requests</td><td>Adatváltozás kérések</td><td>user_id, form_data, status, approved_by</td></tr>
+                    <tr><td>articles</td><td>Tudásbázis cikkek</td><td>title, content, category, published</td></tr>
                 </table>
             </div>
 
@@ -510,8 +592,8 @@
         </div>
 
         <footer style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
-            <p><strong>Munkavállalói Portál v2.0</strong> - Fejlesztve 2024-2025</p>
-            <p>Utolsó frissítés: 2025. szeptember 27.</p>
+            <p><strong>Munkavállalói Portál v2.5</strong> - Fejlesztve 2024-2025</p>
+            <p>Utolsó frissítés: 2025. szeptember 29.</p>
         </footer>
     </div>
 </body>

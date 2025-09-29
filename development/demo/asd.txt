@@ -36,3 +36,17 @@
 //repjegy / csomag csak a jegy kell, berbol levonas dokumentalja a db
 // ertesitesi beallitasok
 // bejelenteseknel a valasz resznel lehessen doksit csatolni
+
+
+
+
+
+
+
+
+
+
+main azomosito adoszam
+csv import bovites
+email kuka csvbol
+maximont oldalhoz integralas

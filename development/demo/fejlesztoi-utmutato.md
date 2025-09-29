@@ -3,7 +3,7 @@
 ## 📋 Projekt Összefoglaló
 
 **Projekt neve:** munkavallaloi-portal  
-**Verzió:** 2.0  
+**Verzió:** 2.5  
 **Elsődleges nyelv:** Magyar (hu)  
 **Framework:** Laravel 10.x  
 **UI Framework:** Tailwind CSS + Alpine.js  
@@ -29,8 +29,32 @@
 
 4. **Többnyelvűség**
    - Magyar, Angol, Spanyol
-   - 220+ fordítási kulcs
+   - 500+ fordítási kulcs
    - Laravel lokalizáció
+
+5. **Adatváltozás Kezelés**
+   - Dinamikus adatváltozás kérések
+   - Jóváhagyási workflow
+   - Automatikus adatfrissítés
+   - Audit trail
+
+6. **Tudásbázis Rendszer**
+   - Cikkek kezelése kategóriánként
+   - Rich text editor
+   - Keresési funkció
+   - Publikálási státusz
+
+7. **Audit és Naplózás**
+   - Teljes audit trail rendszer
+   - Felhasználói tevékenységek naplózása
+   - Adatváltozások követése
+   - Biztonsági események
+
+8. **Segítség Rendszer**
+   - Kontextuális segítség minden oldalon
+   - Interaktív segítség modal-ok
+   - Háromnyelvű segítség tartalom
+   - Egységes sárga segítség gombok
 
 ## 🛠️ Technológiai Stack
 
